@@ -1,5 +1,9 @@
 #拓扑图编辑器介绍
 
+[Graph.Editor](https://github.com/samsha/graph.editor)
+
+[在线演示](http://demo.qunee.com/editor/)
+
 Graph.Editor是一款基于HTML5技术的拓补图编辑器，采用[jquery](http://jquery.com)插件的形式，是[Qunee图形组件](http://qunee.com)的扩展项目
 
 数据可视化是一件有趣的工作，冰冷的数据变成美观的图形，如同命令行之于Mac OS X图形界面的，传统的图形组件以图表（Chart）居多，不少优秀的开源或者商业的作品，
@@ -10,16 +14,13 @@ Graph.Editor是一款基于HTML5技术的拓补图编辑器，采用[jquery](htt
 
 #在线演示：
 
-[Graph.Editor项目](https://github.com/samsha/graph.editor)
-
-[演示地址](http://demo.qunee.com/editor/)
-
-界面
+请访问此地址查看效果：[http://demo.qunee.com/editor/](http://demo.qunee.com/editor/)
 
 ![拓扑图编辑器截图1](screenshot/V1.8.png)
 
-#Hello Graph.Editor
+#入门示例
 
+Hello Graph.Editor
 ```
 <!DOCTYPE html>
 <html>
