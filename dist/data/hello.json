@@ -1,0 +1,96 @@
+{
+  "datas": [
+    {
+      "_className": "Q.Node",
+      "json": {
+        "location": {
+          "x": 438.5776824034334,
+          "y": 402.7103004291845
+        },
+        "image": "Q-exchanger"
+      },
+      "_refId": 1
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "location": {
+          "x": 723.0858369098712,
+          "y": 364.46995708154503
+        },
+        "image": "Q-group"
+      },
+      "_refId": 3
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "location": {
+          "x": 654.2532188841201,
+          "y": 234.45278969957076
+        },
+        "image": "Q-subnetwork"
+      },
+      "_refId": 5
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "location": {
+          "x": 464.58111587982825,
+          "y": 185.50515021459222
+        }
+      },
+      "_refId": 7
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "Hello Qunee",
+        "from": {
+          "_ref": 7
+        },
+        "to": {
+          "_ref": 5
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "Edge",
+        "from": {
+          "_ref": 5
+        },
+        "to": {
+          "_ref": 3
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "Edge",
+        "from": {
+          "_ref": 3
+        },
+        "to": {
+          "_ref": 1
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "Edge",
+        "from": {
+          "_ref": 1
+        },
+        "to": {
+          "_ref": 7
+        }
+      }
+    }
+  ],
+  "version": "1.6"
+}
