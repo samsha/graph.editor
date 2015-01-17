@@ -12,13 +12,13 @@ Graph.Editor是一款基于HTML5技术的拓补图编辑器，采用[jquery](htt
 
 >注意：本项目内核使用Qunee for HTML5，Qunee本身是一个商业产品，默认仅限本机（localhost）使用，非商业用途可以申请免费授权，商业用途请购买相应授权，官网：[qunee.com](http://qunee.com/)
 
-#在线演示：
+##在线演示：
 
 请访问此地址查看效果：[http://demo.qunee.com/editor/](http://demo.qunee.com/editor/)
 
 ![拓扑图编辑器截图1](screenshot/V1.8.png)
 
-#入门示例
+##入门示例
 
 Hello Graph.Editor
 ```
@@ -64,7 +64,7 @@ $('#editor').graphEditor({
 
 更多用法请查看其他demo和代码
 
-##运行效果
+###运行效果
 ![graph editor - hello](screenshot/hello.png)
 
 #准备工作
