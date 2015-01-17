@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Graph Editor</title>
+  <!-- build:css libs/bootstrap/css/bootstrap.css -->
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <!-- endbuild -->
+  <!-- build:css libs/graph.editor/graph.editor.css -->
+  <link rel="stylesheet" href="src/graph.editor.css"/>
+  <!-- endbuild -->
+</head>
+.
+<body class="layout">
+<div class="graph-editor" data-options="region:'center'"></div>
+
+<!-- build:js libs/js.js -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/layout.border/src/layout.border.js"></script>
+<script src="../bower_components/bootstrap/js/modal.js"></script>
+<!-- endbuild -->
+
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!--<script src="qunee-min.js"></script>-->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/Exportpane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script src="scripts/graphs.js"></script>
+
+<script>
+  $(function () {
+  var images = [
+    {
+      root: 'data/',
+      name: '栅格图标',
+      images: ['images/exchange.png', 'images/exchange2.png', 'images/exchange3.png', 'images/firewall.png',
+        'images/pc.png', 'images/router.png', 'images/server.png', 'images/server2.png']
+    }
+  ];
+
+  $('.graph-editor').graphEditor({
+    toolbar: 'full', data: 'data/topo.json', images: images, callback: function (editor) {
+      editor.graph.zoomToOverview();
+    }
+  });
+});
+
+</script>
+</body>
+</html>

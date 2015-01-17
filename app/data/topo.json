@@ -1,0 +1,1465 @@
+{
+  "version": "1.8 alpha",
+  "refs": {
+    "1": {
+      "_classPath": "Q.Position.CENTER_MIDDLE"
+    },
+    "4": {
+      "_classPath": "graphs.group_cloud"
+    }
+  },
+  "datas": [
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "公共事业服务\n中心网络拓扑图",
+        "styles": {
+          "label.anchor.position": {
+            "$ref": 1
+          },
+          "label.position": {
+            "$ref": 1
+          },
+          "label.font.size": 40,
+          "label.color": "#F00",
+          "label.background.color": null
+        },
+        "location": {
+          "x": 859,
+          "y": 100
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "location": {
+          "x": 537.5000019073486,
+          "y": 425.8,
+          "invalidateFlag": false
+        },
+        "padding": 50,
+        "groupImage": {
+          "$ref": 4
+        }
+      },
+      "_refId": "343"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "存储",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 388,
+          "y": 219
+        },
+        "image": "images/server.png"
+      },
+      "_refId": "345"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "光纤交换机",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 313,
+          "y": 289
+        },
+        "image": "images/exchange2.png"
+      },
+      "_refId": "347"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#F00",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 345
+        },
+        "to": {
+          "_ref": 347
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 153,
+          "y": 355
+        },
+        "image": "images/server.png"
+      },
+      "_refId": "351"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F00",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 347
+        },
+        "to": {
+          "_ref": 351
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 193,
+          "y": 371
+        },
+        "image": "images/server.png"
+      },
+      "_refId": "355"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F00",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 347
+        },
+        "to": {
+          "_ref": 355
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 231,
+          "y": 387
+        },
+        "image": "images/server.png"
+      },
+      "_refId": "359"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F00",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 347
+        },
+        "to": {
+          "_ref": 359
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 271,
+          "y": 405
+        },
+        "image": "images/server.png"
+      },
+      "_refId": "363"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F00",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 347
+        },
+        "to": {
+          "_ref": 363
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "交换机",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 367,
+          "y": 415
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "367"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 363
+        },
+        "to": {
+          "_ref": 367
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "IPS",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 487,
+          "y": 413
+        },
+        "image": "images/firewall.png"
+      },
+      "_refId": "371"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 367
+        },
+        "to": {
+          "_ref": 371
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "核心交换机",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 615,
+          "y": 445
+        },
+        "image": "images/exchange2.png"
+      },
+      "_refId": "375"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 371
+        },
+        "to": {
+          "_ref": 375
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "防火墙",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 761,
+          "y": 443
+        },
+        "image": "images/firewall.png"
+      },
+      "_refId": "379"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 375
+        },
+        "to": {
+          "_ref": 379
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "路由器",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 903,
+          "y": 437
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "383"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 379
+        },
+        "to": {
+          "_ref": 383
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 351,
+          "y": 511
+        },
+        "image": "images/pc.png"
+      },
+      "_refId": "387"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 351,
+          "y": 611
+        },
+        "image": "images/pc.png"
+      },
+      "_refId": "389"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 499,
+          "y": 517
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "391"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 499,
+          "y": 607
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "393"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 613,
+          "y": 583
+        },
+        "image": "images/exchange2.png"
+      },
+      "_refId": "395"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 759,
+          "y": 567
+        },
+        "image": "images/firewall.png"
+      },
+      "_refId": "397"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "parent": {
+          "_ref": 343
+        },
+        "location": {
+          "x": 905,
+          "y": 567
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "399"
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "公共事业服务中心\n中心局域网",
+        "parent": {
+          "_ref": 343
+        },
+        "styles": {
+          "label.anchor.position": {
+            "$ref": 1
+          },
+          "label.position": {
+            "$ref": 1
+          },
+          "label.font.size": 30,
+          "label.color": "#F00",
+          "label.background.color": null
+        },
+        "location": {
+          "x": 609,
+          "y": 271
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 387
+        },
+        "to": {
+          "_ref": 391
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 387
+        },
+        "to": {
+          "_ref": 391
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 387
+        },
+        "to": {
+          "_ref": 391
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 389
+        },
+        "to": {
+          "_ref": 393
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 389
+        },
+        "to": {
+          "_ref": 393
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 389
+        },
+        "to": {
+          "_ref": 393
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 371
+        },
+        "to": {
+          "_ref": 395
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 391
+        },
+        "to": {
+          "_ref": 375
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 391
+        },
+        "to": {
+          "_ref": 395
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 393
+        },
+        "to": {
+          "_ref": 375
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 393
+        },
+        "to": {
+          "_ref": 395
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 375
+        },
+        "to": {
+          "_ref": 395
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 395
+        },
+        "to": {
+          "_ref": 375
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 395
+        },
+        "to": {
+          "_ref": 397
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 397
+        },
+        "to": {
+          "_ref": 399
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 375
+        },
+        "to": {
+          "_ref": 397
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 395
+        },
+        "to": {
+          "_ref": 379
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 379
+        },
+        "to": {
+          "_ref": 399
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 397
+        },
+        "to": {
+          "_ref": 383
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Internet",
+        "styles": {
+          "label.anchor.position": {
+            "$ref": 1
+          },
+          "label.position": {
+            "$ref": 1
+          },
+          "label.font.size": 24,
+          "label.font.style": "bold"
+        },
+        "location": {
+          "x": 1155,
+          "y": 495
+        },
+        "size": {
+          "width": 200
+        },
+        "image": {
+          "$ref": 4
+        }
+      },
+      "_refId": "441"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 383
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 399
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "分支机构",
+        "styles": {
+          "render.color": "#2898E0"
+        },
+        "location": {
+          "x": 1321.3557119369507,
+          "y": 110.8,
+          "invalidateFlag": false
+        },
+        "padding": 30,
+        "groupImage": {
+          "$ref": 4
+        }
+      },
+      "_refId": "447"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "路由器",
+        "parent": {
+          "_ref": 447
+        },
+        "location": {
+          "x": 1188,
+          "y": 100
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "449"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "交换机",
+        "parent": {
+          "_ref": 447
+        },
+        "location": {
+          "x": 1330,
+          "y": 100
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "451"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 447
+        },
+        "location": {
+          "x": 1452,
+          "y": 100
+        },
+        "image": "images/pc.png"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 449
+        },
+        "to": {
+          "_ref": 451
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "分支机构",
+        "location": {
+          "x": 1521.3557119369507,
+          "y": 309.8,
+          "invalidateFlag": false
+        },
+        "padding": 30,
+        "groupImage": {
+          "$ref": 4
+        }
+      },
+      "_refId": "457"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "路由器",
+        "parent": {
+          "_ref": 457
+        },
+        "location": {
+          "x": 1388,
+          "y": 299
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "459"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "交换机",
+        "parent": {
+          "_ref": 457
+        },
+        "location": {
+          "x": 1530,
+          "y": 299
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "461"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 457
+        },
+        "location": {
+          "x": 1652,
+          "y": 299
+        },
+        "image": "images/pc.png"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 459
+        },
+        "to": {
+          "_ref": 461
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "分支机构",
+        "location": {
+          "x": 1632.3557119369507,
+          "y": 531.8,
+          "invalidateFlag": false
+        },
+        "padding": 30,
+        "groupImage": {
+          "$ref": 4
+        }
+      },
+      "_refId": "467"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "路由器",
+        "parent": {
+          "_ref": 467
+        },
+        "location": {
+          "x": 1499,
+          "y": 521
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "469"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "交换机",
+        "parent": {
+          "_ref": 467
+        },
+        "location": {
+          "x": 1641,
+          "y": 521
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "471"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 467
+        },
+        "location": {
+          "x": 1763,
+          "y": 521
+        },
+        "image": "images/pc.png"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 469
+        },
+        "to": {
+          "_ref": 471
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "分支机构",
+        "location": {
+          "x": 1482.3557119369507,
+          "y": 710.8,
+          "invalidateFlag": false
+        },
+        "padding": 30,
+        "groupImage": {
+          "$ref": 4
+        }
+      },
+      "_refId": "477"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "路由器",
+        "parent": {
+          "_ref": 477
+        },
+        "location": {
+          "x": 1349,
+          "y": 700
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "479"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "交换机",
+        "parent": {
+          "_ref": 477
+        },
+        "location": {
+          "x": 1491,
+          "y": 700
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "481"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 477
+        },
+        "location": {
+          "x": 1613,
+          "y": 700
+        },
+        "image": "images/pc.png"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 479
+        },
+        "to": {
+          "_ref": 481
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "分支机构",
+        "location": {
+          "x": 1262.3557119369507,
+          "y": 881.8,
+          "invalidateFlag": false
+        },
+        "padding": 30,
+        "groupImage": {
+          "$ref": 4
+        }
+      },
+      "_refId": "487"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "路由器",
+        "parent": {
+          "_ref": 487
+        },
+        "location": {
+          "x": 1129,
+          "y": 871
+        },
+        "image": "images/router.png"
+      },
+      "_refId": "489"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "交换机",
+        "parent": {
+          "_ref": 487
+        },
+        "location": {
+          "x": 1271,
+          "y": 871
+        },
+        "image": "images/exchange.png"
+      },
+      "_refId": "491"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "内网PC",
+        "parent": {
+          "_ref": 487
+        },
+        "location": {
+          "x": 1393,
+          "y": 871
+        },
+        "image": "images/pc.png"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "edge.color": "#45E",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 489
+        },
+        "to": {
+          "_ref": 491
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 449
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 459
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 469
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 479
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.width": 3,
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 441
+        },
+        "to": {
+          "_ref": 489
+        },
+        "edgeType": "zigzag"
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "VPN",
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F80",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 383
+        },
+        "to": {
+          "_ref": 449
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F80",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 383
+        },
+        "to": {
+          "_ref": 459
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F80",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 383
+        },
+        "to": {
+          "_ref": 469
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F80",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 399
+        },
+        "to": {
+          "_ref": 479
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "styles": {
+          "edge.line.dash": [
+            8,
+            5
+          ],
+          "edge.width": 3,
+          "edge.color": "#F80",
+          "arrow.to": false
+        },
+        "from": {
+          "_ref": 399
+        },
+        "to": {
+          "_ref": 489
+        }
+      }
+    }
+  ]
+}

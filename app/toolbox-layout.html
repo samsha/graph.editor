@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .group__items {
+            position: relative;
+            border: solid 1px #EEE;
+            width: 300px;
+        }
+
+        .group__items .group__item {
+            /*position: absolute;*/
+            padding: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .group__item__content {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #EEE;
+            display: block;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="group">
+    <div class="group__title"><span class="null">内置图标</span><span class="icon group-expand"></span></div>
+    <div class="group__items">
+        <div class="group__item">
+            <div class="group__item__content">
+                Text
+            </div>
+        </div>
+        <div class="group__item">
+            <div class="group__item__content">
+                Text
+            </div>
+        </div>
+        <div class="group__item">
+            <canvas class="group__item__content"></canvas>
+        </div>
+        <div class="group__item">
+            <canvas class="group__item__content"></canvas>
+        </div>
+        <div class="group__item">
+            <canvas class="group__item__content"></canvas>
+        </div>
+        <div class="group__item">
+            <canvas class="group__item__content"></canvas>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+</body>
+</html>

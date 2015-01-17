@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Graph Editor</title>
+  <!-- build:css libs/bootstrap/css/bootstrap.css -->
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbuild -->
+  <!-- build:css libs/graph.editor/graph.editor.css -->
+  <link rel="stylesheet" href="src/graph.editor.css"/>
+  <!-- endbuild -->
+  <style>
+    .graph-editor {
+      background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(#90d9fc), to(#6aa6e5), color-stop(0.4, #b2e5ff));
+    }
+  </style>
+</head>.
+<body class="layout">
+<div class="graph-editor" data-options="region:'center'"></div>
+
+<!-- build:js libs/js.js -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/layout.border/src/layout.border.js"></script>
+<script src="../bower_components/bootstrap/js/modal.js"></script>
+<!-- endbuild -->
+
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/Exportpane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+
+<script>
+  $('.graph-editor').graphEditor({data: 'data/hello.json'});
+</script>
+</body>
+</html>
