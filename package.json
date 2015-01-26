@@ -1,6 +1,6 @@
 {
   "name": "graph-viewer",
-  "version": "0.1",
+  "version": "1.0.0",
   "devDependencies": {
     "gulp": "^3.5.5",
     "gulp-concat": "^2.1.7",

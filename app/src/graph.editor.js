@@ -334,11 +334,7 @@
         }
         this.initContextMenu(this.graph);
 
-        if (options.data) {
-            this.loadDatas(this.graph, options.data, callback);
-        }else{
-            callback.call(this, this);
-        }
+        this.loadDatas(options.data, callback);
     }
 
     Editor.prototype = {
@@ -432,13 +428,22 @@
         },
         _index: 0,
 //初始化数据
-        loadDatas: function (graph, url, callback) {
-            Q.loadJSON(url, function (json) {
-                graph.parseJSON(json);
-                if(callback instanceof Function){
-                    callback.call(this, this);
+        loadDatas: function (data, callback) {
+            if (data) {
+                if(Q.isString(data)){
+                    Q.loadJSON(data, function(json){
+                        this.graph.parseJSON(json);
+                        if(callback instanceof Function){
+                            callback.call(this, this);
+                        }
+                    }.bind(this));
+                    return;
                 }
-            }.bind(this))
+                this.graph.parseJSON(data);
+            }
+            if(callback instanceof Function){
+                callback.call(this, this);
+            }
         },
         _createToolBoxItems: function (groups, toolbox) {
             if(Q.isArray(groups)){
@@ -451,9 +456,6 @@
         },
 //初始化拖拽节点列表
         initToolbox: function (toolbox, graph, groups) {
-            //var defaultNodes = [{type: "Group", label: "分组"}];
-
-            //Q.Graphs.group.type = 'Q.Group';
             var basicNodes = [{
                 label: 'Node',
                 image: 'Q-node'
