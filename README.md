@@ -64,10 +64,10 @@ $('#editor').graphEditor({
 本例中，通过回调函数获取editor.graph对象，并创建了两个节点和一条连线
 
 ###运行效果
-![graph editor - hello](screenshot/hello_V2.5.png)
+![graph editor - hello](screenshot/hello_v2.5.png)
 更多用法请查看其他demo和代码
 
-##编辑器交互快捷键说明
+##编辑器交互快捷键说明v
 
 shift：按住此键拖拽节点，或者是从toolbox中拖拽创建节点，可以将节点拖入到分组内
 shift：按住此键，按图标实际比例调整节点大小
