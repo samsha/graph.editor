@@ -16,7 +16,8 @@ Graph.Editor是一款基于HTML5技术的拓补图编辑器，采用[jquery](htt
 
 请访问此地址查看效果：[http://demo.qunee.com/editor/](http://demo.qunee.com/editor/)
 
-![拓扑图编辑器截图1](screenshot/V1.8.png)
+![拓扑图编辑器截图1](screenshot/V2.5.png)
+![拓扑图编辑器截图2](screenshot/layout_demo.png)
 
 ##入门示例
 
@@ -62,19 +63,31 @@ $('#editor').graphEditor({
 ```
 本例中，通过回调函数获取editor.graph对象，并创建了两个节点和一条连线
 
+###运行效果
+![graph editor - hello](screenshot/hello_V2.5.png)
 更多用法请查看其他demo和代码
 
-###运行效果
-![graph editor - hello](screenshot/hello.png)
+##编辑器交互快捷键说明
+
+shift：按住此键拖拽节点，或者是从toolbox中拖拽创建节点，可以将节点拖入到分组内
+shift：按住此键，按图标实际比例调整节点大小
+方向键：移动画布
+ctrl / commond + 方向键：移动选中图元的坐标，微调
+dblclick 空白处：缩放画布到整个窗口
+delete：删除当前选中的图元
+ctrl / commond + S：导出当前画布图片
+ctrl / commond + A：全选图元
+ctrl / commond, 按住此键可以多选图元
+ESC：取消全选
 
 #准备工作
 
-项目用到nodejs，使用bower包管理，用到Gulp相关的插件打包和发布
+项目用到nodejs，~~使用bower包管理(v2.5版本改成了直接引用相关js文件)，~~用到Gulp相关的插件打包和发布
 
 本项目使用以下工具：
 
 * 安装nodejs
-* 安装bower - 包管理
+~~* 安装bower - 包管理~~
 * 安装Gulp - 任务自动管理工具
 
 ##开始开发环境
@@ -85,9 +98,9 @@ $('#editor').graphEditor({
 
 ##前端第三方包
 
-用到[jquery](http://jquery.com), [bootstrap](http://getbootstrap.com), [layout.border](https://github.com/samsha/layout.border)，使用bower下载这些包到bower_components目录
+用到[jquery](http://jquery.com), [bootstrap](http://getbootstrap.com), [layout.border](https://github.com/samsha/layout.border), [bootstrap-colorpicker](https://github.com/mjolnic/bootstrap-colorpicker)
 
->bower install
+~~>bower install~~
 
 ##项目结构
 
@@ -100,18 +113,29 @@ app/
             --JSONSerializer.js  数据序列化模块
             --PopupMenu.js  右键菜单模块
             --Toolbar.js  工具栏模块
+            --PropertyPane.js  属性面板模块
+            --ToolBox.js  左侧工具箱模块
+            --GridBackground.js  网格背景模块
+            -- ...  others
         --images/
         --graph.editor.js  拓扑图编辑器插件
         --graph.editor.css
+    --libs/  第三方类库
     --scripts/  示例脚本
     --images/  示例资源
     --data/  示例资源
     --index.html  编辑器主页面
     --demo.html  编辑器插件示例
+    -- ... other demos
 dist/ 输出目录
-bower_components/ bower第三方包目录，运行bower install 后自动生成
+demos/  使用在线editor类库的示例
 node_modules/ 开发环境相关包目录，运行npm install后自动生成
+... 其他文件(包含一些后台相关的尚未完成的代码,可能你没法直接使用,仅作为参考,可以忽略)
 ```
+
+##编辑运行
+
+开发过程中直接运行app中的html文件即可，不需要gulp打包，所有的.html文件都可以直接在IDE中运行，有一些动态加载json数据的可能需要web服务器部署访问
 
 ##编译打包
 
@@ -135,7 +159,6 @@ dist/
 ```
 编辑器主要的类库文件位于libs/graph.editor/, 第三方类库（jquery, bootstrap, layout.border）位于libs/js.js，bootstrap样式和资源目录位于libs/bootstrap/
 
+#其他说明
 
-#其他示例
-
-![拓扑图编辑器截图](screenshot/screenshot1.png)
+项目中包含一些后台相关的尚未完成的代码,可能你没法直接使用,仅作为参考,可以忽略

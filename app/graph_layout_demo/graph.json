@@ -1,0 +1,542 @@
+{
+	"version": "2.0",
+	"datas": [
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 350,
+					"y": 50
+				},
+				"image": "icon2"
+			},
+			"_refId": "502"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 500,
+					"y": 50
+				},
+				"image": "icon2"
+			},
+			"_refId": "506"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 650,
+					"y": 50
+				},
+				"image": "icon2"
+			},
+			"_refId": "510"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 810,
+					"y": 50
+				},
+				"image": "icon2"
+			},
+			"_refId": "514"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 510,
+					"y": 210
+				},
+				"image": "icon1"
+			},
+			"_refId": "518"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 650,
+					"y": 210
+				},
+				"image": "icon1"
+			},
+			"_refId": "522"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 510,
+					"y": 360
+				},
+				"image": "icon1"
+			},
+			"_refId": "526"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 650,
+					"y": 360
+				},
+				"image": "icon1"
+			},
+			"_refId": "530"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 340,
+					"y": 300
+				},
+				"image": "icon2"
+			},
+			"_refId": "534"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 270,
+					"y": 540
+				},
+				"image": "icon3"
+			},
+			"_refId": "538"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 390,
+					"y": 540
+				},
+				"image": "icon3"
+			},
+			"_refId": "542"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 510,
+					"y": 540
+				},
+				"image": "icon3"
+			},
+			"_refId": "546"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 620,
+					"y": 540
+				},
+				"image": "icon3"
+			},
+			"_refId": "550"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 760,
+					"y": 530
+				},
+				"image": "icon2"
+			},
+			"_refId": "554"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 860,
+					"y": 530
+				},
+				"image": "icon2"
+			},
+			"_refId": "558"
+		},
+		{
+			"_className": "Q.Node",
+			"json": {
+				"location": {
+					"x": 540,
+					"y": 660
+				},
+				"image": "icon3"
+			},
+			"_refId": "562"
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"styles": {
+					"edge.color": "#0de62f"
+				},
+				"from": {
+					"_ref": 502
+				},
+				"to": {
+					"_ref": 506
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"styles": {
+					"edge.color": "#28a314"
+				},
+				"from": {
+					"_ref": 510
+				},
+				"to": {
+					"_ref": 514
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 514
+				},
+				"to": {
+					"_ref": 522
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 510
+				},
+				"to": {
+					"_ref": 518
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 506
+				},
+				"to": {
+					"_ref": 522
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 502
+				},
+				"to": {
+					"_ref": 518
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 518
+				},
+				"to": {
+					"_ref": 522
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 518
+				},
+				"to": {
+					"_ref": 522
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 518
+				},
+				"to": {
+					"_ref": 526
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 518
+				},
+				"to": {
+					"_ref": 526
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 522
+				},
+				"to": {
+					"_ref": 530
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 522
+				},
+				"to": {
+					"_ref": 530
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 534
+				},
+				"to": {
+					"_ref": 518
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 534
+				},
+				"to": {
+					"_ref": 526
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 530
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 530
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 538
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 542
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 546
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 550
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 526
+				},
+				"to": {
+					"_ref": 554
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 530
+				},
+				"to": {
+					"_ref": 558
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 530
+				},
+				"to": {
+					"_ref": 550
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 530
+				},
+				"to": {
+					"_ref": 546
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 530
+				},
+				"to": {
+					"_ref": 542
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "Edge",
+				"from": {
+					"_ref": 530
+				},
+				"to": {
+					"_ref": 538
+				}
+			}
+		},
+		{
+			"_className": "Q.Edge",
+			"json": {
+				"name": "",
+				"styles": {
+					"edge.color": "#ff0000"
+				},
+				"from": {
+					"_ref": 530
+				},
+				"to": {
+					"_ref": 562
+				},
+				"pathSegments": {
+					"_className": "Q.HashList",
+					"json": [
+						{
+							"_className": "Q.PathSegment",
+							"json": {
+								"type": "l",
+								"points": [
+									910,
+									360
+								]
+							}
+						},
+						{
+							"_className": "Q.PathSegment",
+							"json": {
+								"type": "l",
+								"points": [
+									910,
+									660
+								]
+							}
+						}
+					]
+				}
+			}
+		}
+	],
+	"scale": 0.8238065146205548,
+	"tx": -71.89666226230821,
+	"ty": 51.76581260412485
+}

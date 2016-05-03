@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+
+    Q.MoveInteraction.prototype.enddrag = function(evt, graph){
+        if(!this.currentDraggingElement){
+            return;
+        }
+        if(this.draggingElements && this.draggingElements.length){
+            if(evt.shiftKey){
+                var xy = graph.toLogical(evt);
+                var x = xy.x, y = xy.y;
+                var parent;
+                graph.forEachReverseVisibleUI(function(ui){
+                    var data = ui.data;
+                    if(!this.draggingElements.contains(data) && ui.uiBounds.intersectsPoint(x - ui.x, y - ui.y) && ui.hitTest(x, y, 1)){
+                        if(data.isGroup || data.enableSubNetwork || (data instanceof Q.Group && data.expanded)){
+                            parent = data;
+                        }
+                        return false;
+                    }
+                }, this);
+                if(parent){
+                    this.draggingElements.forEach(function(item){
+                        var p = item.parent;
+                        while(p){
+                            if(this.draggingElements.contains(p)){
+                                return;
+                            }
+                            p = p.parent;
+                        }
+                        item.parent = parent;
+                        if(parent.isGroup){
+                            item.host = parent;
+
+                        }
+                    }, this)
+                }
+            }
+
+            var interactionEvent = new Q.InteractionEvent(graph, Q.InteractionEvent.ELEMENT_MOVE_END, evt, this.currentDraggingElement, this.draggingElements.datas);
+            graph.onInteractionEvent(interactionEvent);
+        }
+        this.destroy(graph);
+    }
+
+    //注册图片,之后就直接使用这个名字即可,支持普通图片jpg, png, svg,gif,也支持canvas code 可使用在线工具将svg转换成canvas code http://demo.qunee.com/svg2canvas
+    Q.registerImage('group_cloud', {
+        cacheable: false,
+        width: 100, height: 100,
+        draw: function(g){
+            g.fillStyle = '#FFD';
+            g.fillRect(0, 0, 100, 100);
+            g.strokeStyle = '#CCC';
+            g.strokeRect(0, 0, 100, 100);
+        }
+    });
+    Q.registerImage('qunee', 'data/images/logo.svg');
+
+    Object.defineProperties(Q.Node.prototype, {
+        expanded: {
+            get: function(){
+                return this._expanded;
+            },
+            set: function(v){
+                if(this._expanded == v){
+                    return;
+                }
+                this._expanded = v;
+                if(!this.originalImage){
+                    this.originalImage = this.image;
+                }
+                this.image = v ? this.groupImage : this.originalImage;
+                this.resizable = v;
+                if(!v){
+                    this.groupSize = this.size;
+                    this.size = null;
+                }else if(this.groupSize){
+                    this.size = this.groupSize;
+                }
+                this.forEachChild(function(child){
+                    child.visible = v;
+                    child.invalidateVisibility();
+                })
+            }
+        }
+    })
+
+    $('#editor').graphEditor({images: [{name: 'Custom Elements', images: ['qunee', {
+        image: 'group_cloud',
+        type: 'Node',
+        properties: {
+            image: 'Q-group',
+            groupImage: 'group_cloud',
+            isGroup: true,
+            groupSize: {width: 300},
+            expanded: true,
+        }
+    }, {
+        type: 'Group',
+        properties: {
+            groupImage: 'group_cloud',
+        }
+    }]}], callback: function(editor){
+        editor.toolbox.hideDefaultGroups();
+        var graph = editor.graph;
+        graph.visibleFilter = function(element){
+            return element.visible !== false;
+        }
+        graph.ondblclick = function(evt){
+            var data = evt.getData();
+            if(data && data.isGroup){
+                data.expanded = !data.expanded;
+            }
+        }
+        graph.onElementCreated = function (element, evt, dragInfo) {
+            if(evt.shiftKey){
+                var parent = this.getElementByMouseEvent(evt);
+                if(parent){
+                    element.host = element.parent = parent;
+                }
+            }
+
+        }
+
+
+    }});
+</script>
+</body>
+</html>

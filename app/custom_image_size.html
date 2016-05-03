@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Qunee Graph Editor V2.0</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <!-- build:css libs/graph.editor/graph.editor.css -->
+    <link rel="stylesheet" href="src/css/graph.editor.css"/>
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+<body class="layout">
+<header data-options="region:'north', height: '50'">
+    <a class="navbar-brand" href="http://qunee.com">
+        <div class="logo" title="qunee.com"></div>
+    </a>
+    <span id="title">Light High Efficiency Graph Component</span>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://qunee.com">Home</a></li>
+        <li><a href="http://blog.qunee.com">Blog</a></li>
+        <li><a href="http://doc.qunee.com">Doc</a></li>
+        <li><a href="http://demo.qunee.com">Demo</a></li>
+        <!--<li><a href="http://qunee.com#try">试用</a></li>-->
+        <li class="active"><a href="http://demo.qunee.com/editor/">Editor</a></li>
+        <li class="new"><a href="http://demo.qunee.com/svg2canvas/">SVG2Canvas</a></li>
+    </ul>
+</header>
+<div id="editor" class="graph-editor" data-options="region:'center'"></div>
+<footer data-options="region:'south', height: '30'" class="footer">
+    Copyright © 2015 上海酷利软件有限公司 Shanghai Kuli Software Co.,Ltd. All right reserved. Email: <span
+        style="color: #2898E0;">support#qunee.com</span>
+</footer>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- endbuild -->
+
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/common/PropertyPane.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+
+<script>
+    $(function () {
+        $('.graph-editor').graphEditor({
+            images: [
+                {
+                    name: 'Cisco图标',
+                    images: [{image: './data/cisco/ATMSwitch.png', properties: {size: {width: 30}}}]
+                }]
+        });
+    });
+
+</script>
+</body>
+</html>

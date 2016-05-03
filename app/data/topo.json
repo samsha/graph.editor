@@ -56,7 +56,7 @@
           "x": 388,
           "y": 219
         },
-        "image": "images/server.png"
+        "image": "data/images/server.png"
       },
       "_refId": "345"
     },
@@ -71,7 +71,7 @@
           "x": 313,
           "y": 289
         },
-        "image": "images/exchange2.png"
+        "image": "data/images/exchange2.png"
       },
       "_refId": "347"
     },
@@ -101,7 +101,7 @@
           "x": 153,
           "y": 355
         },
-        "image": "images/server.png"
+        "image": "data/images/server.png"
       },
       "_refId": "351"
     },
@@ -135,7 +135,7 @@
           "x": 193,
           "y": 371
         },
-        "image": "images/server.png"
+        "image": "data/images/server.png"
       },
       "_refId": "355"
     },
@@ -169,7 +169,7 @@
           "x": 231,
           "y": 387
         },
-        "image": "images/server.png"
+        "image": "data/images/server.png"
       },
       "_refId": "359"
     },
@@ -203,7 +203,7 @@
           "x": 271,
           "y": 405
         },
-        "image": "images/server.png"
+        "image": "data/images/server.png"
       },
       "_refId": "363"
     },
@@ -238,7 +238,7 @@
           "x": 367,
           "y": 415
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "367"
     },
@@ -269,7 +269,7 @@
           "x": 487,
           "y": 413
         },
-        "image": "images/firewall.png"
+        "image": "data/images/firewall.png"
       },
       "_refId": "371"
     },
@@ -300,7 +300,7 @@
           "x": 615,
           "y": 445
         },
-        "image": "images/exchange2.png"
+        "image": "data/images/exchange2.png"
       },
       "_refId": "375"
     },
@@ -331,7 +331,7 @@
           "x": 761,
           "y": 443
         },
-        "image": "images/firewall.png"
+        "image": "data/images/firewall.png"
       },
       "_refId": "379"
     },
@@ -362,7 +362,7 @@
           "x": 903,
           "y": 437
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "383"
     },
@@ -393,7 +393,7 @@
           "x": 351,
           "y": 511
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       },
       "_refId": "387"
     },
@@ -408,7 +408,7 @@
           "x": 351,
           "y": 611
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       },
       "_refId": "389"
     },
@@ -422,7 +422,7 @@
           "x": 499,
           "y": 517
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "391"
     },
@@ -436,7 +436,7 @@
           "x": 499,
           "y": 607
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "393"
     },
@@ -450,7 +450,7 @@
           "x": 613,
           "y": 583
         },
-        "image": "images/exchange2.png"
+        "image": "data/images/exchange2.png"
       },
       "_refId": "395"
     },
@@ -464,7 +464,7 @@
           "x": 759,
           "y": 567
         },
-        "image": "images/firewall.png"
+        "image": "data/images/firewall.png"
       },
       "_refId": "397"
     },
@@ -478,7 +478,7 @@
           "x": 905,
           "y": 567
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "399"
     },
@@ -927,7 +927,7 @@
           "x": 1188,
           "y": 100
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "449"
     },
@@ -942,7 +942,7 @@
           "x": 1330,
           "y": 100
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "451"
     },
@@ -957,7 +957,7 @@
           "x": 1452,
           "y": 100
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       }
     },
     {
@@ -1003,7 +1003,7 @@
           "x": 1388,
           "y": 299
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "459"
     },
@@ -1018,7 +1018,7 @@
           "x": 1530,
           "y": 299
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "461"
     },
@@ -1033,7 +1033,7 @@
           "x": 1652,
           "y": 299
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       }
     },
     {
@@ -1079,7 +1079,7 @@
           "x": 1499,
           "y": 521
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "469"
     },
@@ -1094,7 +1094,7 @@
           "x": 1641,
           "y": 521
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "471"
     },
@@ -1109,7 +1109,7 @@
           "x": 1763,
           "y": 521
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       }
     },
     {
@@ -1155,7 +1155,7 @@
           "x": 1349,
           "y": 700
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "479"
     },
@@ -1170,7 +1170,7 @@
           "x": 1491,
           "y": 700
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "481"
     },
@@ -1185,7 +1185,7 @@
           "x": 1613,
           "y": 700
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       }
     },
     {
@@ -1231,7 +1231,7 @@
           "x": 1129,
           "y": 871
         },
-        "image": "images/router.png"
+        "image": "data/images/router.png"
       },
       "_refId": "489"
     },
@@ -1246,7 +1246,7 @@
           "x": 1271,
           "y": 871
         },
-        "image": "images/exchange.png"
+        "image": "data/images/exchange.png"
       },
       "_refId": "491"
     },
@@ -1261,7 +1261,7 @@
           "x": 1393,
           "y": 871
         },
-        "image": "images/pc.png"
+        "image": "data/images/pc.png"
       }
     },
     {

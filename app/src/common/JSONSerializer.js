@@ -262,9 +262,11 @@
         }
     }
 
+    var OUTPUT_PROPERTIES = ['enableSubNetwork', 'zIndex', 'tooltipType', 'tooltip', 'movable', 'selectable', 'resizable', 'uiClass', 'name', 'parent', 'host'];
+
     Q.Element.prototype.toJSON = function (serializer) {
         var info = {};
-        var outputProperties = ['enableSubNetwork', 'zIndex', 'tooltipType', 'tooltip', 'movable', 'selectable', 'resizable', 'uiClass', 'name', 'parent', 'host'];
+        var outputProperties = OUTPUT_PROPERTIES;
         if (this.outputProperties) {
             outputProperties = outputProperties.concat(this.outputProperties);
         }
@@ -592,7 +594,7 @@
     function graphModelToJSON(model, filter) {
         var serializer = new JSONSerializer();
         var json = {
-            version: '1.8 alpha',
+            version: '2.0',
             refs: {}
         };
         var datas = [];
@@ -694,6 +696,9 @@
     Q.Graph.prototype.toJSON = Q.Graph.prototype.exportJSON = function (toString, options) {
         options = options || {};
         var json = this.graphModel.toJSON(options.filter);
+        json.scale = this.scale;
+        json.tx = this.tx;
+        json.ty = this.ty;
         if (toString) {
             json = JSON.stringify(json, options.replacer, options.space || '\t')
         }
@@ -704,6 +709,11 @@
             json = JSON.parse(json);
         }
         this.graphModel.parseJSON(json, options);
+        var scale = json.scale;
+        if(scale){
+            this.originAtCenter = false;
+            this.translateTo(json.tx || 0, json.ty || 0, scale);
+        }
     }
 
     loadClassPath(Q, 'Q');

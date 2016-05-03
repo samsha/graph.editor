@@ -1,0 +1,13 @@
+{
+  "name": "Cisco图标",
+  "root": "./data/cisco/",
+  "images": [
+    "ATMSwitch.png",
+    "multilayerSwitch.png",
+    "workgroupSwitch.png",
+    "workgroupSwitchSubdued.png",
+    "100BaseT_hub.png",
+    "cisco_hub.png",
+    "switch1100.png"
+  ]
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+    //    图片最好先注册,json中直接设置图片名称,避免图片路径的问题,例如:
+    //Q.registerImage('user', "./data/cisco/user.png");
+    //Q.registerImage('start', "./data/cisco/start.png");
+    //Q.registerImage('stop', "./data/cisco/stop.png");
+    Q.registerImage('user', Q.Graphs.node);
+    Q.registerImage('start', Q.Graphs.node);
+    Q.registerImage('stop', Q.Graphs.server);
+
+
+    var FLOWING_FORWARD = 'forward';
+    var FLOWING_BACKWARD = 'backward';
+
+    function FlowingSupport(graph) {
+        this.map = {};
+        this.graph = graph;
+
+        graph.dataPropertyChangeDispatcher.addListener(function (evt) {
+            if (evt.propertyName !== 'flow') {
+                return;
+            }
+            this.onChanged(evt.source);
+        }.bind(this));
+        graph.listChangeDispatcher.addListener(function (evt) {
+            if (evt.kind == Q.ListEvent.KIND_CLEAR) {
+                this.clear();
+            } else if (evt.kind == Q.ListEvent.KIND_REMOVE) {
+                this.onRemove(evt.data);
+            } else if (evt.kind == Q.ListEvent.KIND_ADD) {
+                this.onAdd(evt.data);
+            }
+        }.bind(this));
+    }
+
+    FlowingSupport.prototype = {
+        map: null,
+        length: 0,
+        clear: function () {
+            this.map = {};
+            this.length = 0;
+        },
+        _add: function (item) {
+            if (this.map[item.id]) {
+                return;
+            }
+            this.length++;
+            this.map[item.id] = item;
+            this.start();
+        },
+        _remove: function (item) {
+            if (!this.map[item.id]) {
+                return;
+            }
+            delete this.map[item.id];
+            this.length--;
+        },
+        _interval: 300,
+        start: function () {
+            if (this._timer) {
+                return;
+            }
+            var offset = 0;
+            this._timer = setTimeout(function A() {
+                if (!this.length) {
+                    offset = 0;
+                    this._timer = null;
+                    return;
+                }
+                offset -= 2;
+                for (var id in this.map) {
+                    var edge = this.map[id];
+                    edge.setStyle(Q.Styles.EDGE_LINE_DASH_OFFSET, edge.flow == FLOWING_BACKWARD ? -offset : offset);
+                }
+                this._timer = setTimeout(A.bind(this), this._interval);
+            }.bind(this), this._interval);
+        },
+        onChanged: function (element) {
+            element.flow ? this._add(element) : this._remove(element);
+        },
+        _dataToArray: function (data) {
+            if (Q.isArray(data)) {
+                return data;
+            }
+            return [data];
+        },
+        onRemove: function (data) {
+            data = this._dataToArray(data);
+            data.forEach(function (item) {
+                if (this.map[item.id]) {
+                    this._remove(item);
+                }
+            }, this);
+        },
+        onAdd: function (data) {
+            data = this._dataToArray(data);
+            data.forEach(function (item) {
+                if (item instanceof Q.Edge && item.flow && !this.map[item.id]) {
+                    this._add(item);
+                }
+            }, this);
+        }
+    }
+
+    Q.Edge.prototype.outputProperties = ['flow'];
+    Object.defineProperties(Q.Edge.prototype, {
+        flow: {
+            get: function () {
+                return this._flow;
+            },
+            set: function (v) {
+                if (this._flow == v) {
+                    return;
+                }
+                var old = this._flow;
+                this._flow = v;
+                this.setStyle(Q.Styles.EDGE_LINE_DASH, v ? [8, 8] : null);
+                this.firePropertyChangeEvent('flow', v, old);
+            }
+        }
+    });
+
+    var data = {
+        "ty": 200,
+        "datas": [
+            {
+                "_className": "Q.Node",
+                "_refId": "1",
+                "extraParams": {},
+                "json": {
+                    "properties": {
+                        "typeName": "operationChart",
+                        "deployId": 10000064530005,
+                        "defKey": "GTest01_C",
+                        "defId": 10000064460001,
+                        "bpmNodeId": "StartEvent1",
+                        "bpmNodeType": "StartEvent",
+                        "actDefId": "GTest01_C:1:10000064530008",
+                        "parentActDefId": "",
+                    },
+                    "location": {
+                        "y": 20,
+                        "x": 60
+                    },
+                    "name": "开始",
+                    "image": "start"
+
+                }
+            },
+            {
+                "_className": "Q.Node",
+                "_refId": "2",
+                "extraParams": {},
+                "json": {
+                    "properties": {
+                        "typeName": "operationChart",
+                        "deployId": 10000064530005,
+                        "defKey": "GTest01_C",
+                        "defId": 10000064460001,
+                        "bpmNodeId": "EndEvent1",
+                        "bpmNodeType": "EndEvent",
+                        "actDefId": "GTest01_C:1:10000064530008",
+                        "parentActDefId": "",
+                    },
+                    "location": {
+                        "y": 300,
+                        "x": 70
+                    },
+                    "name": "结束",
+                    "image": "stop"
+                }
+            },
+            {
+                "_className": "Q.Node",
+                "_refId": "6",
+                "extraParams": {},
+                "json": {
+                    "properties": {
+                        "typeName": "operationChart",
+                        "deployId": 10000064530005,
+                        "subDefKey": "yudaflow2",
+                        "defKey": "GTest01_C",
+                        "defId": 10000064460001,
+                        "bpmNodeId": "UserTask1",
+                        "bpmNodeType": "UserTask",
+                        "actDefId": "GTest01_C:1:10000064530008",
+                        "parentActDefId": "",
+                    },
+                    "user": "true",
+                    "location": {
+                        "y": 120,
+                        "x": 40
+                    },
+                    "name": "用户任务",
+                    "image": "user"
+                }
+            },
+            {
+                "_className": "Q.Edge",
+                "_refId": "edge_1",
+                "extraParams": {},
+                "json": {
+                    "flow": true,
+                    "properties": {
+                        "bpmEdgeId": "sequenceFlow1",
+                    },
+                    "to": {
+                        "_ref": 6
+                    },
+                    "name": "",
+                    "from": {
+                        "_ref": 1
+                    }
+                }
+            },
+            {
+                "_className": "Q.Edge",
+                "_refId": "edge_2",
+                "extraParams": {},
+                "json": {
+                    "properties": {
+                        "bpmEdgeId": "sequenceFlow2",
+                    },
+                    "to": {
+                        "_ref": 2
+                    },
+                    "name": "",
+                    "from": {
+                        "_ref": 6
+                    }
+                }
+            }
+
+        ],
+        "tx": 200,
+        "scale": 1,
+        "version": "2.0"
+    };
+
+    $('#editor').graphEditor({
+        images: [], callback: function (editor) {
+            var graph = editor.graph;
+            new FlowingSupport(graph);
+
+            graph.parseJSON(data);
+
+
+            //通过client属性查找图元
+            function getElementByClientProperty(name, value){
+                var result;
+                graph.forEach(function(element){
+                    if(element.get(name) == value){
+                        result = element;
+                        return false;
+                    }
+                })
+                return result;
+            }
+
+            var edge1 = getElementByClientProperty('bpmEdgeId', 'sequenceFlow1');
+            Q.log(edge1.name)
+
+
+        }
+    });
+</script>
+</body>
+</html>

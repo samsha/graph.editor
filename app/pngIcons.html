@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Drop Action</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<script src="scripts/graphs.js"></script>
+<!-- endbuild -->
+<script>
+  $(function () {
+    Q.registerImage('groupImage', Q.Shapes.getShape(Q.Consts.SHAPE_ROUNDRECT, 0, 0, 200, 200));
+  var images = [
+    {
+      root: 'data/',
+      name: '栅格图标',
+      images: [{
+        type: 'Group',
+        label: '分组',
+        image: 'Q-group',
+        properties: {//设置分组属性
+          groupImage: 'Q-cloud',//设置分组背景图片，这里也可以用前面注册的图片：'groupImage'
+          padding: 20//设置分组内间距
+        },styles:{
+          'render.color': '#FF0'
+          //这里也可以设置分组样式，填充色之类的
+        }
+      },'images/logo.svg','images/exchange.png', 'images/exchange2.png', 'images/exchange3.png', 'images/firewall.png',
+        'images/pc.png', 'images/router.png', 'images/server.png', 'images/server2.png']
+    }
+  ];
+
+  $('#editor').graphEditor({
+    toolbar: 'full', data: 'data/topo.json', images: images, callback: function (editor) {
+      editor.graph.zoomToOverview();
+    }
+  });
+});
+
+</script>
+</body>
+</html>

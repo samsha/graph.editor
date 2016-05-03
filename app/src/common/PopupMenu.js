@@ -1,4 +1,4 @@
-;(function (Q, $) {
+;(function (Q) {
 //PopupMenu
   function showDivAt(div, x, y) {
     var body = document.documentElement;
@@ -36,6 +36,7 @@
   var PopupMenu = function (items) {
     this.items = items || [];
   }
+
   var menuClassName = 'dropdown-menu';
   PopupMenu.Separator = 'divider';
 
@@ -171,8 +172,8 @@
         var isEdge = data instanceof Q.Edge;
 
         items.push({
-          text: '编辑名称', action: function (evt, item) {
-            Q.prompt('输入图元名称', data.name || '', function (name) {
+          text: getI18NString('Rename'), action: function (evt, item) {
+            Q.prompt(getI18NString('Input Element Name'), data.name || '', function (name) {
               if (name === null) {
                 return;
               }
@@ -183,13 +184,13 @@
         if (isEdge) {
           var isDashLine = data.getStyle(Q.Styles.EDGE_LINE_DASH) || Q.DefaultStyles[Q.Styles.EDGE_LINE_DASH];
           items.push({
-            text: isDashLine ? '实线样式' : '虚线样式', action: function (evt, item) {
+            text: isDashLine ? getI18NString('Solid Line') : getI18NString('Dashed Line'), action: function (evt, item) {
               data.setStyle(Q.Styles.EDGE_LINE_DASH, isDashLine ? null : [5, 3]);
             }
           });
           items.push({
-            text: '连线线宽', action: function (evt, item) {
-              Q.prompt('输入连线线宽', data.getStyle(Q.Styles.EDGE_WIDTH) || Q.DefaultStyles[Q.Styles.EDGE_WIDTH], function (lineWidth) {
+            text: getI18NString('Line Width'), action: function (evt, item) {
+              Q.prompt(getI18NString('Input Line Width'), data.getStyle(Q.Styles.EDGE_WIDTH) || Q.DefaultStyles[Q.Styles.EDGE_WIDTH], function (lineWidth) {
                 if (lineWidth === null) {
                   return;
                 }
@@ -199,8 +200,8 @@
             }
           });
           items.push({
-            text: '连线颜色', action: function (evt, item) {
-              Q.prompt('输入连线颜色', data.getStyle(Q.Styles.EDGE_COLOR) || Q.DefaultStyles[Q.Styles.EDGE_COLOR], function (color) {
+            text: getI18NString('Line Color'), action: function (evt, item) {
+              Q.prompt(getI18NString('Input Line Color'), data.getStyle(Q.Styles.EDGE_COLOR) || Q.DefaultStyles[Q.Styles.EDGE_COLOR], function (color) {
                 if (color === null) {
                   return;
                 }
@@ -210,28 +211,28 @@
           });
         } else if (data.parent instanceof Q.Group) {
           items.push({
-            text: '脱离分组', action: function () {
+            text: getI18NString('Out of Group'), action: function () {
               data.parent = null;
             }
           })
         }
         items.push(Q.PopupMenu.Separator);
         items.push({
-          text: '置顶显示', action: function (evt, item) {
+          text: getI18NString('Send to Top'), action: function (evt, item) {
             data.zIndex = 1;
             graph.sendToTop(data);
             graph.invalidate();
           }
         });
         items.push({
-          text: '置底显示', action: function (evt, item) {
+          text: getI18NString('Send to Bottom'), action: function (evt, item) {
             data.zIndex = -1;
             graph.sendToBottom(data);
             graph.invalidate();
           }
         });
         items.push({
-          text: '恢复默认层', action: function (evt, item) {
+          text: getI18NString('Reset Layer'), action: function (evt, item) {
             data.zIndex = 0;
             graph.invalidate();
           }
@@ -239,26 +240,26 @@
         items.push(Q.PopupMenu.Separator);
       }
       items.push({
-        text: '清空画布', action: function () {
+        text: getI18NString('Clear Graph'), action: function () {
           graph.clear();
         }
       })
       items.push(Q.PopupMenu.Separator);
 
       items.push({
-        text: '放大', action: function (evt, item) {
+        text: getI18NString('Zoom In'), action: function (evt, item) {
           var localXY = graph.globalToLocal(evt);
           graph.zoomIn(localXY.x, localXY.y, true);
         }
       });
       items.push({
-        text: '缩小', action: function (evt, item) {
+        text: getI18NString('Zoom Out'), action: function (evt, item) {
           var localXY = graph.globalToLocal(evt);
           graph.zoomOut(localXY.x, localXY.y, true);
         }
       });
       items.push({
-        text: '1:1', action: function (evt, item) {
+        text: getI18NString('1:1'), action: function (evt, item) {
           var localXY = graph.globalToLocal(evt);
           graph.scale = 1;
         }
@@ -266,8 +267,8 @@
       items.push(Q.PopupMenu.Separator);
       var currentMode = graph.interactionMode;
       var interactons = [
-        {text: '平移模式', value: Q.Consts.INTERACTION_MODE_DEFAULT},
-        {text: '框选模式', value: Q.Consts.INTERACTION_MODE_SELECTION}
+        {text: getI18NString('Pan Mode'), value: Q.Consts.INTERACTION_MODE_DEFAULT},
+        {text: getI18NString('Rectangle Select'), value: Q.Consts.INTERACTION_MODE_SELECTION}
       ];
       for (var i = 0, l = interactons.length; i < l; i++) {
         var mode = interactons[i];

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+    $('#editor').graphEditor({
+        callback: function (editor) {
+            var graph = editor.graph;
+            graph.styles = graph.styles || {};
+            graph.styles[Q.Styles.EDGE_COLOR] = '#F00';
+            graph.styles[Q.Styles.EDGE_WIDTH] = 4;
+            graph.styles[Q.Styles.EDGE_LINE_DASH] = [4, 2];
+
+            var hello = graph.createNode("Hello", -100, -50);
+            hello.image = Q.Graphs.server;
+            var qunee = graph.createNode("Qunee", 100, 50);
+            var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+            graph.moveToCenter();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,8 +1,0 @@
-{
-  "name": "graph-viewer",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "~3.2.0",
-    "layout.border": "0.1"
-  }
-}

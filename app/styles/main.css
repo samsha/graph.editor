@@ -13,26 +13,36 @@ html, body {
 
 header {
     padding: 0px 15px;
-    background-color: #EEE;
+    /*background-color: #EEE;*/
     border-bottom: solid 1px #CCC;
 }
-
+.navbar-right li a{
+    color: #444;
+}
+.navbar-right li.active a{
+    color: #2898E0;
+}
 .navbar-right li a:hover {
-    background-color: #FFF;
 }
 
 header .navbar-brand {
     padding: 10px 0px;
 }
 
+#title {
+    display: inline-block;
+    color: #777;
+    margin-top: 15px;
+    padding-left: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}
 footer {
-    text-align: right;
+    text-align: center;
     font-size: 0.8em;
     padding: 5px 15px;
     border-top: solid 1px #CCC;
     /*background-color: #E8E8E8;*/
-    color: #DDD;
-    background: #555;
 }
 
 #editor {

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Drop Action</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="libs/layout.border.js"></script>
+
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/common/PropertyPane.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+    $('#editor').graphEditor({callback: function(editor){
+        var graph = editor.graph;
+
+        graph.styles["edge.color"] = "#85BA40";
+        graph.styles["edge.width"] = 3;
+        graph.styles["edge.outline"] = 0.5;
+        graph.styles["edge.outline.style"] = "rgba(0,0,0,0.53)";
+        graph.styles["arrow.to"] = false;
+        graph.onElementCreated = function(element, evt){
+            if(element instanceof Q.Edge){
+                //change element's styles
+                element.name = 'custom edge name';
+            }
+        }
+        graph.copy = function () {
+            var selection = this.selectionModel.toDatas();
+            this._copyElements = selection;
+        }
+        graph.paste = function (dx, dy) {
+            if (!this._copyElements) {
+                return;
+            }
+            dx = dx || 0;
+            dy = dy || 0;
+            var selection = [];
+            this._copyElements.forEach(function (element) {
+                if(element instanceof Q.Group){
+                    return;
+                }
+                if (element instanceof Q.Node) {
+                    var node = new element.class();
+                    node.name = element.name;
+                    node.x = element.x + dx;
+                    node.y = element.y + dy;
+                    node.image = element.image;
+                    node.size = element.size;
+                    node.parent = element.parent;
+                    graph.addElement(node);
+                    selection.push(node);
+                }
+            }, this)
+            graph.setSelection(selection);
+        }
+        graph.addCustomInteraction({
+            onkeydown: function (evt, graph) {
+                var code = evt.keyCode;
+                if (!Q.isMetaKey(evt)) {
+                    return;
+                }
+                if (code == 67) {
+                    graph.copy();
+                } else if (code == 86) {
+                    graph.paste(20, 20);
+                } else if (code == 90) {
+//            graph.undo();
+                } else if (code == 89) {
+//            graph.redo();
+                } else {
+                    return;
+                }
+                Q.stopEvent(evt);
+            }
+        })
+
+        var hello = graph.createNode("Hello", -100, -50);
+        hello.image = Q.Graphs.server;
+        var qunee = graph.createNode("Qunee", 100, 50);
+        var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+        graph.moveToCenter();
+    }});
+</script>
+</body>
+</html>

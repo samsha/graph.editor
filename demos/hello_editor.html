@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=http://demo.qunee.com/editor/libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=http://demo.qunee.com/editor/libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=http://demo.qunee.com/editor/libs/graph.editor/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/editor/libs/js.js"></script>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<script src="http://demo.qunee.com/editor/libs/graph.editor/graph.editor.js"></script>
+<script>
+    $('#editor').graphEditor({callback: function(editor){
+        var graph = editor.graph;
+        var hello = graph.createNode("Hello", -100, -50);
+        hello.image = Q.Graphs.server;
+        var qunee = graph.createNode("Qunee", 100, 50);
+        var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+        graph.moveToCenter();
+    }});
+</script>
+</body>
+</html>

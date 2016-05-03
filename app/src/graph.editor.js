@@ -1,95 +1,16 @@
 ;
 (function (Q, $) {
     'use strict';
-    var DRAGINFO_PREFIX = "draginfo";
 
-    function ondrag(evt) {
-        var dataTransfer = evt.dataTransfer;
-        var img = evt.target;
-        dataTransfer.setData("text", img.getAttribute(DRAGINFO_PREFIX));
+    var createElement = function (className, parent, tag, html) {
+        return Q.createElement({class: className, parent: parent, tagName: tag, html: html});
     }
-
-    /**
-     *
-     * @param {type} parent
-     * @param {type} tag
-     * @param {type} className
-     * @param {type} innerHTML
-     * @param {type} title
-     * @returns {unresolved}
-     */
-    function createElement(parent, tag, className, innerHTML, title) {
-        var e = document.createElement(tag);
-        if (title || innerHTML) {
-            e.setAttribute('title', title || innerHTML);
-        }
-        if (className) {
-            e.className = className;
-        }
-        if (innerHTML) {
-            e.innerHTML = innerHTML;
-        }
-        if (parent) {
-            parent.appendChild(e);
-        }
-        return e;
-    }
-
-//animation
-    function animateScrollTo(x, y) {
-        if (x instanceof HTMLElement) {
-            y = x.offsetTop;
-            x = window.scrollX || 0;
-        }
-        var oldX = window.scrollX || 0;
-        var oldY = window.scrollY || 0;
-        var time = Math.min(500, Math.abs(x - oldX) + Math.abs(y - oldY));
-        var perX = (x - oldX) / time;
-        var perY = (y - oldY) / time;
-
-        var now = Date.now();
-        var end = now + time;
-
-        function A() {
-            var spend = Date.now() - now;
-            now = Date.now();
-            if (now >= end) {
-                window.scrollTo(x, y);
-            } else {
-                window.scrollTo(oldX = oldX + perX * spend, oldY = oldY + perY
-                * spend);
-                Q.nextFrame(A);
-            }
-        }
-
-        A();
-    }
-
-    function showDivCenterAt(div, x, y) {
-        var width = div.offsetWidth;
-        var height = div.offsetHeight;
-        div.style.left = (x - width / 2) + 'px';
-        div.style.top = (y - height / 2) + 'px';
-    }
-
-    var utils = {
-        appendDNDInfo: function (img, info) {
-            img.setAttribute("draggable", "true");
-            img.setAttribute(DRAGINFO_PREFIX, Q.exportJSON(info, true));
-            img.ondragstart = ondrag;
-            return img;
-        },
-        getFirstChild: function (parent, childClass) {
-            var child = parent.find(childClass);
-            if (child.length) {
-                return child[0];
-            }
+    var getFirstChild = function (parent, childClass) {
+        var child = parent.find(childClass);
+        if (child.length) {
+            return child[0];
         }
     }
-
-    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-    var isFileSupported = window.requestFileSystem != null;
-
     $.fn.graphEditor = function (options) {
         return this.each(function () {
             var editor = this.graphEditor;
@@ -100,27 +21,6 @@
         });
     };
 
-    var createElement = function (className, parent, tag, html) {
-        var element = document.createElement(tag || 'div');
-        element.className = className;
-        $(element).html(html);
-        if (parent) {
-            parent.appendChild(element);
-        }
-        return element;
-    }
-
-    var forEach = function (object, call, scope) {
-        if (Array.isArray(object)) {
-            return object.forEach(function (v) {
-                call.call(this, v);
-            }, scope);
-        }
-        for (var name in object) {
-            call.call(scope, object[name], name);
-        }
-    }
-
     var DEFAULT_STYLES = {};
     DEFAULT_STYLES[Q.Styles.SHAPE_FILL_COLOR] = Q.toColor(0xCCCCCCCC);
     DEFAULT_STYLES[Q.Styles.SELECTION_COLOR] = "#888";
@@ -128,221 +28,37 @@
     DEFAULT_STYLES[Q.Styles.SELECTION_SHADOW_OFFSET_X] = 2;
     DEFAULT_STYLES[Q.Styles.SELECTION_SHADOW_OFFSET_Y] = 2;
 
-    var defaultImageStyles = {
-        fillColor: '#EEE',
-        lineWidth: 1,
-        strokeStyle: '#2898E0',
-        padding: {left: 1, top: 1, right: 5, bottom: 5},
-        shadowColor: '#888',
-        shadowOffsetX: 2,
-        shadowOffsetY: 2,
-        shadowBlur: 3
-    }
-    var nodeImageStyles = {};
-    nodeImageStyles[Q.Styles.RENDER_COLOR] = 'renderColor';
-    nodeImageStyles[Q.Styles.RENDER_COLOR_BLEND_MODE] = 'renderColorBlendMode';
-    nodeImageStyles[Q.Styles.SHAPE_FILL_COLOR] = 'fillColor';
-    nodeImageStyles[Q.Styles.SHAPE_STROKE_STYLE] = 'strokeStyle';
-    nodeImageStyles[Q.Styles.SHAPE_LINE_DASH] = 'borderLineDash';
-    nodeImageStyles[Q.Styles.SHAPE_LINE_DASH_OFFSET] = 'borderLineDashOffset';
-    //nodeImageStyles[Q.Styles.SHAPE_FILL_GRADIENT] = 'fillGradient';
-    nodeImageStyles[Q.Styles.SHAPE_OUTLINE] = 'outline';
-    nodeImageStyles[Q.Styles.SHAPE_OUTLINE_STYLE] = 'outlineStyle';
-    nodeImageStyles[Q.Styles.LINE_CAP] = 'lineGap';
-    nodeImageStyles[Q.Styles.LINE_JOIN] = 'lineJoin';
-    nodeImageStyles[Q.Styles.BACKGROUND_COLOR] = 'backgroundColor';
-    nodeImageStyles[Q.Styles.BACKGROUND_GRADIENT] = 'backgroundGradient';
-    nodeImageStyles[Q.Styles.BORDER] = 'border';
-    nodeImageStyles[Q.Styles.BORDER_COLOR] = 'borderColor';
-    nodeImageStyles[Q.Styles.BORDER_LINE_DASH] = 'borderLineDash';
-    nodeImageStyles[Q.Styles.BORDER_LINE_DASH_OFFSET] = 'borderLineDashOffset';
-    //Styles.IMAGE_BACKGROUND_COLOR = "image.background.color";
-    //Styles.IMAGE_BACKGROUND_GRADIENT = "image.background.gradient";
-    //Styles.IMAGE_BORDER = "image.border.width";
-    //Styles.IMAGE_BORDER_STYLE = Styles.IMAGE_BORDER_COLOR = "image.border.style";
-    //Styles.IMAGE_BORDER_LINE_DASH = "image.border.line.dash";
-    //Styles.IMAGE_BORDER_LINE_DASH_OFFSET = "image.border.line.dash.offset";
-    //Styles.IMAGE_RADIUS = Styles.IMAGE_BORDER_RADIUS = "image.radius";
-    //Styles.IMAGE_PADDING = "image.padding";
-
-    //var imageUI = new Q.ImageUI();
-    //var imageProperties = {};
-    //for(var name in imageUI){
-    //    if(name[0] == '_' || name.indexOf('$invalidate') == 0 || imageUI[name] instanceof Function){
-    //        continue;
-    //    }
-    //    if(name[0] == '$'){
-    //        name = name.substring(1);
-    //    }
-    //    imageProperties[name] = imageUI[name];
-    //}
-    //Q.log(JSON.stringify(imageProperties, null, '\t'));
-
-    function mixStyles(styles){
-        if(!styles){
-            return defaultImageStyles;
-        }
-        var result = {};
-        for(var name in defaultImageStyles){
-            result[name] = defaultImageStyles[name];
-        }
-        for(var name in styles){
-            var propertyName = nodeImageStyles[name];
-            if(propertyName){
-                result[propertyName] = styles[name];
-            }
-        }
-        return result;
-    }
-
-    var onGroupTitleClick = function (evt) {
-        var parent = evt.target.parentNode;
-        while (parent && !$(parent).hasClass('group')) {
-            parent = parent.parentNode;
-        }
-        if (!parent) {
-            return;
-        }
-        if ($(parent).hasClass('group--closed')) {
-            $(parent).removeClass('group--closed');
-        } else {
-            $(parent).addClass('group--closed');
-        }
-    }
-
-    function isImage(image) {
-        return Q.isString(image) || image.draw instanceof Function;
-    }
-
-    function createToolboxGroup(groupInfo, name) {
-        name = groupInfo.name || name;
-        var root = groupInfo.root;
-        var images = groupInfo.images;
-
-        var group = createElement('group');
-        var title = createElement('group__title', group);
-        title.onclick = onGroupTitleClick;
-        createElement(null, title, 'span', name);
-        createElement('icon group-expand', title, 'span');
-        var items = createElement('group__items', group);
-        var clearDiv = document.createElement('div');
-        clearDiv.style.clear = 'both';
-        group.appendChild(clearDiv);
-
-        if (!images) {
-            return group;
-        }
-
-        //var images = [{
-        //    type: '图元类型',
-        //    label: '图元文本',
-        //    image: '图元图片',
-        //    imageName: '图片名称',
-        //    styles: '图元样式',
-        //    properties: '图元属性',
-        //    clientProperties: '图元client属性',
-        //    html: '拖拽html内容'
-        //}, 'a.png', {draw: function(g){}}];
-        //var group = {
-        //    name: '分组名称',
-        //    root: '根目录',
-        //    images: images//'拖拽图片信息'
-        //}
-
-        var imageWidth = groupInfo.imageWidth || this.imageWidth;
-        var imageHeight = groupInfo.imageHeight || this.imageHeight;
-
-        forEach(images, function (imageInfo, name) {
-            if (name == '_classPath' || name == '_className') {
-                return;
-            }
-            var image;
-            if (isImage(imageInfo)) {
-                image = imageInfo;
-            } else {
-                image = imageInfo.image;
-            }
-            var imageDiv, tooltip;
-            if (image) {
-                var imageName;
-                if (Q.isString(image)) {
-                    imageName = image;
-                    if (!Q.hasImage(image) && root) {
-                        image = root + image;
-                    }
-                } else {
-                    imageName = imageInfo.imageName || imageInfo.name || name || 'drawable-' + this._index++;
-                }
-                if (!Q.hasImage(imageName)){
-                    Q.registerImage(imageName, image);
-                }
-                imageDiv = Q.createCanvas(imageWidth, imageHeight, true);
-                Q.drawImage(imageName, imageDiv, mixStyles(imageInfo.styles));
-                if (isImage(imageInfo)) {
-                    imageInfo = {image: imageName};
-                } else {
-                    imageInfo.image = imageName;
-                }
-
-                tooltip = imageName;
-            } else if (imageInfo.html) {
-                var imageDiv = document.createElement('div');
-                imageDiv.style.width = imageWidth + 'px';
-                imageDiv.style.height = imageHeight + 'px';
-                imageDiv.style.lineHeight = imageHeight + 'px';
-                imageDiv.style.overflow = 'hidden';
-                imageDiv.innerHTML = imageInfo.html;
-            } else {
-                return;
-            }
-            tooltip = imageInfo.tooltip || imageInfo.label || tooltip || name;
-            imageDiv.setAttribute('title', tooltip);
-            var item = createElement('group__item', items);
-            utils.appendDNDInfo(imageDiv, imageInfo);
-            item.appendChild(imageDiv);
-        }, this)
-        return group;
-    }
-
-    var getFirstChild = function (parent, childClass) {
-        var child = parent.find(childClass);
-        if (child.length) {
-            return child[0];
-        }
-    }
-
     function Editor(editor, options) {
-        options = options || {};
-        this.dom = editor;
-        $(editor).addClass('layout graph-editor');
-
-        this.createGraph(options.styles || DEFAULT_STYLES);
-        this.createToolbar();
-        this.createToolbox();
-        //this.createPropertyPane();
-        this.createJSONPane();
-        $(editor).borderLayout();
-
-        var callback = options.callback || function(){
-                this.graph.moveToCenter();
-            }
-        if (this.toolbar) {
-            this.initToolbar(this.toolbar, this.graph);
-        }
-        if (this.toolbox) {
-            this.initToolbox(this.toolbox, this.graph, options.images);
-        }
-        this.initContextMenu(this.graph);
-
-        this.loadDatas(options.data, callback);
+        this._initEditor(editor, options);
+        this.loadDatas(this.options.data, this.options.callback || function () {
+            this.graph.moveToCenter();
+        });
     }
 
     Editor.prototype = {
+        _initEditor: function (editor, options) {
+            this.options = options = options || {};
+            this.dom = editor;
+            $(editor).addClass('layout graph-editor');
+            this.createGraph(this.options.styles || DEFAULT_STYLES);
+            this.createToolbar(options);
+            this.createToolbox(this.options.images);
+            this.createPropertyPane(options);
+            this.createJSONPane();
+            $(editor).borderLayout();
+
+            if (this.toolbar) {
+                this.initToolbar(this.toolbar, this.graph);
+            }
+            this.initContextMenu(this.graph);
+            window.addEventListener('beforeunload', this.onbeforeunload.bind(this));
+        },
+        onbeforeunload: function (evt) {
+            //this.saveLocal();
+        },
         _getFirst: function (childClass) {
             return getFirstChild($(this.dom), '.' + childClass);
         },
-        imageWidth: 40,
-        imageHeight: 40,
         toolbar: null,
         toolbox: null,
         propertyPane: null,
@@ -358,12 +74,28 @@
             graph.originAtCenter = false;
             graph.editable = true;
             graph.styles = styles;
-            graph.getDropInfo = function(evt, text){
-                if(text){
+            graph.getDropInfo = function (evt, text) {
+                if (text) {
                     return Q.parseJSON(text);
                 }
             }
+            graph.dropAction = function(){
+                return this.dropAction.apply(this, arguments);
+            }.bind(this);
+            $(canvas).bind('size.change', function () {
+                graph.updateViewport();
+            })
             return graph;
+        },
+        dropAction: function(evt, xy, info){
+            if(info.ondrop){
+                var ondrop = window[info.ondrop];
+                if(ondrop instanceof Function){
+                    ondrop.call(this, evt, this.graph, xy, info);
+                    Q.stopEvent(evt);
+                    return false;
+                }
+            }
         },
         createToolbar: function () {
             var toolbar = this._getFirst('graph-editor__toolbar');
@@ -374,27 +106,48 @@
             toolbar.setAttribute('data-options', 'region:"north", height: 40');
             return toolbar;
         },
-        createToolbox: function () {
-            var toolbox = this._getFirst('graph-editor__toolbox');
-            if (toolbox) {
-                return this.toolbox = toolbox;
-            }
-            this.toolbox = toolbox = createElement('graph-editor__toolbox', this.dom);
-            toolbox.setAttribute('data-options', "region:'west', width:'18%', left:15, min-width:100, max-width:300");
-            return toolbox;
+        createToolbox: function (images) {
+            var toolbox = document.createElement('div');
+            this.dom.appendChild(toolbox);
+            toolbox.setAttribute('data-options', "region:'west', width:'18%', left:0, min-width:220, max-width:400");
+            this.toolbox = new Q.ToolBox(this.graph, toolbox, images);
 
+            this.graph.toolbox = this.toolbox;
         },
-        createPropertyPane: function () {
-            var propertyPane = this._getFirst('graph-editor__property');
-            if (propertyPane) {
-                return this.propertyPane = propertyPane;
+        createPropertyPane: function (options) {
+            if(!Q.PropertyPane){
+                return;
             }
-            this.propertyPane = propertyPane = createElement('graph-editor__property', this.dom);
-            propertyPane.setAttribute('data-options', "region:'east', width: '20%', right: 15, min-width: 100, max-width: '300'");
-            return propertyPane;
+            var propertyPane = this._getFirst('graph-editor__property');
+            if (!propertyPane) {
+                propertyPane = createElement('graph-editor__property', this.dom);
+                propertyPane.setAttribute('data-options', "region:'east', width: '20%', right: 0, min-width: 100, max-width: '300'");
+            }
+            return this.propertyPane = new Q.PropertyPane(this.graph, propertyPane, options);
         },
         getJSONTextArea: function () {
             return getFirstChild($(this.jsonPane), 'textarea');
+        },
+        loadJSONFile: function (files) {
+            if (!files[0]) {
+                return;
+            }
+            Q.readerSingleFile(files[0], 'json', function (json) {
+                if (!json) {
+                    alert(getI18NString('json file is empty'));
+                    return;
+                }
+                this.graph.clear();
+                this.graph.parseJSON(json);
+            }.bind(this));
+        },
+        exportJSONFile: function (saveAs) {
+            if (saveAs) {
+                var name = this.graph.name || 'graph';
+                var json = this.graph.exportJSON(true);
+                var blob = new Blob([json], {type: "text/plain;charset=utf-8"});
+                saveAs(blob, name + ".json");
+            }
         },
         exportJSON: function (toString) {
             if (toString && this.jsonPane) {
@@ -408,32 +161,17 @@
             this.graph.clear();
             this.graph.parseJSON(json);
         },
-        createJSONPane: function () {
-            var jsonPane = this._getFirst('graph-editor__json');
-            if (jsonPane) {
-                return this.jsonPane = jsonPane;
-            }
-            this.jsonPane = jsonPane = createElement('graph-editor__json', this.dom);
-            jsonPane.appendChild(document.createElement('textarea'));
-
-            var buttonGroup = createElement('graph-editor__json__buttons', jsonPane);
-
-            var jsonButtons = [
-                {name: '更新', action: this.exportJSON.bind(this)},
-                {name: '提交', action: this.submitJSON.bind(this)}
-            ]
-            Q.createButtonGroup(jsonButtons, buttonGroup);
-            jsonPane.style.display = 'none';
-            return jsonPane;
-        },
-        _index: 0,
-//初始化数据
+        //加载数据
         loadDatas: function (data, callback) {
             if (data) {
-                if(Q.isString(data)){
-                    Q.loadJSON(data, function(json){
-                        this.graph.parseJSON(json);
-                        if(callback instanceof Function){
+                if (Q.isString(data)) {
+                    Q.loadJSON(data, function (json) {
+                        this.graph.parseJSON(json.json || json);
+                        if (callback instanceof Function) {
+                            callback.call(this, this);
+                        }
+                    }.bind(this), function(err){
+                        if (callback instanceof Function) {
                             callback.call(this, this);
                         }
                     }.bind(this));
@@ -441,60 +179,82 @@
                 }
                 this.graph.parseJSON(data);
             }
-            if(callback instanceof Function){
+            if (callback instanceof Function) {
                 callback.call(this, this);
             }
         },
-        _createToolBoxItems: function (groups, toolbox) {
-            if(Q.isArray(groups)){
-                forEach(groups, function (group, name) {
-                    toolbox.appendChild(createToolboxGroup.call(this, group, name));
-                }, this);
+        onsave: function (err, evt) {
+            if (err) {
+                return alert(getI18NString('Save Error'));
+            }
+            alert(getI18NString('Save Success'));
+        },
+        /**
+         * 保存json到后台
+         */
+        save: function () {
+            if (!this.options.saveService) {
                 return;
             }
-            toolbox.appendChild(createToolboxGroup.call(this, groups));
-        },
-//初始化拖拽节点列表
-        initToolbox: function (toolbox, graph, groups) {
-            var basicNodes = [{
-                label: 'Node',
-                image: 'Q-node'
-            }, {
-                type: 'Text',
-                label: 'Text',
-                html: '<span style="background-color: #2898E0; color:#FFF; padding: 3px 5px;">文本</span>',
-                styles: {
-                    'label.background.color': '#2898E0',
-                    'label.color': '#FFF',
-                    'label.padding': new Q.Insets(3, 5)
+            var saveService = this.options.saveService;
+            var json = this.graph.exportJSON(true);
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', saveService, true);
+            xhr.onerror = function (e) {
+                this.onsave(e);
+            }.bind(this)
+            xhr.onload = function (e) {
+                if(e.target.status == 200){
+                    this.onsave(null, e);
+                }else{
+                    this.onsave(e);//load error
                 }
-            }, {
-                type: 'Group',
-                label: 'Group',
-                image: 'Q-group'
-            }, {
-                label: 'SubNetwork',
-                image: 'Q-subnetwork',
-                properties: {enableSubNetwork: true}
-            }];
-
-            var innerGroups = [{name: '基本节点', images: basicNodes}, {name: '注册图标', images: Q.getAllImages()}, {
-                name: '内置形状',
-                images: Q.Shapes.getAllShapes(this.imageWidth, this.imageHeight)
-            }];
-            this._createToolBoxItems(innerGroups, toolbox, 'Q-');
-            if (groups) {
-                this._createToolBoxItems(groups, toolbox);
+            }.bind(this)
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({name: this.name, json: json}));
+        },
+        createJSONPane: function () {
+            var jsonPane = this._getFirst('graph-editor__json');
+            if (jsonPane) {
+                return this.jsonPane = jsonPane;
             }
-        },
+            this.jsonPane = jsonPane = createElement('graph-editor__json', this.dom);
+            var textarea = document.createElement('textarea');
+            jsonPane.appendChild(textarea);
+            textarea.spellcheck = false;
 
-//初始化工具栏
+            var buttonGroup = createElement('graph-editor__json__buttons', jsonPane);
+
+            var jsonButtons = [
+                {name: getI18NString('Update'), action: this.exportJSON.bind(this, true)},
+                {name: getI18NString('Submit'), action: this.submitJSON.bind(this)}
+            ]
+            Q.createButtonGroup(jsonButtons, buttonGroup);
+            jsonPane.style.display = 'none';
+            return jsonPane;
+        },
+        //初始化工具栏
         initToolbar: function (toolbar, graph) {
-            Q.createToolbar(graph, toolbar, {
-                save: {
-                    name: '导出JSON', iconClass: 'icon toolbar-json', action: this.showJSONPanel.bind(this)
+            var exportButtons = [{
+                    name: getI18NString('Export JSON'), iconClass: 'q-icon toolbar-json', action: this.showJSONPanel.bind(this)
+                }, {
+                    iconClass: 'q-icon toolbar-upload',
+                    name: getI18NString('Load File ...'), action: this.loadJSONFile.bind(this), type: 'file'
                 }
-            })
+            ]
+            if (window.saveAs) {
+                exportButtons.push({
+                    iconClass: 'q-icon toolbar-download',
+                    name: getI18NString('Download File'), action: this.exportJSONFile.bind(this, window.saveAs)
+                })
+            }
+            if(this.options.saveService){
+                exportButtons.push({
+                    iconClass: 'q-icon toolbar-save',
+                    name: getI18NString('Save'), action: this.save.bind(this)
+                })
+            }
+            Q.createToolbar(graph, toolbar, {export: exportButtons})
         },
         showExportPanel: function (evt) {
             Q.showExportPanel(this.graph);
@@ -515,9 +275,22 @@
                 this.exportJSON(true);
             }
         },
-//初始化右键菜单
         initContextMenu: function (graph) {
             graph.popupmenu = new Q.PopupMenu();
         }
     }
+
+    if (window.localStorage) {
+        Editor.prototype.loadLocal = function () {
+            if (localStorage.graph) {
+                this.graph.clear();
+                this.graph.parseJSON(localStorage.graph);
+                return true;
+            }
+        }
+        Editor.prototype.saveLocal = function () {
+            localStorage.graph = this.graph.exportJSON(true);
+        }
+    }
+    Q.Editor = Editor;
 })(Q, jQuery);

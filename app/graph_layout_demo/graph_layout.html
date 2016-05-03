@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=../libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=../libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=../src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=2.5"></script>
+<!--<script src="qunee.js"></script>-->
+<script src="../libs/jquery.min.js"></script>
+<script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="../libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="../libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="../src/common/i18n.js"></script>
+<script src="../src/common/DomSupport.js"></script>
+<script src="../src/common/DragSupport.js"></script>
+<script src="../src/common/FileSupport.js"></script>
+<script src="../src/common/JSONSerializer.js"></script>
+<script src="../src/common/ExportPane.js"></script>
+<script src="../src/common/Toolbar.js"></script>
+<script src="../src/common/ToolBox.js"></script>
+<script src="../src/common/PopupMenu.js"></script>
+<script src="../src/common/PropertyPane.js"></script>
+<script src="../src/graph.editor.js"></script>
+<script src="../scripts/graphs.js"></script>
+<script src="../src/common/GridBackground.js"></script>
+<!-- endbuild -->
+<style>
+    /*.graph-editor__toolbox{*/
+    /*margin-top: 0px;*/
+    /*margin-right: 5px;*/
+    /*}*/
+</style>
+<script>
+
+    Q.registerImage('icon1', './icons/icon1.png');
+    Q.registerImage('icon2', './icons/icon2.png');
+    Q.registerImage('icon3', './icons/icon3.png');
+    Q.registerImage('icon4', './icons/icon4.png');
+
+    var path = new Q.Path();
+    path.moveTo(-200, -50);
+    path.lineTo(200, -50);
+    path.lineTo(200, 50);
+    path.lineTo(-100, 50);
+    $('#editor').graphEditor({
+        data: './graph.json',
+        images: [{
+            name: 'Custom Elements',
+            images: ['icon1', 'icon2', 'icon3', {image: 'icon4', properties: {size: {width: 40}}}, {
+                image: './icons/bus.png', type: 'ShapeNode', styles: {
+                    'shape.stroke': 2,
+                }, properties: {
+                    "path": path
+                }
+            }]
+        }], callback: function (editor) {
+            init(editor.graph, editor)
+        }
+    });
+
+    var LAYOUT_TYPE_BALLOON = "balloon";
+    var LAYOUT_TYPE_TREE = "tree";
+    var LAYOUT_TYPE_HIERARCHIC = "hierarchic";
+    var HierarchicLayouter = function (graph) {
+        this.graph = graph;
+    }
+
+    HierarchicLayouter.prototype = {
+        getLayoutResult: function (params) {
+            if (!(params instanceof Object)) {
+                if (Q.isNumber(params)) {
+                    params = {xGap: params, yGap: params}
+                } else {
+                    params = {};
+                }
+            }
+            var xGap = params.xGap || 100;
+            var yGap = params.yGap || 100;
+            var graph = this.graph;
+
+            var locations = {};
+
+            graph.graphModel.forEachByTopoBreadthFirstSearch(function (v, from, layer, index, sum) {
+                if (v._layer === undefined || layer > v._layer) {
+                    v._layer = layer;
+                    return;
+                }
+            });
+
+            var layers = {};
+            graph.forEach(function (element) {
+                if (element._layer !== undefined) {
+                    var nodes = layers[element._layer];
+                    if (!nodes) {
+                        nodes = layers[element._layer] = [];
+                    }
+                    nodes.push(element);
+                }
+            })
+
+            var layer = 0;
+            while (true) {
+                var nodes = layers[layer];
+                if (!nodes) {
+                    break;
+                }
+                var width = (nodes.length - 1) * xGap;
+                var x = -width / 2;
+                var y = layer * yGap;
+                nodes.forEach(function (node, i) {
+                    locations[node.id] = {node: node, x: x + i * xGap, y: y};
+                    delete node._layer;
+                })
+                layer++;
+            }
+
+            return locations;
+        }
+    }
+    Q.extend(HierarchicLayouter, Q.Layouter);
+    function AutoLayouter(graph) {
+        this.graph = graph;
+        this._layouters = {};
+    }
+
+    AutoLayouter.prototype = {
+        _layouters: null,
+        _getLayouter: function (layoutType) {
+            if (layoutType == LAYOUT_TYPE_HIERARCHIC) {
+                return new HierarchicLayouter(this.graph)
+            }
+            if (layoutType == LAYOUT_TYPE_BALLOON) {
+                return new Q.BalloonLayouter(this.graph);
+            }
+            if (layoutType == LAYOUT_TYPE_TREE) {
+                var layouter = new Q.TreeLayouter(this.graph);
+                layouter.getLayoutResult = function (params) {
+                    var bounds = params.bounds = new Q.Rect();
+                    var locations = Q.TreeLayouter.prototype.getLayoutResult.call(this, params);
+                    var offsetX = -bounds.width / 2;
+                    var offsetY = -bounds.height / 2;
+                    for (var id in locations) {
+                        var p = locations[id];
+                        p.x += offsetX;
+                        p.y += offsetY;
+                    }
+                    return locations;
+                }
+                return layouter;
+            }
+            var layouter = new Q.SpringLayouter(this.graph);
+            layouter.repulsion = 200;
+            return layouter;
+        },
+        doLayout: function (params) {
+            var layoutType = params.layoutType;
+            var layouter = this._layouters[layoutType];
+            if (!layouter) {
+                layouter = this._layouters[layoutType] = this._getLayouter(layoutType);
+            }
+            layouter.doLayout(params);
+        }
+    }
+
+    function init(graph, editor) {
+        editor.toolbox.hideDefaultGroups();
+        editor.toolbox.hideButtonBar();
+        var toolbar = editor.toolbar;
+        var button = document.createElement('button');
+        button.textContent = 'do layout';
+        var layouter = new AutoLayouter(graph);
+        button.onclick = function () {
+            graph.forEach(function (e) {
+                if (e instanceof Q.Edge) {
+                    e.pathSegments = null;
+                }
+            })
+            layouter.doLayout({
+                layoutType: LAYOUT_TYPE_HIERARCHIC, callback: function () {
+                    graph.moveToCenter()
+                }
+            })
+        }
+        toolbar.appendChild(button)
+
+        graph.styles = {'arrow.to': false};
+
+        var background = new GridBackground(graph);
+
+        var currentCell = 10;
+
+        function snapToGrid(x, y) {
+            var gap = currentCell;
+            x = Math.round(x / gap) * gap;
+            y = Math.round(y / gap) * gap;
+            return [x, y];
+        }
+
+        graph.interactionDispatcher.addListener(function (evt) {
+            if (evt.kind == Q.InteractionEvent.ELEMENT_MOVE_END) {
+                var datas = evt.datas;
+                datas.forEach(function (node) {
+                    if (!(node instanceof Q.Node)) {
+                        return
+                    }
+                    var ps = snapToGrid(node.x, node.y);
+                    node.setLocation(ps[0], ps[1]);
+                });
+                return;
+            }
+            if (evt.kind == Q.InteractionEvent.POINT_MOVE_END) {
+                var line = evt.data;
+                Q.log(evt.point);
+                var segment = evt.point.segment;
+                segment.points = snapToGrid(segment.points[0], segment.points[1]);
+                line.invalidate();
+                return;
+            }
+            if (evt.kind == Q.InteractionEvent.ELEMENT_CREATED) {
+                var node = evt.data;
+                if (!(node instanceof Q.Node)) {
+                    return
+                }
+                var ps = snapToGrid(node.x, node.y);
+                node.setLocation(ps[0], ps[1]);
+                return;
+            }
+
+        });
+    }
+</script>
+</body>
+</html>

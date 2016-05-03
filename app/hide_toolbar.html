@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+
+    Q.Editor.prototype.showToolbar = function(visible){
+        visible = visible !== false;
+        if(visible){
+            this.toolbar.style.display = '';
+            this.toolbar.setAttribute('data-options', 'region:"north", height: 40');
+            $(this.toolbar.parentNode).borderLayout();
+            return;
+        }
+        this.toolbar.style.display = 'none';
+        this.toolbar.setAttribute('data-options', 'region:"north", height: 0');
+        $(this.toolbar.parentNode).borderLayout();
+    }
+
+    $('#editor').graphEditor({callback: function(editor){
+        var graph = editor.graph;
+        var hello = graph.createNode("Hello", -100, -50);
+        hello.image = Q.Graphs.server;
+        var qunee = graph.createNode("Qunee", 100, 50);
+        var edge = graph.createEdge("click hide/show toolbar", hello, qunee);
+        graph.moveToCenter();
+
+        var visible = true;
+        graph.onclick = function(evt){
+            visible = !visible;
+            editor.showToolbar(visible);
+        }
+
+        graph.onclick();
+    }});
+</script>
+</body>
+</html>

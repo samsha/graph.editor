@@ -13,14 +13,18 @@ gulp.task('clean', function(cb) {
     del([out], cb);
 });
 gulp.task('copyfiles', function() {
-    gulp.src('./bower_components/bootstrap/fonts/**/*.{ttf,woff,eof,svg}')
-        .pipe(gulp.dest(out + '/libs/bootstrap/fonts'));
-    gulp.src('./app/src/images/*.*')
-        .pipe(gulp.dest(out + '/libs/graph.editor/images'));
-    gulp.src('./app/data/**/*.*')
-        .pipe(gulp.dest(out + '/data'));
-    gulp.src('./app/images/**/*.*')
+    gulp.src('app/libs/**/*.*')
+        .pipe(gulp.dest(out + '/libs'));
+    gulp.src('app/images/**/*.*')
         .pipe(gulp.dest(out + '/images'));
+    gulp.src('app/data/**/*.*')
+        .pipe(gulp.dest(out + '/data'));
+    gulp.src('./app/src/css/*.*')
+        .pipe(gulp.dest(out + '/libs/graph.editor/'));
+    //gulp.src('./app/data/**/*.*')
+    //    .pipe(gulp.dest(out + '/data'));
+    //gulp.src('./app/images/**/*.*')
+    //    .pipe(gulp.dest(out + '/images'));
 });
 gulp.task('usemin', ['clean'], function () {
     gulp.run('copyfiles');

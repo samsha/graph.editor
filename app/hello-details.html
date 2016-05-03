@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<style>
+    /*http://www.cssarrowplease.com/*/
+    .arrow_box {
+        position: relative;
+        background: #FFFFFF;
+        border: 2px solid #DDDDDD;
+        box-shadow: #888 3px 3px 10px 0px;
+    }
+    .arrow_box:after, .arrow_box:before {
+        /*right: 100%;*/
+        /*top: 50%;*/
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-right-color: #FFFFFF;
+        border-width: 10px;
+        margin-top: -10px;
+    }
+    .arrow_box:before {
+        border-color: rgba(221, 221, 221, 0);
+        border-right-color: #DDDDDD;
+        border-width: 13px;
+        margin-top: -13px;
+    }
+</style>
+<div id="detailsPane" class="arrow_box" style="position: absolute; display: none; min-width: 300px; min-height: 300px;">
+</div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+
+    $('#editor').graphEditor({
+        images: {name: '图元库', images: ['Q-node', 'Q-server']}, callback: function (editor) {
+            editor.toolbox.hideDefaultGroups();
+
+            init(editor.graph);
+        }
+    });
+
+    function init(graph){
+
+        var hello = graph.createNode("Hello", -100, -50);
+        hello.image = Q.Graphs.server;
+        var qunee = graph.createNode("Qunee", 100, 50);
+        var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+        graph.moveToCenter();
+
+        function showDivAt(div, x, y) {
+            var body = document.documentElement;
+            var bounds = new Q.Rect(window.pageXOffset, window.pageYOffset, body.clientWidth - 2, body.clientHeight - 2);
+            var width = div.offsetWidth;
+            var height = div.offsetHeight;
+
+            if (x + width > bounds.x + bounds.width) {
+                x = bounds.x + bounds.width - width;
+            }
+            if (y + height > bounds.y + bounds.height) {
+                y = bounds.y + bounds.height - height;
+            }
+            if (x < bounds.x) {
+                x = bounds.x;
+            }
+            if (y < bounds.y) {
+                y = bounds.y;
+            }
+            div.style.left = x + "px";
+            div.style.top = y + "px";
+            return [x, y];
+        }
+
+        function hideDiv(div){
+            div.style.display = 'none';
+        }
+
+        graph.detailsPane = document.getElementById('detailsPane');
+
+        function fillDetailsPane(detailsPane, element){
+            detailsPane.innerHTML = '以下为详细信息<br>Name: ' + element.name;
+            detailsPane.style.display = '';
+        }
+
+
+        var arrowStyleContainer;
+        function updateArrowCss(css){
+            if(!arrowStyleContainer){
+                arrowStyleContainer = document.createElement('style');
+                arrowStyleContainer.type = 'text/css';
+                document.body.appendChild(arrowStyleContainer);
+            }
+            arrowStyleContainer.innerHTML = css;
+        }
+
+        graph.addCustomInteraction({
+            onclick: function(evt, graph){
+                var data = evt.getData()
+                if(data){
+                    fillDetailsPane(graph.detailsPane, data);
+
+                    var arrowSize = 16;
+                    var x = evt.pageX;
+                    var y = evt.pageY - graph.detailsPane.clientHeight / 2;
+
+                    var arrowAtRight = x > window.innerWidth / 2;
+                    var arrowCss = '.arrow_box:after, .arrow_box:before{\n';
+
+                    if(arrowAtRight){
+                        x -= graph.detailsPane.clientWidth + arrowSize;
+                        arrowCss += 'left: 100%;\ntransform: rotate(180deg);';
+                    }else{
+                        x += arrowSize;
+                        arrowCss += 'right: 100%;\n';
+                    }
+                    var xy = showDivAt(graph.detailsPane, x, y);
+
+                    var arrowY = evt.pageY - xy[1];
+                    arrowCss += 'top: ' + arrowY + 'px;\n}';
+
+                    updateArrowCss(arrowCss);
+                }
+            },
+            onmousedown: function(evt, graph){
+                hideDiv(graph.detailsPane);
+            }
+        })
+    }
+</script>
+</body>
+</html>

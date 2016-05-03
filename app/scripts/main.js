@@ -22,8 +22,10 @@ $(function () {
 
     $('.graph-editor').graphEditor({
         data: 'data/topo2.json',
+        //data: 'data',
+        //saveService: 'save',
         images: [
-            {name: '预定义图形', images: graphs},
+            {name: 'Custom Images', images: graphs},
             {
                 name: 'Cisco图标',
                 root: 'data/cisco/',
@@ -69,6 +71,53 @@ $(function () {
                 },
                 styles: createLampStyles('#F0F')
             }]
-        }]
+        }],
+        callback: function(editor){
+            var graph = editor.graph;
+            graph.moveToCenter()
+
+            var background = new GridBackground(graph);
+
+            var currentCell = 10;
+
+            function snapToGrid(x, y) {
+                var gap = currentCell;
+                x = Math.round(x / gap) * gap;
+                y = Math.round(y / gap) * gap;
+                return [x, y];
+            }
+
+            graph.interactionDispatcher.addListener(function (evt) {
+                if (evt.kind == Q.InteractionEvent.ELEMENT_MOVE_END) {
+                    var datas = evt.datas;
+                    datas.forEach(function (node) {
+                        if (!(node instanceof Q.Node) || node instanceof Q.Group) {
+                            return
+                        }
+                        var ps = snapToGrid(node.x, node.y);
+                        node.setLocation(ps[0], ps[1]);
+                    });
+                    return;
+                }
+                if (evt.kind == Q.InteractionEvent.POINT_MOVE_END) {
+                    var line = evt.data;
+                    Q.log(evt.point);
+                    var segment = evt.point.segment;
+                    segment.points = snapToGrid(segment.points[0], segment.points[1]);
+                    line.invalidate();
+                    return;
+                }
+                if (evt.kind == Q.InteractionEvent.ELEMENT_CREATED) {
+                    var node = evt.data;
+                    if (!(node instanceof Q.Node)) {
+                        return
+                    }
+                    var ps = snapToGrid(node.x, node.y);
+                    node.setLocation(ps[0], ps[1]);
+                    return;
+                }
+
+            });
+        }
     });
 });

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SVG icons</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<script src="scripts/SVGIcons.js"></script>
+<!-- endbuild -->
+<script>
+    $(function () {
+        var images = [
+            {
+                name: 'svg.icons',
+                displayName: 'SVG图标',
+                size: {width: 40},
+                images: SVGIcons
+            }
+        ];
+
+        $('#editor').graphEditor({
+            images: images, callback: function (editor) {
+
+                var toolbox = editor.toolbox;
+                toolbox.hideDefaultGroups();
+
+                var graph = editor.graph;
+                graph.editable = false;
+
+                for (var name in SVGIcons) {
+                    var node = graph.createNode(name);
+                    node.image = name;
+                    node.size = {width: 40}
+                }
+
+                new Q.SpringLayouter(graph).doLayout({
+                    callback: function () {
+                        graph.moveToCenter();
+                    }
+                })
+
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
