@@ -1,4 +1,4 @@
-#拓扑图编辑器介绍
+# 拓扑图编辑器介绍
 
 [Graph.Editor](https://github.com/samsha/graph.editor)
 
@@ -12,14 +12,14 @@ Graph.Editor是一款基于HTML5技术的拓补图编辑器，采用[jquery](htt
 
 >注意：本项目内核使用Qunee for HTML5，Qunee本身是一个商业产品，默认仅限本机（localhost）使用，非商业用途可以申请免费授权，商业用途请购买相应授权，官网：[qunee.com](http://qunee.com/)
 
-##在线演示：
+## 在线演示：
 
 请访问此地址查看效果：[http://demo.qunee.com/editor/](http://demo.qunee.com/editor/)
 
 ![拓扑图编辑器截图1](screenshot/V2.5.png)
 ![拓扑图编辑器截图2](screenshot/layout_demo.png)
 
-##入门示例
+## 入门示例
 
 Hello Graph.Editor
 ```
@@ -63,11 +63,11 @@ $('#editor').graphEditor({
 ```
 本例中，通过回调函数获取editor.graph对象，并创建了两个节点和一条连线
 
-###运行效果
+### 运行效果
 ![graph editor - hello](screenshot/hello_v2.5.png)
 更多用法请查看其他demo和代码
 
-##编辑器交互快捷键说明v
+## 编辑器交互快捷键说明v
 
 shift：按住此键拖拽节点，或者是从toolbox中拖拽创建节点，可以将节点拖入到分组内
 shift：按住此键，按图标实际比例调整节点大小
@@ -80,7 +80,7 @@ ctrl / commond + A：全选图元
 ctrl / commond, 按住此键可以多选图元
 ESC：取消全选
 
-#准备工作
+# 准备工作
 
 项目用到nodejs，~~使用bower包管理(v2.5版本改成了直接引用相关js文件)，~~用到Gulp相关的插件打包和发布
 
@@ -90,19 +90,19 @@ ESC：取消全选
 ~~* 安装bower - 包管理~~
 * 安装Gulp - 任务自动管理工具
 
-##开始开发环境
+## 开始开发环境
 
 切换到项目目录，然后运行下面的命令，完成开发环境的安装
 
 >npm install
 
-##前端第三方包
+## 前端第三方包
 
 用到[jquery](http://jquery.com), [bootstrap](http://getbootstrap.com), [layout.border](https://github.com/samsha/layout.border), [bootstrap-colorpicker](https://github.com/mjolnic/bootstrap-colorpicker)
 
 ~~>bower install~~
 
-##项目结构
+## 项目结构
 
 项目主要代码在app目录，其中脚本代码在app/src/内，
 ```
@@ -133,11 +133,11 @@ node_modules/ 开发环境相关包目录，运行npm install后自动生成
 ... 其他文件(包含一些后台相关的尚未完成的代码,可能你没法直接使用,仅作为参考,可以忽略)
 ```
 
-##编辑运行
+## 编辑运行
 
 开发过程中直接运行app中的html文件即可，不需要gulp打包，所有的.html文件都可以直接在IDE中运行，有一些动态加载json数据的可能需要web服务器部署访问
 
-##编译打包
+## 编译打包
 
 >gulp
 
@@ -159,6 +159,6 @@ dist/
 ```
 编辑器主要的类库文件位于libs/graph.editor/, 第三方类库（jquery, bootstrap, layout.border）位于libs/js.js，bootstrap样式和资源目录位于libs/bootstrap/
 
-#其他说明
+# 其他说明
 
 项目中包含一些后台相关的尚未完成的代码,可能你没法直接使用,仅作为参考,可以忽略
