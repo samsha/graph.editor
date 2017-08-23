@@ -1,4 +1,5 @@
 $(function () {
+
     Q.registerImage('lamp', Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, -8, -8, 16, 16));
 
     var lampGradient = new Q.Gradient(Q.Consts.GRADIENT_TYPE_RADIAL, [Q.toColor(0xAAFFFFFF), Q.toColor(0x33EEEEEE), Q.toColor(0x44888888), Q.toColor(0x33666666)],
@@ -45,6 +46,7 @@ $(function () {
                 properties: {
                     name: 'Message'
                 },
+                br: true,
                 styles: createLampStyles('#FF0')
             }, {
                 image: 'lamp',
@@ -74,6 +76,10 @@ $(function () {
         }],
         callback: function(editor){
             var graph = editor.graph;
+
+            var defaultStyles = graph.styles = {};
+            defaultStyles[Q.Styles.ARROW_TO] = false;
+
             graph.moveToCenter()
 
             var background = new GridBackground(graph);

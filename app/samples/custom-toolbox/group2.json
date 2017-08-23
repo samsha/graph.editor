@@ -1,0 +1,213 @@
+{
+  "version": "2.0",
+  "refs": {
+    "6": {
+      "_classPath": "Q.Position.RIGHT_TOP"
+    },
+    "7": {
+      "_classPath": "Q.Position.LEFT_TOP"
+    }
+  },
+  "datas": [
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "A",
+        "parent": {
+          "_ref": 35507
+        },
+        "location": {
+          "x": 50,
+          "y": -50
+        }
+      },
+      "_refId": "35501"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "B",
+        "parent": {
+          "_ref": 35511
+        },
+        "location": {
+          "x": 170,
+          "y": 30
+        }
+      },
+      "_refId": "35502"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "D",
+        "parent": {
+          "_ref": 35509
+        },
+        "location": {
+          "x": -30,
+          "y": -130
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "E",
+        "parent": {
+          "_ref": 35507
+        },
+        "location": {
+          "x": 50,
+          "y": -100
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "G1",
+        "parent": {
+          "_ref": 35509
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#FFF",
+                "$backgroundColor": "#2898E0",
+                "$padding": {
+                  "_className": "Q.Insets",
+                  "json": {
+                    "top": 0,
+                    "left": 4,
+                    "bottom": 0,
+                    "right": 4
+                  }
+                },
+                "$borderRadius": 0,
+                "$position": {
+                  "$ref": 6
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "type": "GroupHandle",
+                "$font": "lighter 12px Verdana, sans-serif",
+                "data": "+"
+              }
+            },
+            "bindingProperties": {
+              "property": "expanded",
+              "target": {}
+            }
+          }
+        ],
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 50,
+            "y": -70,
+            "rotate": 0
+          }
+        },
+        "expanded": false
+      },
+      "_refId": "35507"
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "G2",
+        "parent": {
+          "_ref": 35511
+        },
+        "styles": {
+          "group.background.color": "rgba(252,251,155,0.80)",
+          "group.background.gradient": {
+            "_classPath": "Q.Gradient.LINEAR_GRADIENT_HORIZONTAL"
+          },
+          "group.stroke": 2,
+          "group.stroke.color": "#2898E0",
+          "group.stroke.line.dash": [
+            3,
+            2
+          ]
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#FFF",
+                "$backgroundColor": "#2898E0",
+                "$padding": {
+                  "_className": "Q.Insets",
+                  "json": {
+                    "top": 0,
+                    "left": 4,
+                    "bottom": 0,
+                    "right": 4
+                  }
+                },
+                "$borderRadius": 0,
+                "$position": {
+                  "$ref": 6
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "type": "GroupHandle",
+                "$font": "lighter 12px Verdana, sans-serif",
+                "data": "-"
+              }
+            },
+            "bindingProperties": {
+              "property": "expanded",
+              "target": {}
+            }
+          }
+        ],
+        "location": {
+          "x": 20.66015625,
+          "y": -93.3,
+          "invalidateFlag": false
+        }
+      },
+      "_refId": "35509"
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "G3",
+        "styles": {
+          "group.stroke.line.dash": [
+            3,
+            2
+          ],
+          "group.background.color": false
+        },
+        "location": {
+          "x": 67,
+          "y": -45.8,
+          "invalidateFlag": false
+        },
+        "groupType": "ELLIPSE"
+      },
+      "_refId": "35511"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "A>B",
+        "from": {
+          "_ref": 35501
+        },
+        "to": {
+          "_ref": 35502
+        }
+      }
+    }
+  ]
+}

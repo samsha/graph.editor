@@ -10,8 +10,8 @@
 </head>
 <body class="layout">
 <div id="editor" data-options="region:'center'"></div>
-<script src="http://demo.qunee.com/lib/qunee-min.js?v=2.5"></script>
-<!--<script src="qunee.js"></script>-->
+<!--<script src="http://demo.qunee.com/lib/qunee-min.js?v=2.5"></script>-->
+<script src="../qunee-min_v2.5.9.3_飞视宝/qunee-min.js"></script>
 <script src="./libs/jquery.min.js"></script>
 <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="./libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
@@ -27,7 +27,7 @@
 <script src="./src/common/Toolbar.js"></script>
 <script src="./src/common/ToolBox.js"></script>
 <script src="./src/common/PopupMenu.js"></script>
-<script src="./src/common/PropertyPane.js"></script>
+<script src="src/common/PropertyPane.js"></script>
 <script src="./src/graph.editor.js"></script>
 <script src="./scripts/graphs.js"></script>
 <script src="./src/common/GridBackground.js"></script>
@@ -38,11 +38,67 @@
     path.lineTo(200, -50);
     path.lineTo(200, 50);
     path.lineTo(-100, 50);
+
+
+//    Q.registerImage('customImage', {
+//        draw: function(g, canvas){
+//
+//        }
+//    })
+//    function addCircle(path, circle) {
+//        var r = circle.r || 1;
+//        var x = circle.cx || 0;
+//        var y = circle.cy || 0;
+//        var c = r * Math.tan(Math.PI / 8);
+//        var d = r * Math.sin(Math.PI / 4);
+//        path.moveTo(x + r, y);
+//        path.quadTo(x + r, y + c, x + d, y + d);
+//        path.quadTo(x + c, y + r, x, y + r);
+//        path.quadTo(x - c, y + r, x - d, y + d);
+//        path.quadTo(x - r, y + c, x - r, y);
+//        path.quadTo(x - r, y - c, x - d, y - d);
+//        path.quadTo(x - c, y - r, x, y - r);
+//        path.quadTo(x + c, y - r, x + d, y - d);
+//        path.quadTo(x + r, y - c, x + r, y);
+//    }
+
+    var customShape = new Q.Path();
+    customShape.moveTo(0, 0);
+    customShape.lineTo(100, 0);
+    customShape.arcTo(100, 50, 50, 50, 50);
+    customShape.arcTo(0, 50, 0, 0, 50);
+
+
+    var gradientAlpha = new Q.Gradient(Q.Consts.GRADIENT_TYPE_LINEAR, [Q.toColor(0x55FFFFFF), Q.toColor(0x55DDDDDD), Q.toColor(0x55FFFFFF)], null, Math.PI/2);
+
+    Q.Edge.prototype.angle = Math.PI / 2;
+
     $('#editor').graphEditor({
         images: [{
             name: 'Custom Elements',
             images: [{
-                image: './images/bus.png', type: 'ShapeNode', styles: {
+                image: Q.Shapes.getRect(0, 0, 100, 40, 20),
+                styles:{
+                    'shape.stroke': 2,
+                    'shape.stroke.style': '#666',
+                    'shape.fill.style': '#EEE',
+                    'label.position':'cm',
+                    'label.anchor.position':'cm'
+                },
+                label: '矩形'
+            },{
+                image: customShape,
+                styles:{
+                    'shape.stroke': 1,
+                    'shape.stroke.style': '#666',
+                    'shape.fill.style': '#FFFFFF',
+                    'shape.fill.gradient': gradientAlpha,
+                    'label.position':'cm',
+                    'label.anchor.position':'cm'
+                },
+                label: '自定义形状'
+            },{
+                image: './images/bus.png', type: 'Q.Bus', styles: {
                     'shape.stroke': 2,
                     'shape.fill.color': null
                 }, properties: {
@@ -51,8 +107,27 @@
             }]
         }], callback: function (editor) {
             var graph = editor.graph;
+
+//            就是这个graph
+
             graph.createNode();
             graph.moveToCenter()
+
+//            graph.canLinkTo = function (node, from) {
+//                return !from.getEdgeBundle(node);
+//            }
+
+//            graph.interactionDispatcher.addListener(function(evt){
+//                if(evt.kind == Q.InteractionEvent.ELEMENT_CREATED){
+//                    var data = evt.data;
+//                    if(data instanceof Q.Edge){
+//                        var edgeBundle = data.getEdgeBundle();
+//                        if(edgeBundle && edgeBundle.edges.length){
+//                            graph.removeElement(data);
+//                        }
+//                    }
+//                }
+//            })
         }
     });
 </script>

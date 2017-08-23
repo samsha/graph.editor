@@ -1,0 +1,191 @@
+{
+  "version": "2.0",
+  "datas": [
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Router",
+        "properties": {
+          "type": "Router"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 860.1957262679816,
+            "y": -884.6858371074677,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "width": 100
+        },
+        "image": "images/3rd/Router.png"
+      },
+      "_refId": "6835"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Router",
+        "properties": {
+          "id": 111,
+          "type": "Router"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 853.3931301505816,
+            "y": -401.7015127720524,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "width": 100
+        },
+        "image": "images/3rd/Router.png"
+      },
+      "_refId": "6839"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "UGW",
+        "properties": {
+          "type": "UGW"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 1302.3644738989958,
+            "y": -1086.4961885903408,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "width": 100
+        },
+        "image": "images/3rd/UGW.png"
+      },
+      "_refId": "6843"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "MME",
+        "properties": {
+          "type": "MME"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 1304.6320059381292,
+            "y": -637.5248448419266,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "width": 100
+        },
+        "image": "images/3rd/MME.png"
+      },
+      "_refId": "6847"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "HSS",
+        "properties": {
+          "type": "HSS"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 1306.8995379772625,
+            "y": -84.24702729337554,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "width": 100
+        },
+        "image": "images/3rd/HSS.png"
+      },
+      "_refId": "6851"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "",
+        "from": {
+          "_ref": 6843
+        },
+        "to": {
+          "_ref": 6835
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "",
+        "from": {
+          "_ref": 6847
+        },
+        "to": {
+          "_ref": 6835
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "",
+        "from": {
+          "_ref": 6843
+        },
+        "to": {
+          "_ref": 6839
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "",
+        "from": {
+          "_ref": 6847
+        },
+        "to": {
+          "_ref": 6839
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "",
+        "from": {
+          "_ref": 6851
+        },
+        "to": {
+          "_ref": 6839
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "",
+        "from": {
+          "_ref": 6851
+        },
+        "to": {
+          "_ref": 6835
+        }
+      }
+    }
+  ],
+  "scale": 0.3052942014990828,
+  "tx": 296.20436031189166,
+  "ty": 498.17664774973866
+}

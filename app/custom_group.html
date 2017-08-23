@@ -120,12 +120,19 @@
             groupImage: 'group_cloud',
             isGroup: true,
             groupSize: {width: 300},
-            expanded: true,
+            expanded: true
         }
     }, {
-        type: 'Group',
+        type: 'Q.Group',
+        image: 'Q-group',
         properties: {
-            groupImage: 'group_cloud',
+            groupType: Q.Consts.GROUP_TYPE_ELLIPSE,
+            name: 'HELLO Group'
+        },
+        styles: {
+//            'label.position': 'lt',
+//            'label.anchor.position': 'rb',
+            'group.background.color': '#F00'
         }
     }]}], callback: function(editor){
         editor.toolbox.hideDefaultGroups();
@@ -139,7 +146,18 @@
                 data.expanded = !data.expanded;
             }
         }
+
+        var nameIndex = 1;
         graph.onElementCreated = function (element, evt, dragInfo) {
+            if(element instanceof Q.Edge){
+                element.name = null;
+            }
+            if(element instanceof Q.Group){
+                var label = new Q.LabelUI('' + nameIndex++);
+                label.position = Q.Position.LEFT_TOP;
+                label.anchorPosition = Q.Position.RIGHT_BOTTOM;
+                element.addUI(label);
+            }
             if(evt.shiftKey){
                 var parent = this.getElementByMouseEvent(evt);
                 if(parent){
@@ -148,6 +166,12 @@
             }
 
         }
+
+        graph.listChangeDispatcher.on(function(evt){
+            if(evt.kind == 'clear'){
+                nameIndex = 1;
+            }
+        })
 
 
     }});

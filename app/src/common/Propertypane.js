@@ -1,4 +1,27 @@
 !function (Q) {
+    var createElement = function (options) {
+        options = options || {};
+        var element = document.createElement(options.tagName || 'div');
+        if(options.class){
+            $(element).addClass(options.class);
+        }
+        if (options.parent) {
+            options.parent.appendChild(element);
+        }
+        if(options.style){
+            element.setAttribute('style', options.style);
+        }
+        if(options.css){
+            $(element).css(options.css);
+        }
+        if(options.html){
+            $(element).html(options.html);
+        }
+        //$(element).attr(options);
+        return element;
+    }
+    Q.createElement = createElement;
+
     ///editors
     function StringEditor(property, parent, getter, setter, scope) {
         this.getter = getter;
@@ -19,14 +42,14 @@
         setValue: function (v) {
             this.input.value = valueToString(v, this.property.type);
         },
+        getValue: function(){
+            return stringToValue(this.input.value, this.property.type);
+        },
         createHtml: function (parent) {
             var property = this.property;
             var input = Q.createElement({
                 tagName: 'input',
                 class: "form-control",
-                type: property.type,
-                min: property.min,
-                max: property.max,
                 parent: parent
             });
             this.input = input;
@@ -34,9 +57,7 @@
             if(property.readonly){
                 input.setAttribute('readonly', 'readonly');
             }
-
             this.update();
-
             $(input).on('input', function (evt) {
                 if (this.ajdusting) {
                     return;
@@ -49,7 +70,7 @@
     Object.defineProperties(StringEditor.prototype, {
         value: {
             get: function () {
-                return stringToValue(this.input.value, this.property.type);
+                return this.getValue();
             },
             set: function (v) {
                 this.ajdusting = true;
@@ -58,6 +79,46 @@
             }
         }
     })
+
+    function BooleanEditor() {
+        Q.doSuperConstructor(this, BooleanEditor, arguments);
+    }
+
+    BooleanEditor.prototype = {
+        setValue: function (v) {
+            if(v){
+                this.input.setAttribute('checked', 'checked')
+            }else{
+                this.input.removeAttribute('checked')
+            }
+            // this.input.setAttribute('checked', v ? 'checked' : false);
+        },
+        getValue: function(){
+            return stringToValue(this.input.checked, this.property.type);
+        },
+        createHtml: function (parent) {
+            var property = this.property;
+            var input = Q.createElement({
+                tagName: 'input',
+                parent: parent
+            });
+            input.setAttribute('type', 'checkbox');
+            this.input = input;
+
+            if(property.readonly){
+                input.setAttribute('readonly', 'readonly');
+            }
+            this.update();
+            $(input).on('click', function (evt) {
+                if (this.ajdusting) {
+                    return;
+                }
+                this.setter.call(this.scope, this);
+            }.bind(this));
+        }
+    }
+
+    Q.extend(BooleanEditor, StringEditor);
 
     function ColorEditor() {
         Q.doSuperConstructor(this, ColorEditor, arguments);
@@ -75,7 +136,9 @@
 
             this.update();
 
-            $(parent).colorpicker().on('changeColor.colorpicker', function (evt) {
+            $(parent).colorpicker({
+                container: true
+            }).on('changeColor', function (evt) {
                 if (this.ajdusting) {
                     return;
                 }
@@ -93,7 +156,7 @@
         style: Q.Styles.RENDER_COLOR,
         type: 'color',
         displayName: 'Render Color'
-    }];
+    }, {style: Q.Styles.LABEL_POSITION, displayName: 'Label Position'}, {style: Q.Styles.LABEL_ANCHOR_POSITION, displayName: 'Label Anchor Position'}];
     var nodeProperties = [{name: 'size', type: 'size', displayName: 'Size'}, {
         name: 'location',
         type: 'point',
@@ -106,12 +169,12 @@
         style: Q.Styles.BORDER_COLOR,
         type: 'color',
         displayName: 'Border Color'
-    }, {
-        client: 'status',
-        type: 'color',
-        displayName: '状态'
     }];
     var shapeProperties = [{
+        style: Q.Styles.SHAPE_FILL_COLOR,
+        type: 'color',
+        displayName: 'Fill Color'
+    }, {
         style: Q.Styles.SHAPE_STROKE_STYLE,
         type: 'color',
         displayName: 'Stroke Color'
@@ -120,11 +183,11 @@
         type: 'number',
         displayName: 'Stroke'
     }];
-    var edgeProperties = [{name: 'angle', type: 'degree'},{style: Q.Styles.BORDER, display: 'none'}, {
+    var edgeProperties = [{name: 'angle', type: 'degree', displayName: 'angle 0-360°'},{style: Q.Styles.BORDER, display: 'none'}, {
         style: Q.Styles.EDGE_WIDTH,
         type: 'number',
         displayName: 'Edge Width'
-    }, {style: Q.Styles.EDGE_COLOR, type: 'color', displayName: 'Edge Color'}];
+    }, {style: Q.Styles.EDGE_COLOR, type: 'color', displayName: 'Edge Color'}, {style: Q.Styles.ARROW_TO, type: 'boolean', displayName: 'Arrow To'}];
     var textProperties = [{name: 'size', display: 'none'}, {
         style: Q.Styles.LABEL_SIZE,
         type: 'size',
@@ -144,19 +207,23 @@
     //        }
     //    }
     //};
-    var propertiesMap = {};
+    var DEFAULT_PROPERTY_MAP = {};
 
     var classIndex = 0;
 
-    function getPropertiesByType(clazz, create) {
+    function getClassName(clazz){
         var name = clazz._classPath || clazz._tempName;
         if (!name) {
             name = clazz._tempName = 'class-' + classIndex++;
         }
+        return name;
+    }
+    function getPropertiesByTypeFrom(clazz, create, propertyMap) {
+        var name = getClassName(clazz);
         if (!create) {
-            return propertiesMap[name];
+            return propertyMap[name];
         }
-        return propertiesMap[name] = {class: clazz, properties: {}};
+        return propertyMap[name] = {class: clazz, properties: {}};
     }
 
     function getPropertyKey(name, propertyType) {
@@ -169,43 +236,99 @@
         return name;
     }
 
-    //var className = 0;
-    function registerProperties(clazz, properties, groupName) {
-        var propertyMap = getPropertiesByType(clazz, true);
-        properties.forEach(function (property) {
+
+    function registerDefaultProperties(options) {
+        registerProperties(DEFAULT_PROPERTY_MAP, options)
+    }
+    function registerProperties(propertyMap, options) {
+        var clazz = options.class;
+        if(!clazz){
+            throw new Error('class property can not be null');
+        }
+        var properties = options.properties;
+
+        var name = getClassName(clazz);
+        if(!properties){
+            delete propertyMap[name];
+            return;
+        }
+        var property = getPropertiesByTypeFrom(clazz, true, propertyMap);
+
+        if(name in propertyMap){
+            property = propertyMap[name];
+        }else{
+            property = propertyMap[name] = {class: clazz, properties: {}};
+        }
+
+        formatProperties(options, property.properties);
+    }
+
+    function formatProperties(options, result){
+        result = result || {};
+        var properties = options.properties;
+        var groupName = options.group || 'Element'
+        properties.forEach(function (item) {
             var key;
-            if (property.style) {
-                property.propertyType = Q.Consts.PROPERTY_TYPE_STYLE;
-                property.name = property.style;
-            } else if (property.client) {
-                property.propertyType = Q.Consts.PROPERTY_TYPE_CLIENT;
-                property.name = property.client;
-            } else if (property.name) {
-                property.propertyType = Q.Consts.PROPERTY_TYPE_ACCESSOR;
+            if (item.style) {
+                item.propertyType = Q.Consts.PROPERTY_TYPE_STYLE;
+                item.name = item.style;
+            } else if (item.client) {
+                item.propertyType = Q.Consts.PROPERTY_TYPE_CLIENT;
+                item.name = item.client;
+            } else if (item.name) {
+                item.propertyType = Q.Consts.PROPERTY_TYPE_ACCESSOR;
             } else {
                 return;
             }
-            var key = property.key = getPropertyKey(property.name, property.propertyType);
-            if (!property.groupName) {
-                property.groupName = groupName || 'Element';
+            var key = item.key = getPropertyKey(item.name, item.propertyType);
+            if (!item.groupName) {
+                item.groupName = groupName;
             }
-            propertyMap.properties[key] = property;
+            result[key] = item;
         })
+        return result;
     }
 
-    registerProperties(Q.Element, elementProperties, 'Element');
-    registerProperties(Q.Node, nodeProperties, 'Node');
-    registerProperties(Q.Edge, edgeProperties, 'Edge');
-    registerProperties(Q.Text, textProperties, 'Text');
-    registerProperties(Q.ShapeNode, shapeProperties, 'Shape');
+    registerDefaultProperties({
+        class: Q.Element,
+        properties: elementProperties,
+        group: 'Element'
+    })
 
-    function getProperties(data) {
-        var properties = {};
-        for (var name in propertiesMap) {
-            if (!(data instanceof propertiesMap[name].class)) {
+    registerDefaultProperties({
+        class: Q.Node,
+        properties: nodeProperties,
+        group: 'Node'
+    })
+
+    registerDefaultProperties({
+        class: Q.Edge,
+        properties: edgeProperties,
+        group: 'Edge'
+    })
+
+    registerDefaultProperties({
+        class: Q.Text,
+        properties: textProperties,
+        group: 'Text'
+    })
+
+    registerDefaultProperties({
+        class: Q.ShapeNode,
+        properties: shapeProperties,
+        group: 'Shape'
+    })
+
+    function getProperties(data, properties, propertyMap) {
+        if(!propertyMap){
+            propertyMap = DEFAULT_PROPERTY_MAP;
+        }
+        properties = properties || {};
+        for (var name in propertyMap) {
+            if (!(data instanceof propertyMap[name].class)) {
                 continue;
             }
-            var map = propertiesMap[name].properties;
+            var map = propertyMap[name].properties;
             for (var key in map) {
                 var p = map[key];
                 if (p.display == 'none') {
@@ -215,13 +338,15 @@
                 }
             }
         }
-        return new PropertyGroup(properties);
+        return properties;
     }
 
     function PropertyGroup(properties) {
         this.properties = properties;
         var groups = {};
+        var length = 0;
         for (var key in properties) {
+            length++;
             var groupName = properties[key].groupName;
             var group = groups[groupName];
             if (!group) {
@@ -230,12 +355,16 @@
             group[key] = properties[key];
         }
         this.group = groups;
+        this.length = length;
     }
 
     PropertyGroup.prototype = {
         contains: function (name, propertyType) {
             var key = getPropertyKey(name, propertyType);
             return this.properties[key];
+        },
+        isEmpty: function(){
+            return this.length == 0;
         }
 
     }
@@ -244,6 +373,9 @@
         var type = item.type;
         if (type == 'color') {
             return new ColorEditor(item, parent, getter, setter, scope);
+        }
+        if (type == 'boolean') {
+            return new BooleanEditor(item, parent, getter, setter, scope);
         }
         return new StringEditor(item, parent, getter, setter, scope);
     }
@@ -272,21 +404,20 @@
         }
     }
 
-    function PropertyPane(graph, parent, options) {
+    function PropertyPane(graph, html, options) {
+        this._propertyMap = {};
         this._formItems = [];
-
-        this.html = parent;
-        this.form = Q.createElement({class: 'form-horizontal', parent: parent, tagName: 'form'});
-
+        this.container = html;
+        this.dom = this.html = Q.createElement({class: 'form-horizontal', parent: html, tagName: 'form'});
         this.graph = graph;
 
         graph.dataPropertyChangeDispatcher.addListener(function (evt) {
             this.onDataPropertyChange(evt);
         }.bind(this));
+
         graph.selectionChangeDispatcher.addListener(function (evt) {
             this.datas = this.graph.selectionModel.toDatas();
         }.bind(this));
-
     }
 
     function numberToString(number) {
@@ -310,7 +441,18 @@
         return value.toString();
     }
 
+    var positions = {};
+    for (var name in Q.Position) {
+        var p = Q.Position[name];
+        if (name == "random" || !(p instanceof Q.Position)) {
+            continue;
+        }
+        positions[p.toString()] = p;
+    }
     function stringToValue(string, type) {
+        if(type == 'position'){
+            return positions[string];
+        }
         if (type == 'number') {
             return parseFloat(string) || 0;
         }
@@ -388,11 +530,18 @@
         },
         clear: function () {
             $('.colorpicker-element').colorpicker('hide');
-            this.form.innerHTML = '';
+            this.dom.innerHTML = '';
             this._formItems = [];
             this._cellEditors = null;
-            this.form.style.display = 'none';
-            //this.html.style.display = 'none';
+            this._setVisible(false);
+        },
+        _setVisible: function(visible){
+            var display = visible? 'block': 'none';
+            if(this.container){
+                this.container.style.display = display;
+            }else{
+                this.dom.style.display = display;
+            }
         },
         createItem: function (parent, property) {
             var formItem = Q.createElement({class: 'form-group', parent: parent});
@@ -481,13 +630,32 @@
          * @param properties
          */
         createItemGroup: function (name, properties) {
-            var group = Q.createElement({class: 'class-group', parent: this.form});
+            var group = Q.createElement({class: 'class-group', parent: this.dom});
             Q.createElement({tagName: 'h4', parent: group, html: name});
             for (var name in properties) {
                 this.createItem(group, properties[name]);
             }
+        },
+        register: function(options){
+            registerProperties(this._propertyMap, options);
+        },
+        showDefaultProperties: true,
+        _getProperties: function(data){
+            var properties = {};
+            if(this.showDefaultProperties){
+                getProperties(data, properties);
+            }
+            if(this._propertyMap){
+                getProperties(data, properties, this._propertyMap);
+            }
+            if(data.propertyDefinitions){
+                var map = formatProperties(data.propertyDefinitions);
+                for(var name in map){
+                    properties[name] = map[name];
+                }
+            }
+            return new PropertyGroup(properties);
         }
-
     }
     Object.defineProperties(PropertyPane.prototype, {
         datas: {
@@ -507,8 +675,10 @@
                     return;
                 }
                 if (datas.length == 1) {
-                    this.form.style.display = '';
-                    this.propertyGroup = getProperties(datas[0]);
+                    this._setVisible(true);
+
+                    this.propertyGroup = this._getProperties(datas[0]);
+
                     var group = this.propertyGroup.group;
                     for (var groupName in group) {
                         this.createItemGroup(groupName, group[groupName]);
@@ -517,6 +687,6 @@
             }
         }
     })
-
     Q.PropertyPane = PropertyPane;
+    Q.PropertyPane.register = registerDefaultProperties;
 }(Q)

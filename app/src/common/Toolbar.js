@@ -217,27 +217,52 @@
             return toolbar.graph;
         }
 
-        toolbar.setGraph = function(graph){
+        toolbar.addEventListener('click', function () {
+            updateButtonStatus();
+        }, false);
+
+        toolbar.setGraph = function (graph) {
             var old = this.graph;
-            if(old){
+            if (old) {
                 old.propertyChangeDispatcher.removeListener(onInteractionModeChange, this);
             }
             this.graph = graph;
             updateButtonStatus();
-            if(graph){
+            if (graph) {
                 graph.propertyChangeDispatcher.addListener(onInteractionModeChange, this);
             }
+        }
+
+        function hasSameProperty(o1, o2) {
+            if (o1 == o2) {
+                return true;
+            }
+            if (!o1 || !o2) {
+                return false;
+            }
+            for (var name in o1) {
+                if (o1[name] != o2[name]) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         function updateButtonStatus() {
             var g = getGraph();
             var mode = g ? g.interactionMode : null;
+            var interactionProperties = g ? g.interactionProperties : null;
             $(toolbar).find('.btn').each(function (index, btn) {
-                if (mode && btn.info && btn.info.interactionMode == mode) {
-                    Q.appendClass(btn, 'active');
-                } else {
-                    Q.removeClass(btn, 'active');
+                if(!btn.info || !btn.info.interactionMode){
+                    return;
                 }
+                if (btn.info.interactionMode == mode) {
+                    if (!interactionProperties || hasSameProperty(interactionProperties, btn.info)) {
+                        Q.appendClass(btn, 'active');
+                        return;
+                    }
+                }
+                Q.removeClass(btn, 'active');
             })
         }
 
@@ -249,7 +274,7 @@
 
         function setInteractionMode(evt, info, interactionProperties) {
             var g = getGraph();
-            if(!g){
+            if (!g) {
                 return;
             }
             g.interactionMode = info.value;
@@ -303,12 +328,12 @@
                     interactionMode: Q.Consts.INTERACTION_MODE_CREATE_EDGE,
                     iconClass: 'q-icon toolbar-edge'
                 },
-                //{
-                //  name: '创建曲线',
-                //  interactionMode: Q.Consts.INTERACTION_MODE_CREATE_SIMPLE_EDGE,
-                //  iconClass: 'q-icon toolbar-edge_flex',
-                //  uiClass: FlexEdgeUI
-                //},
+                // {
+                //     name: '创建曲线',
+                //     interactionMode: Q.Consts.INTERACTION_MODE_CREATE_SIMPLE_EDGE,
+                //     iconClass: 'q-icon toolbar-edge_VH',
+                //     edgeType: Q.Consts.EDGE_TYPE_HORIZONTAL_VERTICAL
+                // },
                 {
                     name: '创建L型连线',
                     interactionMode: Q.Consts.INTERACTION_MODE_CREATE_SIMPLE_EDGE,
@@ -327,7 +352,11 @@
                 }
             ],
             search: {
-                name: 'Find', placeholder: 'Name', iconClass: 'q-icon toolbar-search', type: 'search', id: 'search_input',
+                name: 'Find',
+                placeholder: 'Name',
+                iconClass: 'q-icon toolbar-search',
+                type: 'search',
+                id: 'search_input',
                 search: function (name, info) {
                     var result = [];
                     var reg = new RegExp(name, 'i');
@@ -337,7 +366,8 @@
                         }
                     });
                     return result;
-                }, select: function (item) {
+                },
+                select: function (item) {
                     item = getGraph().graphModel.getById(item);
                     if (!item) {
                         return false;
@@ -355,7 +385,7 @@
                     Q.showExportPanel(getGraph());
                 }
             }
-        };
+        }
         if (customButtons) {
             for (var n in customButtons) {
                 buttons[n] = customButtons[n];
@@ -381,6 +411,7 @@
                 toolbar.appendChild(createGraphButton(info, scope)).info = info;
             }
         }
+
         createButtons(buttons, toolbar, this, false, false);
 
         toolbar.setGraph(graph);

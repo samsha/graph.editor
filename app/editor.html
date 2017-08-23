@@ -68,13 +68,22 @@
     Q.registerImage('lamp', Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, -8, -8, 16, 16));
 
     $('#editor').graphEditor({
-        data: 'data', saveService: 'save',
+        saveService: 'save',
         callback: function (editor) {
             var graph = editor.graph;
             var node = graph.createNode('Node');
             var text = graph.createText('Text', 100, 100);
             graph.createEdge(node, text);
             graph.moveToCenter();
+
+            graph.onclick = function(){
+                if(graph.popupmenu){
+                    graph.popupmenuOld = graph.popupmenu;
+                    graph.popupmenu = null
+                }else{
+                    graph.popupmenu = graph.popupmenuOld;
+                }
+            }
         }
     });
 

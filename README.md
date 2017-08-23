@@ -64,20 +64,30 @@ $('#editor').graphEditor({
 本例中，通过回调函数获取editor.graph对象，并创建了两个节点和一条连线
 
 ###运行效果
+
 ![graph editor - hello](screenshot/hello_v2.5.png)
 更多用法请查看其他demo和代码
 
 ##编辑器交互快捷键说明v
 
 shift：按住此键拖拽节点，或者是从toolbox中拖拽创建节点，可以将节点拖入到分组内
+
 shift：按住此键，按图标实际比例调整节点大小
+
 方向键：移动画布
+
 ctrl / commond + 方向键：移动选中图元的坐标，微调
+
 dblclick 空白处：缩放画布到整个窗口
+
 delete：删除当前选中的图元
+
 ctrl / commond + S：导出当前画布图片
+
 ctrl / commond + A：全选图元
+
 ctrl / commond, 按住此键可以多选图元
+
 ESC：取消全选
 
 #准备工作

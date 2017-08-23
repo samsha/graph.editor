@@ -71,7 +71,23 @@
         return group;
     }
 
+    var path = new Q.Path();
+    path.moveTo(-200, -50);
+    path.lineTo(200, -50);
+    path.lineTo(200, 50);
+    path.lineTo(-100, 50);
     $('#editor').graphEditor({images: [{name: 'Custom Node', images: [{
+        image: './images/bus.png', type: 'ShapeNode', styles: {
+            'shape.stroke': 2,
+            'shape.fill.color': null
+        }, properties: {
+            'busLayout': true,
+            "path": path
+        }, clientProperties: {
+                id: '001'
+        }
+
+    },{
         image: 'images/hello.png',
         ondrop: 'createNodes1'//do any thing by your self when drop into the graph
 
@@ -82,11 +98,17 @@
 
     }]}], callback: function(editor){
         var graph = editor.graph;
-        var hello = graph.createNode("Hello", -100, -50);
-        hello.image = Q.Graphs.server;
-        var qunee = graph.createNode("Qunee", 100, 50);
-        var edge = graph.createEdge("Hello\nQunee", hello, qunee);
-        graph.moveToCenter();
+        editor.toolbox.hideDefaultGroups();
+
+        graph.interactionDispatcher.on(function(evt){
+            if(evt.kind == Q.InteractionEvent.ELEMENT_CREATED){
+                var element = evt.data;
+                if(element instanceof Q.Edge){
+                    element.angle = Math.PI / 2;
+                }
+            }
+        })
+
     }});
 </script>
 </body>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Drop Action</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+    function Rectangle() {
+        Q.doSuperConstructor(this, Rectangle, arguments);
+        this.image = null;
+        this.anchorPosition = Q.Position.LEFT_TOP;
+        this.setStyle(Q.Styles.SHAPE_FILL_COLOR, "#EEE");
+        this.setStyle(Q.Styles.SHAPE_STROKE, 1);
+        this.setStyle(Q.Styles.SHAPE_STROKE_STYLE, '#555');
+        this.setStyle(Q.Styles.LABEL_PADDING, 5);
+        this.size = {width: 100, height: 100}
+        this.rotatable = false;
+
+    }
+    Rectangle.prototype = {
+        setBounds: function (x, y, width, height, relativeParent) {
+            if (this.parent && relativeParent) {
+                x += this.parent.x || 0;
+                y += this.parent.y || 0;
+            }
+            this.location = {x: x, y: y};
+            this.size = {width: width, height: height};
+        },
+        getBounds: function () {
+            return {
+                x: this.x,
+                y: this.y,
+                width: this._size.width,
+                height: this._size.height
+            }
+        },
+        onSizeChanged: function () {
+
+        }
+    }
+    Q.extend(Rectangle, Q.Node);
+    Object.defineProperties(Rectangle.prototype, {
+        _size: {
+            get: function () {
+                return this.$size;
+            }, set: function (v) {
+                if (!v) {
+                    return;
+                }
+                this.$size = v;
+                this.image = Q.Shapes.getRect(0, 0, v.width, v.height);
+                this.onSizeChanged();
+            }
+        },
+        size: {
+            set: function (v) {
+                this._size = v;
+            }
+        }
+    })
+
+    function Swimlane() {
+        Q.doSuperConstructor(this, Swimlane, arguments);
+        this.updateStyles();
+
+        this.size = {width: 300, height: 50}
+
+        var addhandler = new Q.LabelUI("+");
+        addhandler.editable = false;
+        addhandler.backgroundColor = "#2898E0";
+        addhandler.color = "#FFF";
+        addhandler.padding = new Q.Insets(0, 4);
+        addhandler.borderRadius = 0;
+        addhandler.position = Q.Position.RIGHT_TOP;
+        addhandler.anchorPosition = Q.Position.LEFT_TOP;
+        addhandler.showOnTop = true;
+        addhandler.name = 'add_handler';
+        this.addUI(addhandler);
+    }
+
+    Swimlane.prototype = {
+        onSizeChanged: function () {
+            if (this.hasChildren()) {
+                Q.nextFrame(this.layoutChildren.bind(this))
+            }
+        },
+        headerSize: 30,
+        layoutChildren: function () {
+            if (!this.hasChildren()) {
+                return;
+            }
+            var bounds = this.getBounds();
+            var headerSize = this.headerSize;
+
+            var isH = this._isHorizontal;
+
+            if (isH) {
+                bounds.x += headerSize;
+                bounds.width -= headerSize;
+            } else {
+                bounds.y += headerSize;
+                bounds.height -= headerSize;
+            }
+            var x = bounds.x, y = bounds.y;
+            var width = bounds.width;
+            var height = bounds.height;
+            var count = this.childrenCount;
+            var per = 1 / count;
+
+            this.forEachChild(function (child) {
+                if (isH) {
+                    var childHeight = height * per;
+                    child.setBounds(x, y, width, childHeight);
+                    y += childHeight;
+                } else {
+                    var childWidth = width * per;
+                    child.setBounds(x, y, childWidth, height);
+                    x += childWidth;
+                }
+            }, this)
+        },
+        _isHorizontal: true,
+        updateStyles: function (node) {
+            node = node || this;
+            if (this._isHorizontal) {
+                node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.LEFT_MIDDLE);
+                node.setStyle(Q.Styles.LABEL_ROTATE, -Math.PI / 2);
+            } else {
+                node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
+                node.setStyle(Q.Styles.LABEL_ROTATE, 0);
+            }
+            node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_TOP);
+            node.setStyle(Q.Styles.LABEL_PADDING, 5);
+        },
+        onChildRemove: function () {
+            Q.doSuper(this, Swimlane, arguments);
+            this.layoutChildren();
+        },
+        addItem: function (options, graph) {
+            options = options || {};
+            var color = options.color || '#FFF';
+            var name = options.name;
+
+            var item = new Rectangle();
+            item.name = name;
+            item.resizable = false;
+            item.movable = false;
+            this.updateStyles(item);
+            item.setStyle(Q.Styles.SHAPE_FILL_COLOR, color);
+
+            if (this.hasChildren()) {
+                var bounds = this.getBounds();
+                if (this.horizontalDirect) {
+                    var perCell = bounds.height / this.childrenCount;
+                    this.size = {width: bounds.width, height: bounds.height + perCell};
+                } else {
+                    var perCell = bounds.width / this.childrenCount;
+                    this.size = {width: bounds.width + perCell, height: bounds.height};
+                }
+            }
+
+            item.parent = item.host = this;
+            if (graph) {
+                graph.addElement(item);
+            }
+            this.layoutChildren();
+            var items = this.toChildren();
+            items.push(this);
+            return item;
+        }
+    }
+
+    Q.extend(Swimlane, Rectangle);
+
+    Object.defineProperties(Swimlane.prototype, {
+        horizontalDirect: {
+            get: function () {
+                return this._isHorizontal;
+            },
+            set: function (isHorizontal) {
+                if (this._isHorizontal == isHorizontal) {
+                    return;
+                }
+                this._isHorizontal = isHorizontal;
+                this.updateStyles()
+                this.layoutChildren();
+            }
+        }
+    })
+    if (Q.loadClassPath) {
+        Q.loadClassPath(Rectangle, "Rectangle");
+        Q.loadClassPath(Swimlane, "Swimlane");
+        if (Q.Element.prototype.addOutProperty) {
+            Q.Element.prototype.addOutProperty('rotatable');
+            Q.Element.prototype.addOutProperty('selectable');
+            Q.Element.prototype.addOutProperty('movable');
+            Rectangle.prototype.addOutProperty('horizontalDirect');
+            Rectangle.prototype.addOutProperty('_size');
+        }
+    }
+
+    function createSwimlane(evt, graph, xy, options) {
+        options = options || {};
+        var name = options.name;
+        var x = xy.x || 0;
+        var y = xy.y || 0;
+
+        var swimlane = new Swimlane('水平', x, y);
+        swimlane.addItem({name: 'A', color: '#2898E0'})
+        swimlane.addItem({name: 'B', color: '#fcfb9b'})
+
+        if(evt.shiftKey){
+            var currentElement = graph.getElementByMouseEvent(evt);
+            if(currentElement instanceof Q.Group || currentElement.enableSubNetwork){
+                swimlane.parent = currentElement;
+            }
+        }
+        graph.addElement(swimlane, true);
+    }
+
+    var images = [{
+        name: 'Custom Node', imageWidth: 80, images: [{html: '空泳道', type: 'Swimlane'}, {
+            html: '泳道图',
+            ondrop: 'createSwimlane'//do any thing by your self when drop into the graph
+
+        }]
+    }]
+
+
+//    images.forEach(function(item){
+//        var items = item.images;
+//        if(items){
+//            items.forEach(function(image){
+//                if(image instanceof Object && !image.type){
+//                    image.type = 'CustomServerNode';
+//                    Q.log(image)
+//                }
+//            })
+//        }
+//    })
+
+    $('#editor').graphEditor({
+        images: images, callback: function (editor) {
+            var graph = editor.graph;
+
+            graph.interactionDispatcher.on(function (evt) {
+                if (evt.kind == Q.InteractionEvent.ELEMENT_MOVE_END && evt.event.shiftKey) {
+                    var draggingElements = new Q.HashList(evt.datas);
+                    var xy = graph.toLogical(evt.event);
+                    var x = xy.x, y = xy.y;
+                    var parent;
+                    graph.forEachReverseVisibleUI(function (ui) {
+                        var data = ui.data;
+                        if (!draggingElements.contains(data) && ui.uiBounds.intersectsPoint(x - ui.x, y - ui.y) && ui.hitTest(x, y, 1)) {
+                            if (data instanceof Rectangle && !(data instanceof Swimlane)) {
+                                parent = data;
+                                return false;
+                            }
+                        }
+                    });
+                    if (parent) {
+                        draggingElements.forEach(function (item) {
+                            var p = item.parent;
+                            while (p) {
+                                if (draggingElements.contains(p)) {
+                                    return;
+                                }
+                                p = p.parent;
+                            }
+                            item.parent = item.host = parent;
+                        }, this)
+                    }
+                }
+            })
+
+            graph.onclick = function (evt) {
+                var data = evt.getData();
+                if (data instanceof Swimlane) {
+                    var target = graph.hitTest(evt);
+                    if (target.name == 'add_handler') {
+                        data.addItem({name: 'New'}, graph)
+                    }
+                }
+            }
+            graph.editable = true;
+            graph.moveToCenter();
+
+            var swimlane = new Swimlane('水平');
+            swimlane.addItem({name: 'A', color: '#2898E0'})
+            swimlane.addItem({name: 'B', color: '#fcfb9b'})
+            graph.addElement(swimlane, true);
+
+            var swimlane2 = new Swimlane('垂直', 0, 200);
+            swimlane2.size = {width: 50, height: 300}
+            swimlane2.horizontalDirect = false;
+            swimlane2.addItem({name: 'A', color: '#2898E0'})
+            swimlane2.addItem({name: 'B', color: '#fcfb9b'})
+            graph.addElement(swimlane2, true);
+
+            var hello = graph.createNode("Hello", -100, -50);
+            hello.image = Q.Graphs.server;
+            var qunee = graph.createNode("Qunee", 100, 50);
+            var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+            edge.setStyle(Q.Styles.EDGE_LINE_DASH, [3, 4]);
+        }
+    });
+</script>
+</body>
+</html>

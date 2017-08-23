@@ -19,20 +19,20 @@ gulp.task('copyfiles', function() {
         .pipe(gulp.dest(out + '/images'));
     gulp.src('app/data/**/*.*')
         .pipe(gulp.dest(out + '/data'));
-    gulp.src('./app/src/css/*.*')
+    gulp.src('app/src/css/**/*.*')
         .pipe(gulp.dest(out + '/libs/graph.editor/'));
     //gulp.src('./app/data/**/*.*')
     //    .pipe(gulp.dest(out + '/data'));
     //gulp.src('./app/images/**/*.*')
     //    .pipe(gulp.dest(out + '/images'));
 });
-gulp.task('usemin', ['clean'], function () {
+gulp.task('usemin', function () {
     gulp.run('copyfiles');
     return gulp.src('./app/index.html')
         .pipe(usemin({
-            css: [minifyCss(), 'concat'],
-            html: [minifyHtml({empty: true})],
-            //js: [uglify(), rev()]
+            // css: [minifyCss(), 'concat'],
+            // html: [minifyHtml({empty: true})],
+            // js: [uglify(), rev()]
             js: [uglify()]
         }))
         .pipe(gulp.dest(out));

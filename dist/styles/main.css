@@ -1,1 +1,58 @@
-.browsehappy{margin:.2em 0;background:#ccc;color:#000;padding:.2em 0}body,html{height:100%;margin:0;background-color:#FFF}header{padding:0 15px;border-bottom:solid 1px #CCC}.navbar-right li a{color:#444}.navbar-right li.active a{color:#2898E0}header .navbar-brand{padding:10px 0}#title{display:inline-block;color:#777;margin-top:15px;padding-left:20px;text-align:center;font-size:1.1em}footer{text-align:center;font-size:.8em;padding:5px 15px;border-top:solid 1px #CCC}#editor{width:100%;display:block}.logo{background-image:url(../images/logo-retina.png);background-size:200px 32px;width:200px;height:32px}
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    background-color: #FFF;
+}
+
+header {
+    padding: 0px 15px;
+    /*background-color: #EEE;*/
+    border-bottom: solid 1px #CCC;
+}
+.navbar-right li a{
+    color: #444;
+}
+.navbar-right li.active a{
+    color: #2898E0;
+}
+.navbar-right li a:hover {
+}
+
+header .navbar-brand {
+    padding: 10px 0px;
+}
+
+#title {
+    display: inline-block;
+    color: #777;
+    margin-top: 15px;
+    padding-left: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    padding: 5px 15px;
+    border-top: solid 1px #CCC;
+    /*background-color: #E8E8E8;*/
+}
+
+#editor {
+    width: 100%;
+    display: block;
+}
+
+.logo {
+    background-image: url(../images/logo-retina.png);
+    background-size: 200px 32px;
+    width: 200px;
+    height: 32px;
+}

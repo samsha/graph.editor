@@ -1,0 +1,64 @@
+{
+  "version": "2.0",
+  "datas": [
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "C",
+        "parent": {
+          "_ref": 35118
+        },
+        "location": {
+          "x": -197,
+          "y": 3
+        }
+      },
+      "_refId": "35109"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "F",
+        "parent": {
+          "_ref": 35118
+        },
+        "location": {
+          "x": -300,
+          "y": -50
+        }
+      },
+      "_refId": "35112"
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "G4",
+        "styles": {
+          "render.color": "#2898E0"
+        },
+        "location": {
+          "x": -250,
+          "y": 7.200000000000003,
+          "invalidateFlag": false
+        },
+        "padding": 30,
+        "groupImage": {
+          "_classPath": "graphs.group_cloud"
+        }
+      },
+      "_refId": "35118"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "name": "F>C",
+        "from": {
+          "_ref": 35112
+        },
+        "to": {
+          "_ref": 35109
+        }
+      }
+    }
+  ]
+}

@@ -237,7 +237,7 @@
         _groups: {},
         _createGroup: function (groupInfo) {
             var name = groupInfo.name;
-            var root = groupInfo.root;
+            var root = groupInfo.root || '';
             var images = groupInfo.images;
             var close = groupInfo.close;
             var displayName = groupInfo.displayName || name;
@@ -283,38 +283,55 @@
 
             var imageWidth = groupInfo.imageWidth || this.imageWidth;
             var imageHeight = groupInfo.imageHeight || this.imageHeight;
+            var showLabel = groupInfo.showLabel;
+
+            function fixImagePath(image, name, isIcon){
+                if(!image){
+                    return image;
+                }
+                if(Q.isString(image)){
+                    return root + image;
+                }
+                if(image.draw instanceof Function){
+                    if(isIcon){
+                        return image;
+                    }
+                    var imageName = image.imageName || image.name || name || 'drawable-' + this._index++;
+                    if (!Q.hasImage(imageName)) {
+                        Q.registerImage(imageName, image);
+                    }
+                    return imageName;
+                }
+                throw new Error('image format error');
+            }
 
             forEach(images, function (imageInfo, name) {
                 if (name == '_classPath' || name == '_className') {
                     return;
                 }
-                var image;
-                if (isImage(imageInfo)) {
-                    image = imageInfo;
-                } else {
-                    image = imageInfo.image;
+
+                var image, icon;
+                if(isImage(imageInfo)){
+                    icon = image = fixImagePath(imageInfo, name);
+                    imageInfo = {
+                        image: image
+                    }
+                }else{
+                    image = imageInfo.image = fixImagePath(imageInfo.image, name);
+                    icon = imageInfo.icon ? fixImagePath(imageInfo.icon, name, true) : image;
                 }
+
                 var imageDiv, tooltip;
-                if (image) {
-                    var imageName;
-                    if (Q.isString(image)) {
-                        imageName = image;
-                        if (!Q.hasImage(image) && root) {
-                            imageName = image = root + image;
-                        }
-                    } else {
-                        imageName = imageInfo.imageName || imageInfo.name || name || 'drawable-' + this._index++;
-                    }
-                    if (!Q.hasImage(imageName)) {
-                        Q.registerImage(imageName, image);
-                    }
+                if (imageInfo.html) {
+                    var imageDiv = document.createElement('div');
+                    imageDiv.style.width = imageWidth + 'px';
+                    imageDiv.style.height = imageHeight + 'px';
+                    imageDiv.style.lineHeight = imageHeight + 'px';
+                    imageDiv.style.overflow = 'hidden';
+                    imageDiv.innerHTML = imageInfo.html;
+                } else if (icon) {
                     imageDiv = Q.createCanvas(imageWidth, imageHeight, true);
-                    Q.drawImage(imageName, imageDiv, mixStyles(imageInfo.styles));
-                    if (isImage(imageInfo)) {
-                        imageInfo = {image: imageName};
-                    } else {
-                        imageInfo.image = imageName;
-                    }
+                    Q.drawImage(icon, imageDiv, mixStyles(imageInfo.styles));
                     if(groupInfo.size){
                         if(!imageInfo.properties){
                             imageInfo.properties = {}
@@ -323,15 +340,7 @@
                             imageInfo.properties.size = groupInfo.size;
                         }
                     }
-
-                    tooltip = imageName;
-                } else if (imageInfo.html) {
-                    var imageDiv = document.createElement('div');
-                    imageDiv.style.width = imageWidth + 'px';
-                    imageDiv.style.height = imageHeight + 'px';
-                    imageDiv.style.lineHeight = imageHeight + 'px';
-                    imageDiv.style.overflow = 'hidden';
-                    imageDiv.innerHTML = imageInfo.html;
+                    tooltip = image;
                 } else {
                     return;
                 }
@@ -340,6 +349,25 @@
                 var item = createElement('group__item', items);
                 Q.appendDNDInfo(imageDiv, imageInfo);
                 item.appendChild(imageDiv);
+
+                if(imageInfo.br){
+                    var br = document.createElement('br');
+                    items.appendChild(br);
+                }
+                if(tooltip && (showLabel || imageInfo.showLabel)){
+                    var sortName = tooltip;
+                    var sortLength = 10;
+                    if(sortName.length > sortLength){
+                        sortName = '...' + sortName.substring(sortName.length - sortLength + 2)
+                    }
+                    var label = document.createElement('div');
+                    label.style.lineHeight = '1em';
+                    label.style.overFlow = 'hide'
+                    label.style.marginTop = '0px'
+                    label.textContent = sortName;
+                    item.appendChild(label);
+                }
+
             }, this)
             return group;
         }

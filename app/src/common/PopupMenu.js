@@ -66,7 +66,9 @@
         this.dom.parentNode.removeChild(this.dom);
       }
     },
-
+    isShowing: function(){
+      return this.dom.parentNode !== null;
+    },
     render: function () {
       this._invalidateFlag = false;
       if (!this.dom) {
@@ -76,12 +78,11 @@
         var startEventName = Q.isTouchSupport ? "touchstart" : "mousedown";
 
         if (!this.stopEditWhenClickOnWindow) {
-          var _this = this;
           this.stopEditWhenClickOnWindow = function (evt) {
-            if (isDescendant(_this.html, evt.target)) {
-              _this.hide();
+            if (this.isShowing() && !isDescendant(this.dom, evt.target)) {
+              this.hide();
             }
-          }
+          }.bind(this)
         }
         window.addEventListener("mousedown", this.stopEditWhenClickOnWindow, true);
         this.dom.addEventListener(startEventName, function (evt) {
@@ -345,6 +346,9 @@
           this._contextmenuListener = _contextmenuListener;
           this.addCustomInteraction(this._contextmenuListener);
           this.html.oncontextmenu = function (evt) {
+            if(!this.popupmenu){
+              return;
+            }
             showMenu(evt, this);
           }.bind(this);
         }

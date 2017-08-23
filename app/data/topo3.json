@@ -1,0 +1,1065 @@
+{
+  "version": "2.0",
+  "refs": {
+    "2": {
+      "_classPath": "Q.Graphs.exchanger2"
+    },
+    "3": {
+      "width": 23
+    },
+    "7": {
+      "_classPath": "Q.Position.LEFT_TOP"
+    },
+    "12": {
+      "_classPath": "Q.Position.RIGHT_MIDDLE"
+    },
+    "17": {
+      "_classPath": "Q.Position.LEFT_MIDDLE"
+    },
+    "30": {
+      "_className": "Q.Path",
+      "json": [
+        {
+          "type": "m",
+          "points": [
+            -60,
+            -60
+          ]
+        },
+        {
+          "type": "l",
+          "points": [
+            60,
+            -60
+          ]
+        },
+        {
+          "type": "q",
+          "points": [
+            70,
+            -60,
+            70,
+            -50
+          ]
+        },
+        {
+          "type": "l",
+          "points": [
+            70,
+            50
+          ]
+        },
+        {
+          "type": "q",
+          "points": [
+            70,
+            60,
+            60,
+            60
+          ]
+        },
+        {
+          "type": "l",
+          "points": [
+            -60,
+            60
+          ]
+        },
+        {
+          "type": "q",
+          "points": [
+            -70,
+            60,
+            -70,
+            50
+          ]
+        },
+        {
+          "type": "l",
+          "points": [
+            -70,
+            -50
+          ]
+        },
+        {
+          "type": "q",
+          "points": [
+            -70,
+            -60,
+            -60,
+            -60
+          ]
+        },
+        {
+          "type": "z",
+          "points": [
+            -60,
+            -60
+          ]
+        }
+      ]
+    },
+    "32": {
+      "_classPath": "Q.Graphs.node"
+    },
+    "57": {
+      "_classPath": "Q.Graphs.server"
+    }
+  },
+  "datas": [
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Double click show detail",
+        "styles": {
+          "shape.fill.gradient": {
+            "_className": "Q.Gradient",
+            "json": {
+              "type": "l",
+              "colors": [
+                "#F4F4F4",
+                "#FFFFFF",
+                "#DFDFDF",
+                "#E9E9E9"
+              ],
+              "positions": [
+                0,
+                0.3333333333333333,
+                0.6666666666666666,
+                1
+              ],
+              "angle": 1.5707963267948966,
+              "tx": 0,
+              "ty": 0
+            }
+          },
+          "shape.stroke": 0,
+          "shape.outline": 1,
+          "shape.outline.style": "#C9C9C9",
+          "layout.by.path": false
+        },
+        "properties": {
+          "image": {
+            "$ref": 2
+          },
+          "id": "QU-2912",
+          "name": "Switch",
+          "cpu": 0.23343344839228686,
+          "memory": 0.21053270118801404,
+          "incoming": "67.94GB",
+          "outgoing": "30.23GB"
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.ImageUI",
+              "json": {
+                "$size": {
+                  "$ref": 3
+                },
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 15,
+                  "y": 12
+                },
+                "fontSize": 10,
+                "data": {
+                  "$ref": 2
+                }
+              }
+            },
+            "bindingProperties": {
+              "property": "icon",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 5
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Switch"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#D00",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 22
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "QU-2912"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 27,
+                  "y": 47
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "CPU"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 27,
+                  "y": 65
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "MEM"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.BarUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 47
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "fontSize": 10,
+                "data": 0.23343344839228686
+              }
+            },
+            "bindingProperties": {
+              "property": "cpu",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.BarUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 65
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "fontSize": 10,
+                "data": 0.21053270118801404
+              }
+            },
+            "bindingProperties": {
+              "property": "memory",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 71,
+                  "y": 90
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Incoming:"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 71,
+                  "y": 106
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Outgoing:"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#C20",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 75,
+                  "y": 90
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "67.94GB"
+              }
+            },
+            "bindingProperties": {
+              "property": "incoming",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#C20",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 75,
+                  "y": 106
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "30.23GB"
+              }
+            },
+            "bindingProperties": {
+              "property": "outgoing",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          }
+        ],
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -250,
+            "y": 0,
+            "rotate": 0
+          }
+        },
+        "image": {
+          "$ref": 30
+        }
+      },
+      "_refId": "1713"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Double click show detail",
+        "styles": {
+          "shape.fill.gradient": {
+            "_className": "Q.Gradient",
+            "json": {
+              "type": "l",
+              "colors": [
+                "#F4F4F4",
+                "#FFFFFF",
+                "#DFDFDF",
+                "#E9E9E9"
+              ],
+              "positions": [
+                0,
+                0.3333333333333333,
+                0.6666666666666666,
+                1
+              ],
+              "angle": 1.5707963267948966,
+              "tx": 0,
+              "ty": 0
+            }
+          },
+          "shape.stroke": 0,
+          "shape.outline": 1,
+          "shape.outline.style": "#C9C9C9",
+          "layout.by.path": false
+        },
+        "properties": {
+          "image": {
+            "$ref": 32
+          },
+          "id": "QU-845",
+          "name": "Mac",
+          "cpu": 0.14633784392641203,
+          "memory": 0.7500390280893743,
+          "incoming": "29.04GB",
+          "outgoing": "67.65GB"
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.ImageUI",
+              "json": {
+                "$size": {
+                  "$ref": 3
+                },
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 15,
+                  "y": 12
+                },
+                "fontSize": 10,
+                "data": {
+                  "$ref": 32
+                }
+              }
+            },
+            "bindingProperties": {
+              "property": "icon",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 5
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Mac"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#D00",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 22
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "QU-845"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 27,
+                  "y": 47
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "CPU"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 27,
+                  "y": 65
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "MEM"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.BarUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 47
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "fontSize": 10,
+                "data": 0.14633784392641203
+              }
+            },
+            "bindingProperties": {
+              "property": "cpu",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.BarUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 65
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "fontSize": 10,
+                "data": 0.7500390280893743
+              }
+            },
+            "bindingProperties": {
+              "property": "memory",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 71,
+                  "y": 90
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Incoming:"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 71,
+                  "y": 106
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Outgoing:"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#C20",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 75,
+                  "y": 90
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "29.04GB"
+              }
+            },
+            "bindingProperties": {
+              "property": "incoming",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#C20",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 75,
+                  "y": 106
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "67.65GB"
+              }
+            },
+            "bindingProperties": {
+              "property": "outgoing",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          }
+        ],
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 250,
+            "y": 0,
+            "rotate": 0
+          }
+        },
+        "image": {
+          "$ref": 30
+        }
+      },
+      "_refId": "1725"
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Double click show detail",
+        "styles": {
+          "shape.fill.gradient": {
+            "_className": "Q.Gradient",
+            "json": {
+              "type": "l",
+              "colors": [
+                "#F4F4F4",
+                "#FFFFFF",
+                "#DFDFDF",
+                "#E9E9E9"
+              ],
+              "positions": [
+                0,
+                0.3333333333333333,
+                0.6666666666666666,
+                1
+              ],
+              "angle": 1.5707963267948966,
+              "tx": 0,
+              "ty": 0
+            }
+          },
+          "shape.stroke": 0,
+          "shape.outline": 1,
+          "shape.outline.style": "#C9C9C9",
+          "layout.by.path": false
+        },
+        "properties": {
+          "image": {
+            "$ref": 57
+          },
+          "id": "QU-619",
+          "name": "VOIP Server",
+          "cpu": 0.09453638782743945,
+          "memory": 0.05458665927485229,
+          "incoming": "61.18GB",
+          "outgoing": "45.71GB"
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.ImageUI",
+              "json": {
+                "$size": {
+                  "$ref": 3
+                },
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 15,
+                  "y": 12
+                },
+                "fontSize": 10,
+                "data": {
+                  "$ref": 57
+                }
+              }
+            },
+            "bindingProperties": {
+              "property": "icon",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 5
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "VOIP Server"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#D00",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 22
+                },
+                "$anchorPosition": {
+                  "$ref": 7
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "QU-619"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 27,
+                  "y": 47
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "CPU"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 27,
+                  "y": 65
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "MEM"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.BarUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 47
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "fontSize": 10,
+                "data": 0.09453638782743945
+              }
+            },
+            "bindingProperties": {
+              "property": "cpu",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.BarUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 30,
+                  "y": 65
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "fontSize": 10,
+                "data": 0.05458665927485229
+              }
+            },
+            "bindingProperties": {
+              "property": "memory",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 71,
+                  "y": 90
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Incoming:"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 71,
+                  "y": 106
+                },
+                "$anchorPosition": {
+                  "$ref": 12
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "Outgoing:"
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#C20",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 75,
+                  "y": 90
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "61.18GB"
+              }
+            },
+            "bindingProperties": {
+              "property": "incoming",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "color": "#C20",
+                "syncSelection": false,
+                "zIndex": 1,
+                "$position": {
+                  "x": 75,
+                  "y": 106
+                },
+                "$anchorPosition": {
+                  "$ref": 17
+                },
+                "$fontSize": 10,
+                "$font": "lighter 10px Verdana, sans-serif",
+                "fontSize": 10,
+                "data": "45.71GB"
+              }
+            },
+            "bindingProperties": {
+              "property": "outgoing",
+              "propertyType": 2,
+              "bindingProperty": "data",
+              "target": {}
+            }
+          }
+        ],
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 0,
+            "y": -100,
+            "rotate": 0
+          }
+        },
+        "image": {
+          "$ref": 30
+        }
+      },
+      "_refId": "1737"
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "from": {
+          "_ref": 1713
+        },
+        "to": {
+          "_ref": 1725
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "from": {
+          "_ref": 1713
+        },
+        "to": {
+          "_ref": 1737
+        }
+      }
+    },
+    {
+      "_className": "Q.Edge",
+      "json": {
+        "from": {
+          "_ref": 1725
+        },
+        "to": {
+          "_ref": 1737
+        }
+      }
+    }
+  ]
+}

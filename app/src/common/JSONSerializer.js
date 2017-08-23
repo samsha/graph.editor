@@ -3,114 +3,6 @@
     if (Q.Graph.prototype.parseJSON) {
         return;
     }
-
-    //<=v1.7
-    function JSONSerializer1_7(options) {
-        this._refs = {};
-        if (options) {
-            this.root = options.root;
-        }
-    }
-
-    JSONSerializer1_7.prototype = {
-        _refs: null,
-        _index: 1,
-        root: null,
-        reset: function () {
-            this._refs = {};
-            this._index = 1;
-        },
-        getREF: function (id) {
-            return this._refs[id];
-        },
-        clearRef: function () {
-            for (var id in this._refs) {
-                var json = this._refs[id];
-                var value = json._value;
-                if (value) {
-                    if (!value._refed) {
-                        delete json._refId;
-                    }
-                    delete value._refed;
-                    delete value._refId;
-                    delete json._value;
-                }
-            }
-            this.reset();
-        },
-        toJSON: function (value) {
-            if (!(value instanceof Object)) {
-                return value;
-            }
-            if (value instanceof Function && !value._classPath) {
-                return null;
-            }
-            if (value._refId !== undefined) {
-                value._refed = true;
-                return {_ref: value._refId};
-            }
-            var refId = this._index++;
-            value._refId = refId;
-            var json = this._toJSON(value);
-            json._refId = refId;
-            json._value = value;
-            this._refs[refId] = json;
-            return json;
-        },
-        _toJSON: function (value) {
-            if (value._classPath) {
-                return {_classPath: value._classPath};
-            }
-            if (!value._className) {
-                return value;
-            }
-            var result = {_className: value._className};
-            if (value.toJSON) {
-                result.json = value.toJSON(this);
-            } else {
-                result.json = value;
-            }
-            return result;
-        },
-        parseJSON: function (json) {
-            if (!(json instanceof Object)) {
-                return json;
-            }
-            if (json._ref !== undefined) {
-                return this._refs[json._ref];
-            }
-            if (json._refId !== undefined) {
-                return this._refs[json._refId] = this._parseJSON(json);
-            }
-            return this._parseJSON(json);
-        },
-        _parseJSON: function (json) {
-            if (json._classPath) {
-                return getByPath(json._classPath);
-            }
-            if (json._className) {
-                var F = getByPath(json._className);
-                var v = new F();
-                ///防止相互引用导致的问题
-                if (json._refId !== undefined) {
-                    this._refs[json._refId] = v;
-                }
-                if (v && json.json) {
-                    json = json.json;
-                    if (v.parseJSON) {
-                        v.parseJSON(json, this);
-                    } else {
-                        for (var n in json) {
-                            v[n] = json[n];
-                        }
-                    }
-                }
-                return v;
-            }
-            return json;
-        }
-    }
-
     //v1.8
     function isEmptyObject(obj) {
         if (!(obj instanceof Object)) {
@@ -187,9 +79,13 @@
     }
 
     Q.HashList.prototype.parseJSON = function (json, serializer) {
+        var result = [];
         json.forEach(function (item) {
-            this.add(serializer.parseJSON(item));
+            var data = serializer.parseJSON(item);
+            this.add(data);
+            result.push(data);
         }, this)
+        return result;
     }
 
     function exportElementProperties(serializer, properties, info, element) {
@@ -262,8 +158,22 @@
         }
     }
 
-    var OUTPUT_PROPERTIES = ['enableSubNetwork', 'zIndex', 'tooltipType', 'tooltip', 'movable', 'selectable', 'resizable', 'uiClass', 'name', 'parent', 'host'];
+    var OUTPUT_PROPERTIES = ['retatable', 'editable', 'layoutable','visible',  'busLayout','enableSubNetwork', 'zIndex', 'tooltipType', 'tooltip', 'movable', 'selectable', 'resizable', 'uiClass', 'name', 'parent', 'host'];
 
+    Q.Element.prototype.addOutProperty = function(name){
+        if(!this.outputProperties){
+            this.outputProperties = [];
+        }
+        this.outputProperties.push(name);
+    }
+    Q.Element.prototype.removeOutProperty = function(name){
+        if(this.outputProperties){
+            var index = this.outputProperties.indexOf(name);
+            if(index >= 0){
+                this.outputProperties.splice(index, 1);
+            }
+        }
+    }
     Q.Element.prototype.toJSON = function (serializer) {
         var info = {};
         var outputProperties = OUTPUT_PROPERTIES;
@@ -329,7 +239,7 @@
             }, this)
         }
         for (var n in info) {
-            if (n == 'styles' || n == 'properties' || n == 'bindingUIs') {
+            if (n == 'id' || n == 'styles' || n == 'properties' || n == 'bindingUIs') {
                 continue;
             }
             var v = serializer.parseJSON(info[n]);
@@ -338,7 +248,7 @@
     }
     Q.Node.prototype.toJSON = function (serializer) {
         var info = Q.doSuper(this, Q.Node, 'toJSON', arguments);
-        exportElementProperties(serializer, ['location', 'size', 'image', 'rotate', 'anchorPosition'], info, this);
+        exportElementProperties(serializer, ['location', 'size', 'image', 'rotate', 'anchorPosition', 'parentChildrenDirection', 'layoutType', 'hGap', 'vGap'], info, this);
         return info;
     }
     Q.Group.prototype.toJSON = function (serializer) {
@@ -353,7 +263,7 @@
     }
     Q.Edge.prototype.toJSON = function (serializer) {
         var info = Q.doSuper(this, Q.Edge, 'toJSON', arguments);
-        exportElementProperties(serializer, ['from', 'to', 'edgeType', 'angle', 'bundleEnabled', 'pathSegments'], info, this);
+        exportElementProperties(serializer, ['angle', 'from', 'to', 'edgeType', 'angle', 'bundleEnabled', 'pathSegments'], info, this);
         return info;
     }
 
@@ -647,25 +557,12 @@
     }
 
     Q.GraphModel.prototype.parseJSON = function (json, options) {
+        options = options || {};
         var datas = json.datas;
         if (!datas || !(datas.length > 0)) {
             return;
         }
-        //旧版本兼容
-        if (versionToNumber(json.version) <= 1.7) {
-            var serializer = new JSONSerializer1_7(options);
-            var datas = json.datas;
-            datas.forEach(function (json) {
-                var element = serializer.parseJSON(json);
-                if (element instanceof Q.Element) {
-                    this.add(element);
-                }
-            }, this);
-
-            serializer.reset();
-            return;
-        }
-
+        var result = [];
         var serializer = new JSONSerializer(options, json.g);
         var elementRefs = {};
         datas.forEach(function (info) {
@@ -679,9 +576,19 @@
         datas.forEach(function (json) {
             var element = serializer.jsonToElement(json);
             if (element instanceof Q.Element) {
+                result.push(element);
                 this.add(element);
             }
         }, this);
+
+        if(this.currentSubNetwork){
+            var currentSubNetwork = this.currentSubNetwork;
+            result.forEach(function(e){
+                if(!e.parent){
+                    e.parent = currentSubNetwork;
+                }
+            })
+        }
 
         if (json.currentSubNetwork) {
             var currentSubNetwork = serializer.getREF(json.currentSubNetwork._ref);
@@ -689,8 +596,9 @@
                 this.currentSubNetwork = currentSubNetwork;
             }
         }
-
         serializer.clearRef();
+
+        return result;
     }
 
     Q.Graph.prototype.toJSON = Q.Graph.prototype.exportJSON = function (toString, options) {
@@ -708,12 +616,14 @@
         if (Q.isString(json)) {
             json = JSON.parse(json);
         }
-        this.graphModel.parseJSON(json, options);
+        options = options || {}
+        var result = this.graphModel.parseJSON(json, options);
         var scale = json.scale;
-        if(scale){
+        if(scale && options.transform !== false){
             this.originAtCenter = false;
             this.translateTo(json.tx || 0, json.ty || 0, scale);
         }
+        return result;
     }
 
     loadClassPath(Q, 'Q');

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=2.5"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<script src="scripts/graphs.js"></script>
+<!-- endbuild -->
+<script>
+
+    Q.registerImage('lamp', Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, -8, -8, 16, 16));
+    var lampGradient = new Q.Gradient(Q.Consts.GRADIENT_TYPE_RADIAL, [Q.toColor(0xAAFFFFFF), Q.toColor(0x33EEEEEE), Q.toColor(0x44888888), Q.toColor(0x33666666)],
+        [0.1, 0.3, 0.7, 0.9], 0, -0.2, -0.2);
+
+    function createLampStyles(color) {
+        var styles = {};
+        styles[Q.Styles.SHAPE_FILL_COLOR] = color;
+        styles[Q.Styles.SHAPE_STROKE] = 0.5;
+        styles[Q.Styles.SHAPE_STROKE_STYLE] = '#CCC';
+        styles[Q.Styles.LABEL_BACKGROUND_COLOR] = '#FF0';
+        styles[Q.Styles.SHAPE_FILL_COLOR] = color;
+        styles[Q.Styles.LABEL_SIZE] = {width: 100, height: 20};
+        styles[Q.Styles.LABEL_PADDING] = 5;
+        styles[Q.Styles.LABEL_OFFSET_Y] = -10;
+        styles[Q.Styles.SHAPE_FILL_GRADIENT] = lampGradient;
+        styles[Q.Styles.LABEL_POSITION] = Q.Position.CENTER_TOP;
+        styles[Q.Styles.LABEL_ANCHOR_POSITION] = Q.Position.LEFT_BOTTOM;
+        return styles;
+    }
+    $('#editor').graphEditor({
+        images: [{
+            name: 'Custom Elements', imageWidth: 60, images: ['data/images/logo.svg', {
+                image: 'lamp',
+                properties: {
+                    name: 'Message'
+                },
+                showLabel: true,
+                styles: createLampStyles('#F00')
+            }, {
+                image: 'Q-group',
+                showLabel: true,
+                type: 'Group',
+                properties: {
+                    groupImage: graphs.group_cloud,
+                },
+                styles: {
+                    'render.color': '#F00'
+                }
+            }]
+        }], callback: function (editor) {
+            editor.toolbox.hideDefaultGroups();
+            var graph = editor.graph;
+            graph.styles = {'arrow.to': false};
+
+            graph.addCustomInteraction({
+                onmousedown: function (evt, graph) {
+                    graph.focus(true);
+                }
+            })
+            var hello = graph.createNode("Hello", -100, -50);
+            hello.image = Q.Graphs.server;
+            var qunee = graph.createNode("Qunee", 100, 50);
+            var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+            graph.moveToCenter();
+        }
+    });
+</script>
+</body>
+</html>

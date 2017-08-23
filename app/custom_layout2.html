@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout" style="margin-top: 40px; margin-bottom: 40px;">
+<div id="editor" data-options="region:'center'">
+    <div data-options="region:'west', width:'30%', min-width:220" class="graph-editor__toolbox"></div>
+    <div class="graph-editor__canvas" data-options="region:'center'" style="background-color: #DDD">
+        <!--<div id="bottom_pane" style="z-index: 100;background-color: #EEF; height: 200px; position: absolute; bottom: 0px; left: 100px; right: 100px;"></div>-->
+    </div>
+</div>
+<!--<div id="bottom_pane" style="background-color: #EEF; height: 200px; position: fixed; width: 70%;bottom: 0px; margin: 0px auto;"></div>-->
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/graph.editor.js"></script>
+<script src="scripts/graphs.js"></script>
+<!-- endbuild -->
+<script>
+    $('#editor').graphEditor({images: [{
+        name: '自定义',
+        images: [{
+            image: Q.Shapes.getRect(0, 0, 100, 50),
+            styles: {
+                'shape.stroke': 1,
+                'shape.stroke.style': '#000'
+            }
+
+        }]
+    }], callback: function(editor){
+
+        var graph = editor.graph;
+
+        graph.interactionDispatcher.addListener(function(evt){
+            if(evt.kind == Q.InteractionEvent.ELEMENT_CREATED){
+                var data = evt.data;
+                if(data instanceof Q.Edge){//监听图元创建事件，如果是不允许相连的，直接删除
+                    var hasOtherEdge;
+                    data.to.forEachInEdge(function(edge){
+                        if(edge != data){
+                            hasOtherEdge = true;
+                            return false;
+                        }
+                    })
+                    if(hasOtherEdge){
+                        graph.removeElement(data)
+                    }
+                }
+                if(graph.interactionProperties && graph.interactionProperties.styles){
+                    evt.data.putStyles(graph.interactionProperties.styles)
+                }
+
+//                evt.data.name = '新创建出来的图元'
+            }
+        })
+
+
+        var hello = graph.createNode("Hello", -100, -50);
+        hello.image = Q.Graphs.server;
+        var qunee = graph.createNode("Qunee", 100, 50);
+        var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+        graph.moveToCenter();
+    }});
+</script>
+</body>
+</html>

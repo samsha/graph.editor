@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/common/PropertyPane.js?"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+    $('#editor').graphEditor({
+        images: [{name: '自定义图片', images: ['Q-server']}],//关于qunee支持的图片类型,请参看开发手册中《节点图片》介绍
+        saveService: 'save',
+        callback: function (editor) {
+            editor.toolbox.hideDefaultGroups();
+
+            var graph = editor.graph;
+            var node = graph.createNode('Node');
+            var text = graph.createText('Text', 100, 100);
+            graph.createEdge(node, text);
+            graph.moveToCenter();
+
+            //定制右键菜单
+            graph.popupmenu.getMenuItems = function (graph, data, evt) {
+                if(!graph.editable){
+                    return null;
+                }
+                var result = Q.PopupMenu.prototype.getMenuItems.apply(this, arguments);
+                if (!data) {
+                    return result;
+                }
+                result.unshift(Q.PopupMenu.Separator);
+                result.unshift({
+                    text: '设置状态属性',
+                    action: function(){
+                        Q.prompt('设置状态', data.get('status'), function (value) {
+                            if (value === null) {
+                                return;
+                            }
+                            data.set('status', value)
+                        })
+                    }
+                })
+                return result;
+            }
+
+//            点击监听
+            graph.onclick = function(evt){
+                var data = evt.getData();
+                if(data){
+                    Q.log('click at - ' + data.name);
+                }
+            }
+
+            //以下为切换编辑模式
+            function setEditable(editable){
+                graph.editable = editable;
+                var toolbox = editor.toolbox.html;
+                var propertyPane = editor.propertyPane.html;
+                if(editable){
+                    toolbox.style.display = '';
+                    propertyPane.style.display = '';
+                    toolbox.setAttribute('data-options', toolbox.getAttribute('old-data-options'));
+                    propertyPane.setAttribute('data-options', propertyPane.getAttribute('old-data-options'));
+                }else{
+                    toolbox.style.display = 'none';
+                    propertyPane.style.display = 'none';
+                    toolbox.setAttribute('old-data-options', toolbox.getAttribute('data-options'));
+                    propertyPane.setAttribute('old-data-options', propertyPane.getAttribute('data-options'));
+                    toolbox.setAttribute('data-options', null);
+                    propertyPane.setAttribute('data-options', null);
+                }
+
+                var oldMode = graph.interactionMode;
+                graph.interactionMode = null;
+                graph.interactionMode = oldMode;
+
+                $('.layout').borderLayout();
+                graph.updateViewport();
+            }
+            var toolbarDiv = editor.toolbar;
+            var button = document.createElement('button');
+            button.textContent = '切换编辑模式';
+            toolbarDiv.appendChild(button)
+            button.onclick = function(){
+                setEditable(!graph.editable);
+            }
+
+
+        }
+    });
+</script>
+</body>
+</html>

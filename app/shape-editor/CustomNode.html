@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Qunee for HTML5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body style="margin: 0px">
+<div style="position: absolute; width: 100%; top: 0px; bottom: 0px;" id="canvas"></div>
+<script src="http://cn.qunee.com/demo/lib/qunee-min.js"></script>
+<!--<script src="../../qunee.js"></script>-->
+<script src="./svg.js"></script>
+<script src="../src/common/GridBackground.js"></script>
+<script src="CustomNode.js"></script>
+<script>
+    var graph = new Q.Graph('canvas');
+    graph.editable = true;
+    graph.moveToCenter();
+    var background = new GridBackground(graph);
+
+    function createNode(drawableInfo) {
+        var node = new CustomNode(drawableInfo);
+        graph.addElement(node)
+        return node;
+    }
+    var node = createNode({
+        shapes: ['M0,50L100,50,L100,150,L0,150Z', {y: 1, fillColor: '#EEF', path: 'M0,50C0 0,100 0,100,50Z'}],
+        labels: [{
+            text: 'hello', color: '#E00',
+        }, {
+            text: 'Qunee',
+            color: '#555',
+            x: 0,
+            y: 20,
+            binding: [{
+                property: 'name',
+                propertyType: Q.Consts.PROPERTY_TYPE_CLIENT,
+                bindingProperty: "data"
+            }, {property: 'color', propertyType: Q.Consts.PROPERTY_TYPE_CLIENT, bindingProperty: "color"}]
+        }]
+    })
+    var node2 = createNode({
+        shapes: ['M0,50L100,50,L100,150,L0,150Z', {fillColor: '#EEF', path: 'M0,50C0 0,100 0,100,50Z'}],
+        labels: [{
+            text: 'hello',
+            color: '#E00',
+            position: Q.Position.CENTER_MIDDLE,
+            anchorPosition: Q.Position.CENTER_MIDDLE
+        }, {
+            text: 'Qunee',
+            color: '#555',
+            position: Q.Position.CENTER_MIDDLE,
+            anchorPosition: Q.Position.CENTER_MIDDLE,
+            x: 0,
+            y: 20,
+        }]
+    })
+    node2.x = 300;
+
+    var textNode = createNode({
+        shapes: [{path: 'M0,0L100,0,L100,40,L0,40Z M0,20L100,20', lineWidth: 1, strokeStyle: '#00F', lineDash: [4]}],
+        labels: [{
+            text: 'PICA3406',
+            y: -10,
+        }, {
+            text: '888 Mpa',
+            color: '#E00',
+            x: 0,
+            y: 10,
+        }]
+    })
+    textNode.x = 150;
+
+    var edge = new Q.Edge(node, node2);
+    edge.edgeType = Q.Consts.EDGE_TYPE_EXTEND_TOP;
+    graph.addElement(edge);
+
+    setInterval(function () {
+        node.set('name', 'Q-' + Q.randomInt(10))
+        node.set('color', Q.randomColor())
+    }, 1000)
+
+
+</script>
+</body>
+</html>

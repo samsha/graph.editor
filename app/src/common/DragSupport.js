@@ -108,7 +108,7 @@
 
                     var point = getMousePageLocation(evt);
 
-                    var graphs = document.getElementsByClassName('Q-Graph');
+                    var graphs = document.getElementsByClassName('Q-CanvasPanel');
                     var i = 0;
                     while (i < graphs.length) {
                         var graph = graphs[i];

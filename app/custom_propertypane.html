@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Drop Action</title>
+    <link rel=stylesheet href=libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=src/css/graph.editor.css>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/js.js -->
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/layout.border.js"></script>
+<script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="src/common/i18n.js"></script>
+<script src="src/common/DomSupport.js"></script>
+<script src="src/common/DragSupport.js"></script>
+<script src="src/common/FileSupport.js"></script>
+<script src="src/common/JSONSerializer.js"></script>
+<script src="src/common/ExportPane.js"></script>
+<script src="src/common/Toolbar.js"></script>
+<script src="src/common/ToolBox.js?"></script>
+<script src="src/common/PopupMenu.js"></script>
+<script src="src/common/PropertyPane.js"></script>
+<script src="src/graph.editor.js"></script>
+<!-- endbuild -->
+<script>
+    var images = {
+        name: '自定义图元', images: [{
+            label: 'Node',
+            image: 'Q-node',
+            clientProperties: {
+                type: 'CustomNode'
+            }
+        }, {
+            type: 'Text',
+            label: 'Text',
+            html: '<span style="background-color: #2898E0; color:#FFF; padding: 3px 5px;">' + getI18NString('Text') + '</span>',
+            styles: {
+                'label.background.color': '#2898E0',
+                'label.color': '#FFF',
+                'label.padding': new Q.Insets(3, 5)
+            }
+        }, {
+            type: 'Group',
+            label: 'Group',
+            image: 'Q-group'
+        }, {
+            label: 'SubNetwork',
+            image: 'Q-subnetwork',
+            properties: {enableSubNetwork: true}
+        }]
+    };
+
+    $('#editor').graphEditor({
+        images: images, callback: function (editor) {
+            var toolbox = editor.toolbox;
+            toolbox.hideDefaultGroups();
+            var graph = editor.graph;
+
+            var propertySheet = editor.propertyPane;
+            propertySheet.showDefaultProperties = false;
+            propertySheet.register({
+                class: Q.Element,
+                properties: [
+                    {client: 'id', displayName: 'ID'},
+                    {style: 'label.color', displayName: '文本颜色', type: 'color'},
+                ]
+            })
+            propertySheet.register({
+                class: Q.Node,
+                properties: [
+                    {client: 'ip', displayName: 'IP'},
+                    {style: 'label.background.color', displayName: '背景颜色', type: 'color'},
+                ],
+                group: '自定义属性'
+            })
+
+            graph.interactionDispatcher.addListener(function(evt) {
+                if (evt.kind == Q.InteractionEvent.ELEMENT_CREATED && evt.data) {
+                    var data = evt.data;
+                    if (data.get('type') == 'CustomNode') {
+                        data.propertyDefinitions = {
+                            group: '自定义属性A',
+                            properties: [
+                                {client: 'a', displayName: '自定义0', groupName: 'A'},
+                                {client: 'b', displayName: '自定义2'},
+                                {client: 'c', displayName: '自定义3'},
+                                {client: 'd', displayName: '自定义1', groupName: 'A'},
+                            ]
+                        }
+                    }
+                }
+            })
+
+
+            graph.moveToCenter();
+        }
+    });
+</script>
+</body>
+</html>

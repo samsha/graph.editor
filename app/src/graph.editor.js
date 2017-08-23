@@ -69,6 +69,8 @@
                 canvas = createElement('graph-editor__canvas', this.dom);
                 canvas.setAttribute('data-options', 'region:"center"');
             }
+            this.html = canvas;
+
             var graph = this.graph = new Q.Graph(canvas);
             graph.allowEmptyLabel = true;
             graph.originAtCenter = false;
@@ -85,6 +87,47 @@
             $(canvas).bind('size.change', function () {
                 graph.updateViewport();
             })
+
+            function findNodeAt(graph, x, y) {
+                var result;
+                graph.forEachReverseVisibleUI(function (ui) {
+                    var data = ui.data;
+                    if (data instanceof Q.Node && ui.uiBounds.intersectsPoint(x - ui.x, y - ui.y) && ui.hitTest(x, y, 1)) {
+                        result = data;
+                        return false;
+                    }
+                });
+                return result;
+            }
+            graph.interactionDispatcher.on(function (evt) {
+                if (evt.kind == Q.InteractionEvent.POINT_MOVE_END && evt.data instanceof Q.Edge && evt.point && evt.point.isEndPoint) {
+                    var edge = evt.data;
+                    var point = evt.point;
+                    var isFrom = point.isFrom;
+                    var oldNode = isFrom ? edge.from : edge.to;
+
+                    var xy = graph.toLogical(evt.event);
+                    var x = xy.x, y = xy.y;
+                    var currentNode = findNodeAt(this, x, y);
+                    if (currentNode && oldNode != currentNode) {
+                        if(currentNode instanceof Q.Group && edge.inGroup && edge.inGroup(currentNode)){
+                            return;
+                        }
+                        var bounds = graph.getUI(currentNode).bodyBounds;
+                        var offset = {
+                            x: x - bounds.cx,
+                            y: y - bounds.cy
+                        }
+                        edge.setStyle(isFrom ? Q.Styles.EDGE_FROM_OFFSET : Q.Styles.EDGE_TO_OFFSET, offset);
+                        if (isFrom) {
+                            edge.from = currentNode;
+                        } else {
+                            edge.to = currentNode;
+                        }
+                    }
+
+                }
+            }.bind(graph))
             return graph;
         },
         dropAction: function(evt, xy, info){
@@ -107,9 +150,12 @@
             return toolbar;
         },
         createToolbox: function (images) {
-            var toolbox = document.createElement('div');
-            this.dom.appendChild(toolbox);
-            toolbox.setAttribute('data-options', "region:'west', width:'18%', left:0, min-width:220, max-width:400");
+            var toolbox = this._getFirst('graph-editor__toolbox');
+            if(!toolbox){
+                toolbox = document.createElement('div');
+                this.dom.appendChild(toolbox);
+                toolbox.setAttribute('data-options', "region:'west', width:'18%', left:0, min-width:220, max-width:400");
+            }
             this.toolbox = new Q.ToolBox(this.graph, toolbox, images);
 
             this.graph.toolbox = this.toolbox;
@@ -121,7 +167,7 @@
             var propertyPane = this._getFirst('graph-editor__property');
             if (!propertyPane) {
                 propertyPane = createElement('graph-editor__property', this.dom);
-                propertyPane.setAttribute('data-options', "region:'east', width: '20%', right: 0, min-width: 100, max-width: '300'");
+                // propertyPane.setAttribute('data-options', "region:'east', width: '20%', right: 0, min-width: 100, max-width: '300'");
             }
             return this.propertyPane = new Q.PropertyPane(this.graph, propertyPane, options);
         },
@@ -237,11 +283,14 @@
         initToolbar: function (toolbar, graph) {
             var exportButtons = [{
                     name: getI18NString('Export JSON'), iconClass: 'q-icon toolbar-json', action: this.showJSONPanel.bind(this)
-                }, {
-                    iconClass: 'q-icon toolbar-upload',
-                    name: getI18NString('Load File ...'), action: this.loadJSONFile.bind(this), type: 'file'
                 }
             ]
+            if(Q.isFileSupported){
+                exportButtons.push({
+                    iconClass: 'q-icon toolbar-upload',
+                    name: getI18NString('Load File ...'), action: this.loadJSONFile.bind(this), type: 'file'
+                })
+            }
             if (window.saveAs) {
                 exportButtons.push({
                     iconClass: 'q-icon toolbar-download',

@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Qunee Graph Editor V2.0</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel=stylesheet href=../../libs/bootstrap/css/bootstrap.css>
+    <!--<link rel=stylesheet href=libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>-->
+    <!-- build:css libs/graph.editor/graph.editor.css -->
+    <link rel="stylesheet" href="../../src/css/graph.editor.css"/>
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="../../styles/main.css">
+    <!-- endbuild -->
+</head>
+<body class="layout">
+<!--<header data-options="region:'north', height: '50'">-->
+<!--<a class="navbar-brand" href="http://qunee.com">-->
+<!--<div class="logo" title="qunee.com"></div>-->
+<!--</a>-->
+<!--<span id="title">Light High Efficiency Graph Component</span>-->
+<!--<ul class="nav navbar-nav navbar-right">-->
+<!--<li><a href="http://qunee.com">Home</a></li>-->
+<!--<li><a href="http://blog.qunee.com">Blog</a></li>-->
+<!--<li><a href="http://doc.qunee.com">Doc</a></li>-->
+<!--<li><a href="http://demo.qunee.com">Demo</a></li>-->
+<!--&lt;!&ndash;<li><a href="http://qunee.com#try">试用</a></li>&ndash;&gt;-->
+<!--<li class="active"><a href="http://demo.qunee.com/editor/">Editor</a></li>-->
+<!--<li class="new"><a href="http://demo.qunee.com/svg2canvas/">SVG2Canvas</a></li>-->
+<!--</ul>-->
+<!--</header>-->
+<div id="editor" class="graph-editor" data-options="region:'center'"></div>
+<footer data-options="region:'south', height: '30'" class="footer">
+    Copyright © 2016 上海酷利软件有限公司 Shanghai Kuli Software Co.,Ltd. All right reserved. Email: <span
+        style="color: #2898E0;">support#qunee.com</span>
+</footer>
+<!-- build:js libs/js.js -->
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../libs/layout.border.js"></script>
+<!--<script src="libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>-->
+<!-- endbuild -->
+
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=1.8"></script>
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="../../src/common/i18n.js"></script>
+<script src="../../src/common/DomSupport.js"></script>
+<script src="../../src/common/DragSupport.js"></script>
+<script src="../../src/common/FileSupport.js"></script>
+<script src="../../src/common/JSONSerializer.js"></script>
+<script src="../../src/common/ExportPane.js"></script>
+<script src="../../src/common/Toolbar.js"></script>
+<script src="../../src/common/ToolBox.js"></script>
+<script src="../../src/common/PopupMenu.js"></script>
+<!--<script src="src/common/PropertyPane.js"></script>-->
+<script src="../../src/common/GridBackground.js"></script>
+<script src="../../src/graph.editor.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/main.js -->
+<script src="../../scripts/graphs.js"></script>
+<script src="CustomServerNode.js"></script>
+<script src="CustomEdge.js"></script>
+<script>
+    Q.registerImage('lamp', Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, -8, -8, 16, 16));
+
+    function ondropLoadJSON(evt, graph, center, options) {
+        var url = options.url;
+        if (!url) {
+            return;
+        }
+        loadTopoByURL(graph, url, center, evt);
+    }
+
+    function loadTopoByURL(graph, url, center, evt) {
+        Q.loadJSON(url, function (json) {
+            var result = graph.parseJSON(json, {transform: false});
+            if (!result) {
+                return
+            }
+            if(evt){
+                dropIntoGroupOrSubNetwork(evt, graph, result)
+            }
+            if(!center){
+                return;
+            }
+            var bounds = new Q.Rect();
+            result.forEach(function (e) {
+                if (e.location) {
+                    bounds.add(e.location);
+                }
+            })
+
+            if (bounds.isEmpty()) {
+                return;
+            }
+            var xOffset = center.x - bounds.cx;
+            var yOffset = center.y - bounds.cy;
+
+            result.forEach(function (e) {
+                if (e.location) {
+                    e.x += xOffset;
+                    e.y += yOffset;
+                }
+            })
+        })
+    }
+
+    //默认按住shift可以拖拽进入分组或者子网,但是对于自定义的拖拽处理是没有这个功能的,但是我们可以很容易自己实现
+    function dropIntoGroupOrSubNetwork(evt, graph, node){
+        if(evt.shiftKey){
+            var parent = graph.getElementByMouseEvent(evt);
+            if (parent.enableSubNetwork || parent instanceof Q.Group) {
+                if(Array.isArray(node)){
+                    node.forEach(function(e){
+                        if(!e.parent){
+                            e.parent = parent;
+                        }
+                    })
+                }else{
+                    node.parent = parent;
+                }
+            }
+        }
+    }
+
+    function ondropCustomServerNode(evt, graph, center, options){
+        var node = new CustomServerNode(options.name, options.id, options.icon || 'Q-node', options.data);
+        node.location = center;
+        dropIntoGroupOrSubNetwork(evt, graph, node);//自定义拖拽时,没有拖拽到分组的功能,但可以自己实现
+        graph.addElement(node);
+    }
+
+    Q.Editor.prototype.createToolbox = function (images) {
+        var toolbox = document.createElement('div');
+        this.dom.appendChild(toolbox);
+        toolbox.setAttribute('data-options', "region:'east', width:'18%', left:0, min-width:220, max-width:400");
+        this.toolbox = new Q.ToolBox(this.graph, toolbox, images);
+
+        this.graph.toolbox = this.toolbox;
+    },
+
+    $('#editor').graphEditor({
+        images: [{
+            name: '分组',
+            images: [{
+                type: 'Group',
+                label: '云状分组',
+                image: graphs.group_cloud,
+                properties: {
+                    image: 'Q-group', //这个是分组合并时的图标,qunee中内置的图标有这些:"Q-server", "Q-exchanger2", "Q-exchanger", "Q-cloud", "Q-node", "Q-group", "Q-subnetwork"
+                    groupImage: graphs.group_cloud,//这个是分组展开时的背景图片
+                    padding: 20,//分组展开时的内间距,
+                },
+                clientProperties: {
+                    type: 'group.cloud'
+                }
+            }, {
+                type: 'Group',
+                label: '矩形分组',
+                image: 'Q-group',
+                styles: {
+                    'group.background.color': '#FF0',
+                },
+                clientProperties: {
+                    type: 'group.rect'
+                }
+            }, {
+                type: 'Group',
+                label: '椭圆分组',
+                image: 'Q-group',
+                properties: {
+                    groupType: Q.Consts.GROUP_TYPE_ELLIPSE
+                },
+                styles: {
+                    'group.background.color': '#0FF',
+                }
+            }]
+        }, {
+            name: '单个节点',
+            images: [{
+                image: '../../images/custom_node.png',
+                icon: 'Q-server',
+                ondrop: 'ondropCustomServerNode',
+            },{
+                image: graphs.iphone,
+                label: 'iphone',
+                properties: {size: {width: 100}}
+            },{
+                image: graphs.skype,
+                properties: {size: {width: 100}}
+            }, graphs.twitter]
+        }, {
+            name: '特定分组', imageWidth: 'auto', images: [{
+                html: '<div style="padding: 0px 10px">Group1(A1 + b1 + C1)</div>',
+                url: './group3.json',
+                ondrop: 'ondropLoadJSON'//do any thing by your self when drop into the graph
+
+            }, {
+                html: 'Group2(A1 + b1 + C1)',
+                url: './group2.json',
+                ondrop: 'ondropLoadJSON'//do any thing by your self when drop into the graph
+
+            }]
+        }, {
+            name: '预载拓扑图', images: [{
+                image: '../../images/topo2.png',
+                url: '../../data/topo2.json',
+                ondrop: 'ondropLoadJSON'//do any thing by your self when drop into the graph
+
+            }, {
+                image: '../../images/topo3.png',
+                url: '../../data/topo3.json',
+                ondrop: 'ondropLoadJSON'//do any thing by your self when drop into the graph
+
+            }, {
+                image: '../../images/group.png',
+                name: '11',
+                ondrop: 'createGroup',
+                width: 100, //也可以传入一些参数,但只能是string,number等简单类型
+                height: 300
+
+            }]
+        }], callback: function (editor) {
+            editor.toolbox.hideDefaultGroups();
+
+            //初始化工作在此处回调函数中实现
+            var graph = editor.graph;
+            graph.editable = true;
+
+            //添加双击监听,实现双击展开合并
+            graph.html.ondblclick = function(evt){
+                var element = graph.getElementByMouseEvent(evt);
+//            graph.ondblclick = function(evt){
+//                var element = evt.getData();
+                if(element instanceof CustomServerNode){
+                    element.showDetail = !element.showDetail;
+                }
+            }
+
+            graph.originAtCenter = false;
+            graph.moveToCenter();
+
+
+            function createTitle(title, x, y){
+                var node = graph.createText(title, x, y);
+                node.setStyle(Q.Styles.LABEL_FONT_SIZE, 26);
+                node.setStyle(Q.Styles.LABEL_BACKGROUND_COLOR, "#2898E0");
+                node.setStyle(Q.Styles.LABEL_BACKGROUND_GRADIENT, new Q.Gradient(Q.Consts.GRADIENT_TYPE_LINEAR, ['#00d4f9', '#1ea6e6'], null, Math.PI/2));
+                node.setStyle(Q.Styles.LABEL_COLOR, "#FFF");
+                node.setStyle(Q.Styles.LABEL_PADDING, new Q.Insets(5, 10));
+                node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_MIDDLE);
+                node.setStyle(Q.Styles.LABEL_BORDER, 0.5);
+                node.setStyle(Q.Styles.LABEL_BORDER_STYLE, "#1D4876");
+                node.setStyle(Q.Styles.SELECTION_COLOR, "#0F0");
+                return node;
+            }
+
+            var topo1 = createTitle("点击加载拓扑图1", -100, -50);
+            var topo2 = createTitle("点击加载拓扑图2", 100, 50);
+            graph.onclick = function(evt){
+                var data = evt.getData();
+                if(data == topo1){
+                    graph.clear();
+                    loadTopoByURL(graph, '../../data/topo2.json')
+                }
+                if(data == topo2){
+                    graph.clear();
+                    loadTopoByURL(graph, '../../data/topo3.json')
+                }
+            }
+
+            //定制右键菜单
+            graph.popupmenu.getMenuItems = function (graph, data, evt) {
+                var result = Q.PopupMenu.prototype.getMenuItems.apply(this, arguments);
+                if(!data){
+                    return result;
+                }
+//                var result = [];
+                if(!data){
+                    return result;
+                }
+                result.unshift(Q.PopupMenu.Separator);
+
+                var type = data.get('type');
+                if(type == 'group.cloud'){
+                    result.unshift({text: '云状分组'})
+                }
+
+                if(!data.enableSubNetwork && !(data instanceof Q.Group)){
+                    result.unshift({
+                        text: '设置为子网', action: function () {
+                            data.enableSubNetwork = true;//默认子网和普通节点没有任何区别,可以通过定制,实现不同的展示效果
+                        }
+                    })
+                }
+                if(data instanceof Q.Edge){
+                    result.unshift({
+                        text: '设置连线颜色', action: function () {
+                            Q.prompt('输入颜色,例如: #FF0000', graph.getStyle(data, Q.Styles.EDGE_COLOR), function (value) {
+                                if (value === null) {
+                                    return;
+                                }
+                                data.setStyle(Q.Styles.EDGE_COLOR, value);
+                            })
+                        }
+                    })
+                    result.unshift({
+                        text: '设置label1', action: function () {
+                            Q.prompt('输入label1', data.label1|| '', function (value) {
+                                if (value === null) {
+                                    return;
+                                }
+                                data.label1 = '' + value;
+                            })
+                        }
+                    })
+                    if(!data.flow){
+                        result.unshift({
+                            text: '设置流动效果', action: function () {
+                                data.flow = true;//默认子网和普通节点没有任何区别,可以通过定制,实现不同的展示效果
+                            }
+                        })
+                    }else{
+                        result.unshift({
+                            text: '取消流动效果', action: function () {
+                                data.flow = false;//默认子网和普通节点没有任何区别,可以通过定制,实现不同的展示效果
+                            }
+                        })
+                    }
+                }
+                if(data instanceof CustomServerNode){
+                    result.unshift({
+                        text: '设置CPU', action: function () {
+                            Q.prompt(getI18NString('Input CPU'), data.get('cpu') || '', function (value) {
+                                if (value === null) {
+                                    return;
+                                }
+                                data.set("cpu", parseFloat(value));
+                            })
+                        }
+                    })
+                }
+                return result;
+            }
+        }
+    });
+</script>
+<!-- endbuild -->
+</body>
+</html>
