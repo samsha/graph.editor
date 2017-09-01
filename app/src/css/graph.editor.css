@@ -1,0 +1,283 @@
+/*editor*/
+.graph-editor {
+}
+
+.graph-editor__toolbar {
+    /*border-bottom: solid 1px #EEE;*/
+    /*border-top: solid 1px #2898E0;*/
+    padding: 5px;
+    text-align: center;
+    box-shadow: 0px 0px 5px #888;
+}
+
+.graph-editor__toolbar .btn,
+.graph-editor__toolbar .btn-group {
+    margin-right: 5px;
+}
+
+.graph-editor__toolbar .btn-group .btn {
+    margin-right: 0px;
+}
+
+.graph-editor__canvas {
+    outline: none;
+    overflow: hidden;
+}
+
+.graph-editor__property {
+    display: none;
+    box-shadow: 0px 5px 5px #888;
+    padding: 10px;
+    overflow-y: auto;
+    /*border-top: solid 5px #2898E0;*/
+    border-top: solid 1px #CCC;
+    background-color: #FFF;
+    min-width: 200px;
+    right: 0px;
+    top: 40px;
+    bottom: 0px;
+    position: absolute;
+    width: 20%;
+}
+.graph-editor__property .form-group {
+    margin-bottom: 5px;
+}
+
+.graph-editor__json {
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    bottom: 0px;
+    min-width: 360px;
+    width: 35%;
+    background: rgba(250, 254, 156, 0.9);
+    box-shadow: 0px 1px 5px #888;
+    border-top: solid 5px #2898E0;
+    /*border-top: solid 1px #2898E0;*/
+}
+
+.graph-editor__json textarea {
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    font-size: 0.9em;
+    color: #000;
+}
+
+.graph-editor__json__buttons {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
+
+/*toggle button*/
+.btn-default:focus {
+    background-color: transparent;
+}
+
+.graph-editor__toolbox {
+    /*margin-top: 10px;*/
+    box-shadow: 0px 5px 5px #888;
+    /*border-top: solid 5px #2898E0;*/
+    overflow-y: auto;
+    background-color: #FFF;
+}
+
+.graph-editor__toolbox-buttonBar {
+    text-align: right;
+    padding: 5px;
+    border-top: solid 1px #CCC;
+}
+
+/*group*/
+.group {
+    /*border-bottom: solid 1px #CECECE;*/
+}
+
+.group__title {
+    padding: 4px 0px;
+    background-color: #FFF;
+    text-align: center;
+    /*border-bottom: solid 1px #BEC1C7;*/
+    border-top: solid 1px #ccc;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 1.1em;
+    user-select: none;
+    -webkit-user-select: none;
+    color: #555;
+    position: relative;
+}
+
+.group__title .q-icon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.group__title:hover, .group--closed > .group__title:hover {
+    /*background-color: #F0F0F0;*/
+    /*border-top: solid 1px #FFF;*/
+    /*background-color: #EEE;*/
+    background-color: #FFF;
+    color: #000;
+    box-shadow: none;
+}
+
+.group--closed:hover {
+    border-top: none;
+}
+
+.group__items {
+    padding-bottom: 10px;
+    min-height: 70px;
+    /*max-height: 300px;*/
+    background-color: #FFF;
+    overflow-y: auto;
+    text-align: center;
+    line-height: 0px;
+}
+
+.group--closed {
+    /*border-top: solid 1px #BBB;*/
+}
+
+.group--closed > .group__title {
+    background-color: #F5F5F5;
+    font-weight: 200;
+    /*border-top: none;*/
+    box-shadow: inset 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+.group--closed > .group__items {
+    display: none;
+}
+
+.group-expand {
+    background-position: -55px 0px;
+    width: 16px;
+    height: 16px;
+    -moz-transition: transform 0.3s ease-in-out;
+    -ms-transition: transform 0.3s ease-in-out;
+    -o-transition: transform 0.3s ease-in-out;
+    -webkit-transition: transform 0.3s linear;
+    transition: transform 0.3s linear;
+}
+
+.group--closed > .group__title > .group-expand, .group__title:hover > .group-expand {
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.group__item {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.group__item > img, .group__item > canvas, .group__item > div {
+    margin: 5px;
+    line-height: 0px;
+    display: block;
+}
+
+.group__item:hover {
+    background: #DDD;
+}
+
+/*export panel*/
+.graph-export-panel span {
+    padding: 5px;
+}
+
+.graph-export-panel input {
+    display: inline-block;
+    max-width: 100px;
+}
+
+/*input file*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background-color: red;
+    cursor: inherit;
+    display: block;
+}
+
+input[readonly] {
+    background-color: white !important;
+    cursor: text !important;
+}
+
+/*colorpicker*/
+.colorpicker:after, .colorpicker:before {
+    right: 13px;
+    left: auto;
+}
+
+.colorpicker.colorpicker-visible {
+    transform: translateX(-90px);
+}
+
+.font-small {
+    font-size: 80%;
+}
+
+.drag-element{
+    cursor: move;
+}
+
+.form-horizontal .form-group{
+    margin-right: 0px;
+}
+
+/*icons*/
+.graph-editor .q-icon {
+    background-image: url(icons-32.png);
+    background-repeat: no-repeat no-repeat;
+    margin: 1px 0px;
+    background-size: 423px 16px;
+}
+.toolbar-add{ background-position: 0px 0px; width: 16px; height: 16px; }
+.toolbar-default{ background-position: -18px 0px; width: 16px; height: 16px; }
+.toolbar-download{ background-position: -37px 0px; width: 16px; height: 16px; }
+.toolbar-edge_VH{ background-position: -55px 0px; width: 16px; height: 16px; }
+.toolbar-edge{ background-position: -74px 0px; width: 16px; height: 16px; }
+.toolbar-expand{ background-position: -92px 0px; width: 16px; height: 16px; }
+.toolbar-json{ background-position: -111px 0px; width: 16px; height: 16px; }
+.toolbar-line{ background-position: -129px 0px; width: 16px; height: 16px; }
+.toolbar-max{ background-position: -148px 0px; width: 16px; height: 16px; }
+.toolbar-new{ background-position: -166px 0px; width: 16px; height: 16px; }
+.toolbar-overview{ background-position: -185px 0px; width: 16px; height: 16px; }
+.toolbar-pan{ background-position: -203px 0px; width: 16px; height: 16px; }
+.toolbar-polygon{ background-position: -222px 0px; width: 16px; height: 16px; }
+.toolbar-print{ background-position: -240px 0px; width: 16px; height: 16px; }
+.toolbar-rectangle_selection{ background-position: -259px 0px; width: 16px; height: 16px; }
+.toolbar-remove{ background-position: -277px 0px; width: 16px; height: 16px; }
+.toolbar-save{ background-position: -296px 0px; width: 16px; height: 16px; }
+.toolbar-search{ background-position: -314px 0px; width: 16px; height: 16px; }
+.toolbar-update{ background-position: -333px 0px; width: 16px; height: 16px; }
+.toolbar-upload{ background-position: -351px 0px; width: 16px; height: 16px; }
+.toolbar-zoomin{ background-position: -370px 0px; width: 16px; height: 16px; }
+.toolbar-zoomout{ background-position: -388px 0px; width: 16px; height: 16px; }
+.toolbar-zoomreset{ background-position: -407px 0px; width: 16px; height: 16px; }
