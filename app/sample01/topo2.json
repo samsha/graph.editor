@@ -1,0 +1,1688 @@
+{
+  "version": "2.0",
+  "datas": [
+    {
+      "_className": "Q.Group",
+      "json": {
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "label.color": "#333333",
+          "border.color": "#336699",
+          "border.width": 2
+        },
+        "location": {
+          "x": -199.9123600779936,
+          "y": -56.63111340449241
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -41.63824756182669,
+          "y": -33.5,
+          "width": 138.20078866476348,
+          "height": 33.12084985210377
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "zIndex": 1,
+        "name": "技术架构服务",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": -180,
+          "y": -70
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "border.width": 2,
+          "border.color": "#336699",
+          "label.color": "#333333"
+        },
+        "location": {
+          "x": 388.2441250167648,
+          "y": 246.28604259050277
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -33.5,
+          "y": -155.03482676291895,
+          "width": 144.90004707921696,
+          "height": 363.20632843955616
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke.style": ""
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 180,
+            "y": 130,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -0.7063465530899293,
+                -0.7063465530899435
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                0.7063465530899293,
+                0.7063465530899435
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "服务总线",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "x": -180,
+          "y": 0
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "消息服务",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "x": -180,
+          "y": 260
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Ftp服务",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -180,
+            "y": 520,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 46.658628426175454,
+            "height": 55.66678077191498
+          }
+        },
+        "image": "Ftp"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "Web",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -470,
+            "y": 230,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 70.82133302522068,
+            "height": 139.42323734696444
+          }
+        },
+        "image": "webServer"
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "Double",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": -180,
+          "y": 60
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "Kakka",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": -180,
+          "y": 310
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "流程管理服务",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 130,
+            "y": 0,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 39.949490834085296,
+            "height": 63.7979633363412
+          }
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "资产管理服务",
+        "styles": {
+          "render.color": "rgba(255,0,0,0.93)",
+          "label.color": "#ffffff"
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.ImageUI",
+              "json": {
+                "zIndex": -1,
+                "$fillColor": "rgba(255,0,0,0.93)",
+                "fillColor": "rgba(255,0,0,0.93)",
+                "data": {
+                  "_className": "Q.Path",
+                  "json": [
+                    {
+                      "type": "m",
+                      "points": [
+                        0,
+                        30
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        0,
+                        13.431455999999999,
+                        13.431455999999999,
+                        0,
+                        30,
+                        0
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        46.568543999999996,
+                        0,
+                        60,
+                        13.431455999999999,
+                        60,
+                        30
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        60,
+                        46.568543999999996,
+                        46.568543999999996,
+                        60,
+                        30,
+                        60
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        13.431455999999999,
+                        60,
+                        0,
+                        46.568543999999996,
+                        0,
+                        30
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "ui": {
+              "_className": "Q.LabelUI",
+              "json": {
+                "$position": {
+                  "_classPath": "Q.Position.CENTER_TOP"
+                },
+                "$anchorPosition": {
+                  "_classPath": "Q.Position.LEFT_BOTTOM"
+                },
+                "$border": 1,
+                "$backgroundGradient": {
+                  "_classPath": "Q.Gradient.LINEAR_GRADIENT_VERTICAL"
+                },
+                "$padding": {
+                  "_className": "Q.Insets",
+                  "json": {
+                    "top": 2,
+                    "left": 5,
+                    "bottom": 2,
+                    "right": 5
+                  }
+                },
+                "$offsetY": -10,
+                "$offsetX": -10,
+                "$rotatable": false,
+                "$backgroundColor": "rgba(255,0,0,0.93)",
+                "$font": "normal 12px Verdana,helvetica,arial,sans-serif",
+                "data": "2C",
+                "showOnTop": true
+              }
+            }
+          }
+        ],
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 130,
+            "y": 250,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 46.595926672682424,
+            "height": 67.59592667268244
+          }
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "监控管理服务",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 120,
+            "y": 510,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 39.9494908340853,
+            "height": 65.69694500451183
+          }
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "业务数据库",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 430,
+            "y": 130,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 39.393890009023636,
+            "height": 54.88879834987667
+          }
+        },
+        "image": "DB"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "缓存服务",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "x": 425.10051717094757,
+          "y": 251.96398683765588
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "全文检索服务",
+        "styles": {
+          "render.color": "rgba(155,186,219,0.52)",
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "x": 427.5018994987709,
+          "y": 374.93154464286
+        },
+        "image": "server_1"
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "ElasticSearch",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#fff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": 430.3503720010269,
+          "y": 430.0020130198078
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "Redis",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": 427.1828476575169,
+          "y": 303.6610258708092
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "Mysql",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": 430,
+          "y": 180
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "border.width": 2,
+          "border.color": "#336699",
+          "label.color": "#336699"
+        },
+        "location": {
+          "x": 392.785840319269,
+          "y": 5.634940250513145
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -41.045417506767734,
+          "y": -47.69185334536485,
+          "width": 143.80773922908023,
+          "height": 108.67657836792398
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "border.color": "#336699",
+          "border.width": 2
+        },
+        "location": {
+          "x": 416.2049803869765,
+          "y": 516.3304126376031
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -65.23217919298563,
+          "y": -32,
+          "width": 147.55519339950683,
+          "height": 114.32301420652114
+        }
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "流程数据服务",
+        "styles": {
+          "label.color": "#ffffff",
+          "render.color": "rgba(155,186,219,0.52)"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 430,
+            "y": -10,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 42.24236251127955,
+            "height": 60.58574335438849
+          }
+        },
+        "image": "DB"
+      }
+    },
+    {
+      "_className": "Q.Node",
+      "json": {
+        "name": "监控数据库",
+        "styles": {
+          "label.color": "#ffffff",
+          "render.color": "rgba(155,186,219,0.52)"
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 430,
+            "y": 520,
+            "rotate": 0
+          }
+        },
+        "size": {
+          "_className": "Q.Size",
+          "json": {
+            "width": 46.98981668170606,
+            "height": 62.48472502255909
+          }
+        },
+        "image": "DB"
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": " InfluxDB",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "properties": {
+          "status": ""
+        },
+        "location": {
+          "x": 430,
+          "y": 580
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "Mysql",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": 420,
+          "y": 50
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "label.font.size": 0,
+          "render.color": "#052844",
+          "border.color": "#336699",
+          "border.width": 2,
+          "label.color": "#ffffff"
+        },
+        "location": {
+          "x": 90.1682860422792,
+          "y": -86.22761330236722
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -37.09972731211637,
+          "y": -4.260309379815212,
+          "width": 143.5914928599877,
+          "height": 33.314841448438976
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "业务逻辑服务",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": 120,
+          "y": -70
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "border.color": "#336699",
+          "border.width": 2
+        },
+        "location": {
+          "x": 384.3159193722638,
+          "y": -87.06964313386183
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -31,
+          "y": -5.363747479696797,
+          "width": 140.80773922908028,
+          "height": 36.3637474796968
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "数据库缓存服务",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": 430,
+          "y": -70
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "border.color": "#336699",
+          "border.width": 2,
+          "label.color": "#336699"
+        },
+        "location": {
+          "x": -512.2219707969003,
+          "y": -0.7297736322586033
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -31.5,
+          "y": -43.79984872617444,
+          "width": 139.8954757667806,
+          "height": 642.8568549365223
+        }
+      }
+    },
+    {
+      "_className": "Q.Text",
+      "json": {
+        "name": "业务Web应用",
+        "styles": {
+          "label.background.color": "",
+          "label.color": "#ffffff",
+          "label.padding": {
+            "_className": "Q.Insets",
+            "json": {
+              "top": 3,
+              "left": 5,
+              "bottom": 3,
+              "right": 5
+            }
+          }
+        },
+        "location": {
+          "x": -480,
+          "y": -70
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "border.color": "#336699",
+          "border.width": 2
+        },
+        "location": {
+          "x": -510.34691771939583,
+          "y": -88.17554512053147
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -31.5,
+          "y": -0.30236329499142567,
+          "width": 133.3957079833115,
+          "height": 31.80236329499143
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "label.color": "",
+          "render.color": "#052844",
+          "border.color": "#336699",
+          "border.width": 2
+        },
+        "location": {
+          "x": -212.56375206207187,
+          "y": -11.880685718967626
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -32.5,
+          "y": -32.5,
+          "width": 140.56973068714623,
+          "height": 644.8568549365225
+        }
+      }
+    },
+    {
+      "_className": "Q.Group",
+      "json": {
+        "zIndex": -1,
+        "name": "",
+        "styles": {
+          "render.color": "#052844",
+          "label.color": "#ffffff",
+          "border.color": "#336699",
+          "border.width": 2
+        },
+        "location": {
+          "x": 82.14354536947793,
+          "y": 19.456609747480165
+        },
+        "image": "Q-group",
+        "minSize": {
+          "x": -32.5,
+          "y": -64.274609209284,
+          "width": 148.41978641754733,
+          "height": 643.933160650973
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -350,
+            "y": 100,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -109.67365114172219,
+                97.37380241554774
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -20.49974787695743,
+                98.39878980939562
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -21.52473527080531,
+                -98.39878980939562
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                151.69813428948498,
+                -97.37380241554774
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -320,
+            "y": 250,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -131.1983864125275,
+                0
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                131.1983864125275,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -350,
+            "y": 400,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -116.33606920173332,
+                -120.43601877712484
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -21.01224157388134,
+                -120.43601877712484
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -21.01224157388134,
+                120.43601877712484
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                158.36055234949606,
+                120.43601877712484
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "Line",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -190,
+            "y": 520,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                3.074962181543583,
+                2.04997478769576
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -3.074962181543583,
+                -2.04997478769576
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "flow": true,
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2,
+          "label.color": "#333333",
+          "shape.stroke.style": "#2898e0"
+        },
+        "bindingUIs": [
+          {
+            "ui": {
+              "_className": "Q.ImageUI",
+              "json": {
+                "name": "flowingIcon",
+                "$fillColor": "#Fdd",
+                "layoutByPath": true,
+                "$position": {
+                  "x": 170,
+                  "y": 0
+                },
+                "$size": {
+                  "width": 20
+                },
+                "$renderColor": "#F00",
+                "fillColor": "#Fdd",
+                "data": {
+                  "_className": "Q.Path",
+                  "json": [
+                    {
+                      "type": "m",
+                      "points": [
+                        0,
+                        25
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        0,
+                        11.192879999999999,
+                        11.192879999999999,
+                        0,
+                        25,
+                        0
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        38.80712,
+                        0,
+                        50,
+                        11.192879999999999,
+                        50,
+                        25
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        50,
+                        38.80712,
+                        38.80712,
+                        50,
+                        25,
+                        50
+                      ]
+                    },
+                    {
+                      "type": "c",
+                      "points": [
+                        11.192879999999999,
+                        50,
+                        0,
+                        38.80712,
+                        0,
+                        25
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -10,
+            "y": 140,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -158.61679919795807,
+                -126.84218998867402
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                13.581082968484282,
+                -125.81720259482614
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                16.65604515002798,
+                126.32969629175011
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                128.3796710794458,
+                126.32969629175011
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -60,
+            "y": 250,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -121.97349986789666,
+                -231.03215857331014
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -121.97349986789666,
+                -149.03316706548048
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                36.899546178523316,
+                -150.05815445932836
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                37.92453357237125,
+                264.03675265521156
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                169.12291998489874,
+                266.0867274429073
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 280,
+            "y": 0,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -138.37329816946266,
+                2.0499747876957315
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                138.37329816946266,
+                -2.0499747876957315
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 280,
+            "y": 520,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -145.03571622947373,
+                0
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                145.03571622947373,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 300,
+            "y": 180,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -149.3919126533272,
+                58.16803460086669
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                14.606070362332218,
+                57.14304720701881
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                13.581082968484168,
+                -57.65554090394278
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                121.20475932251082,
+                -57.65554090394278
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 230,
+            "y": 360,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -93.61551530477223,
+                -81.65732904321368
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -93.61551530477223,
+                42.366145612378716
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                187.2310306095445,
+                39.29118343083513
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": 280,
+            "y": 260,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -133.2483612002232,
+                0.5124936969239116
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                133.2483612002232,
+                -0.5124936969239116
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -20,
+            "y": 240,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -151.18564059256101,
+                1.02498739384788
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                151.18564059256101,
+                -1.02498739384788
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -50,
+            "y": 380,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -115.56732865634751,
+                -114.54234126249963
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -24.343450603886936,
+                -114.54234126249963
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                -24.343450603886936,
+                115.05483495942354
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                164.25422986412138,
+                114.02984756557561
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -20,
+            "y": 250,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -143.498235138702,
+                1.02498739384788
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                143.498235138702,
+                -1.02498739384788
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_className": "Q.ShapeNode",
+      "json": {
+        "name": "",
+        "styles": {
+          "arrow.to": false,
+          "shape.fill.color": null,
+          "shape.fill.gradient": null,
+          "layout.by.path": true,
+          "shape.stroke": 2
+        },
+        "location": {
+          "_className": "Q.Point",
+          "json": {
+            "x": -20,
+            "y": -10,
+            "rotate": 0
+          }
+        },
+        "path": {
+          "_className": "Q.Path",
+          "json": [
+            {
+              "type": "m",
+              "points": [
+                -145.5482099263977,
+                0
+              ]
+            },
+            {
+              "type": "l",
+              "points": [
+                145.5482099263977,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scale": 0.5181182060435984,
+  "tx": 461.067014891181,
+  "ty": 279.66443907837385
+}

@@ -45,15 +45,24 @@
                 'label.background.color': '#2898E0',
                 'label.color': '#FFF',
                 'label.padding': new Q.Insets(3, 5)
+            },
+            clientProperties: {
+                type: 'CustomNode2'
             }
         }, {
             type: 'Group',
             label: 'Group',
-            image: 'Q-group'
+            image: 'Q-group',
+            clientProperties: {
+                type: 'CustomNode3'
+            }
         }, {
             label: 'SubNetwork',
             image: 'Q-subnetwork',
-            properties: {enableSubNetwork: true}
+            properties: {enableSubNetwork: true},
+            clientProperties: {
+                type: 'CustomNode4'
+            }
         }]
     };
 
@@ -65,38 +74,56 @@
 
             var propertySheet = editor.propertyPane;
             propertySheet.showDefaultProperties = false;
-            propertySheet.register({
-                class: Q.Element,
-                properties: [
-                    {client: 'id', displayName: 'ID'},
-                    {style: 'label.color', displayName: '文本颜色', type: 'color'},
-                ]
-            })
-            propertySheet.register({
-                class: Q.Node,
-                properties: [
-                    {client: 'ip', displayName: 'IP'},
-                    {style: 'label.background.color', displayName: '背景颜色', type: 'color'},
-                ],
-                group: '自定义属性'
-            })
 
-            graph.interactionDispatcher.addListener(function(evt) {
-                if (evt.kind == Q.InteractionEvent.ELEMENT_CREATED && evt.data) {
-                    var data = evt.data;
-                    if (data.get('type') == 'CustomNode') {
-                        data.propertyDefinitions = {
-                            group: '自定义属性A',
-                            properties: [
-                                {client: 'a', displayName: '自定义0', groupName: 'A'},
-                                {client: 'b', displayName: '自定义2'},
-                                {client: 'c', displayName: '自定义3'},
-                                {client: 'd', displayName: '自定义1', groupName: 'A'},
-                            ]
-                        }
+            propertySheet.getCustomPropertyDefinitions = function(data){
+                var type = data.get('type');
+                if (type == 'CustomNode') {
+                    return {
+                        group: '自定义属性',
+                        properties: [
+                            {client: 'a', displayName: 'AAA', groupName: 'A'},
+                            {client: 'b', displayName: 'AA'},
+                            {client: 'c', displayName: 'AAAA'},
+                            {client: 'd', displayName: '自定义1', groupName: 'A'},
+                        ]
                     }
                 }
-            })
+                if (type == 'CustomNode2') {
+                    return {
+                        group: '自定义属性',
+                        properties: [
+                            {client: 'b', displayName: 'BBBBB'},
+                            {client: 'c', displayName: '自定义3'},
+                        ]
+                    }
+                }
+                if (type == 'CustomNode3') {
+                    return {
+                        group: '自定义属性',
+                        properties: [
+                            {client: 'b', displayName: 'CC'},
+                            {client: 'c', displayName: '自定义3'},
+                        ]
+                    }
+                }
+            }
+
+//            propertySheet.register({
+//                class: Q.Element,
+//                properties: [
+//                    {client: 'id', displayName: 'ID'},
+//                    {style: 'label.color', displayName: '文本颜色', type: 'color'},
+//                ]
+//            })
+//            propertySheet.register({
+//                class: Q.Node,
+//                properties: [
+//                    {client: 'ip', displayName: 'IP'},
+//                    {style: 'label.background.color', displayName: '背景颜色', type: 'color'},
+//                ],
+//                group: '自定义属性'
+//            })
+
 
 
             graph.moveToCenter();

@@ -407,8 +407,8 @@
     function PropertyPane(graph, html, options) {
         this._propertyMap = {};
         this._formItems = [];
-        this.container = html;
-        this.dom = this.html = Q.createElement({class: 'form-horizontal', parent: html, tagName: 'form'});
+        this.html = this.container = html;
+        this.dom = Q.createElement({class: 'form-horizontal', parent: html, tagName: 'form'});
         this.graph = graph;
 
         graph.dataPropertyChangeDispatcher.addListener(function (evt) {
@@ -533,9 +533,9 @@
             this.dom.innerHTML = '';
             this._formItems = [];
             this._cellEditors = null;
-            this._setVisible(false);
+            this.setVisible(false);
         },
-        _setVisible: function(visible){
+        setVisible: function(visible){
             var display = visible? 'block': 'none';
             if(this.container){
                 this.container.style.display = display;
@@ -640,7 +640,12 @@
             registerProperties(this._propertyMap, options);
         },
         showDefaultProperties: true,
-        _getProperties: function(data){
+
+        getCustomPropertyDefinitions:function(data){
+            return data.propertyDefinitions;
+        },
+
+        getProperties: function(data){
             var properties = {};
             if(this.showDefaultProperties){
                 getProperties(data, properties);
@@ -648,13 +653,21 @@
             if(this._propertyMap){
                 getProperties(data, properties, this._propertyMap);
             }
-            if(data.propertyDefinitions){
-                var map = formatProperties(data.propertyDefinitions);
+            var propertyDefinitions = this.getCustomPropertyDefinitions(data);
+            if(propertyDefinitions){
+                var map = formatProperties(propertyDefinitions);
                 for(var name in map){
                     properties[name] = map[name];
                 }
             }
+            return properties;
+        },
+        _getProperties: function(data){
+            var properties = this.getProperties(data);
             return new PropertyGroup(properties);
+        },
+        isEditable: function(element){
+            return
         }
     }
     Object.defineProperties(PropertyPane.prototype, {
@@ -669,13 +682,14 @@
                 if (datas && !Q.isArray(datas)) {
                     datas = [datas];
                 }
-                this._datas = datas;
                 this.clear();
                 if (!datas.length) {
+                    this._datas = null;
                     return;
                 }
+                this._datas = datas;
                 if (datas.length == 1) {
-                    this._setVisible(true);
+                    this.setVisible(true);
 
                     this.propertyGroup = this._getProperties(datas[0]);
 

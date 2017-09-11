@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=../libs/bootstrap/css/bootstrap.css>
+    <style>
+        .Q-Graph {
+            background-color: #062943;
+        }
+        .dropdown-menu{
+            position: absolute;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="margin: 0px">
+<div style="position: absolute; width: 100%; top: 0px; bottom: 0px;" id="canvas" ></div>
+<div id="editor" data-options="region:'center'"></div>
+<div id="tooltip_panel" class="dropdown-menu" style="padding: 5px;"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=2.5"></script>
+<script src="../src/common/JSONSerializer.js"></script>
+<script src="FlowingSupport.js"></script>
+<script src="AlarmSupport.js"></script>
+<script src="Popup.js"></script>
+<script src="icons.js"></script>
+<script>
+
+    Q.Defaults.DELAY_CLICK = false;
+    var graph = new Q.Graph('canvas');
+    new Q.FlowingSupport(graph);
+    graph.interactionMode = Q.Consts.INTERACTION_MODE_VIEW;
+
+    Q.loadJSON('topo2.json', function(json){
+        graph.parseJSON(json);
+        graph.moveToCenter();
+    })
+
+
+    //点击，显示提示信息
+    graph.addCustomInteraction({
+        onclick: function (evt) {
+            var data = evt.getData();
+            if (!data) {
+                return;
+            }
+            var tooltip = graph.getTooltip(data);
+            if (!tooltip) {
+                return;
+            }
+            var tooltip_panel = document.getElementById('tooltip_panel');
+            tooltip_panel.innerHTML = tooltip;
+            Q.showPopup(tooltip_panel, evt);
+        }
+    })
+
+</script>
+</body>
+</html>

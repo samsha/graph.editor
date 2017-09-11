@@ -79,19 +79,16 @@
             function setEditable(editable){
                 graph.editable = editable;
                 var toolbox = editor.toolbox.html;
-                var propertyPane = editor.propertyPane.html;
+                editor.propertyPane.setVisible(editable && editor.propertyPane.datas)
+
                 if(editable){
                     toolbox.style.display = '';
-                    propertyPane.style.display = '';
                     toolbox.setAttribute('data-options', toolbox.getAttribute('old-data-options'));
-                    propertyPane.setAttribute('data-options', propertyPane.getAttribute('old-data-options'));
+
                 }else{
                     toolbox.style.display = 'none';
-                    propertyPane.style.display = 'none';
                     toolbox.setAttribute('old-data-options', toolbox.getAttribute('data-options'));
-                    propertyPane.setAttribute('old-data-options', propertyPane.getAttribute('data-options'));
                     toolbox.setAttribute('data-options', null);
-                    propertyPane.setAttribute('data-options', null);
                 }
 
                 var oldMode = graph.interactionMode;

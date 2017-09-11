@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Hello Qunee</title>
+    <link rel=stylesheet href=../libs/bootstrap/css/bootstrap.css>
+    <link rel=stylesheet href=../libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css>
+    <link rel=stylesheet href=../src/css/graph.editor.css>
+    <style>
+        .Q-Graph {
+            background-color: #062943;
+        }
+
+        .icon_shapeline {
+            background-image: url(shape_line_2.png);
+            background-size: 16px 16px;
+            width: 16px;
+            height: 16px;
+            margin: 1px 0px;
+        }
+    </style>
+</head>
+<body class="layout">
+<div id="editor" data-options="region:'center'"></div>
+<script src="http://demo.qunee.com/lib/qunee-min.js?v=2.5"></script>
+<!-- build:js libs/js.js -->
+<script src="../libs/jquery.min.js"></script>
+<script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="../libs/layout.border.js"></script>
+<script src="../libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- endbuild -->
+<!-- build:js libs/graph.editor/graph.editor.js -->
+<script src="../src/common/i18n.js"></script>
+<script src="../src/common/DomSupport.js"></script>
+<script src="../src/common/DragSupport.js"></script>
+<script src="../src/common/FileSupport.js"></script>
+<script src="../src/common/JSONSerializer.js"></script>
+<script src="../src/common/ExportPane.js"></script>
+<script src="../src/common/Toolbar.js"></script>
+<script src="../src/common/ToolBox.js"></script>
+<script src="../src/common/PopupMenu.js"></script>
+<script src="../src/common/PropertyPane.js"></script>
+<script src="../src/graph.editor.js"></script>
+<script src="../src/common/GridBackground.js"></script>
+<!-- endbuild -->
+<script src="FlowingSupport.js"></script>
+<script src="AlarmSupport.js"></script>
+<script src="Popup.js"></script>
+<script src="icons.js"></script>
+<script>
+    Q.Defaults.DELAY_CLICK = false;
+
+    Q.Editor.prototype.initToolbar = function (toolbar, graph) {
+        var exportButtons = [{
+            name: getI18NString('Export JSON'), iconClass: 'q-icon toolbar-json', action: this.showJSONPanel.bind(this)
+        }
+        ]
+        if (Q.isFileSupported) {
+            exportButtons.push({
+                iconClass: 'q-icon toolbar-upload',
+                name: getI18NString('Load File ...'), action: this.loadJSONFile.bind(this), type: 'file'
+            })
+        }
+        if (window.saveAs) {
+            exportButtons.push({
+                iconClass: 'q-icon toolbar-download',
+                name: getI18NString('Download File'), action: this.exportJSONFile.bind(this, window.saveAs)
+            })
+        }
+        if (this.options.saveService) {
+            exportButtons.push({
+                iconClass: 'q-icon toolbar-save',
+                name: getI18NString('Save'), action: this.save.bind(this)
+            })
+        }
+        Q.createToolbar(graph, toolbar, {
+            export: exportButtons,
+            editor: [
+                {
+                    name: '创建连线',
+                    interactionMode: Q.Consts.INTERACTION_MODE_CREATE_EDGE,
+                    iconClass: 'q-icon toolbar-edge'
+                },
+                {
+                    name: '创建线条',
+                    interactionMode: Q.Consts.INTERACTION_MODE_CREATE_LINE,
+                    iconClass: 'q-icon toolbar-line'
+                },
+                {
+                    name: '创建带箭头折线',
+                    interactionMode: Q.Consts.INTERACTION_MODE_CREATE_LINE,
+                    iconClass: 'icon_shapeline',
+                    styles: {
+                        'arrow.to': true
+                    },
+                    properties: {
+                        flow: true
+                    }
+                }
+            ]
+        })
+    }
+
+    function initEditor(editor) {
+        var graph = editor.graph;
+
+        //网格
+
+        var background = new GridBackground(graph);
+
+        var currentCell = 10;
+
+        function snapToGrid(x, y) {
+            var gap = currentCell;
+            x = Math.round(x / gap) * gap;
+            y = Math.round(y / gap) * gap;
+            return [x, y];
+        }
+
+        graph.interactionDispatcher.addListener(function (evt) {
+            if (evt.kind == Q.InteractionEvent.ELEMENT_MOVE_END) {
+                var datas = evt.datas;
+                datas.forEach(function (node) {
+                    if (!(node instanceof Q.Node) || node instanceof Q.Group) {
+                        return
+                    }
+                    var ps = snapToGrid(node.x, node.y);
+                    node.setLocation(ps[0], ps[1]);
+                });
+                return;
+            }
+            if (evt.kind == Q.InteractionEvent.POINT_MOVE_END) {
+                var line = evt.data;
+                Q.log(evt.point);
+                var segment = evt.point.segment;
+                segment.points = snapToGrid(segment.points[0], segment.points[1]);
+                line.invalidate();
+                return;
+            }
+            if (evt.kind == Q.InteractionEvent.ELEMENT_CREATED) {
+                var node = evt.data;
+                if (!(node instanceof Q.Node)) {
+                    return
+                }
+                var ps = snapToGrid(node.x, node.y);
+                node.setLocation(ps[0], ps[1]);
+                return;
+            }
+
+        });
+
+        //流动支持
+        var flowingSupport = new Q.FlowingSupport(graph);
+
+        //实现带箭头的线条
+        graph.onElementCreated = function (data) {
+            Q.Graph.prototype.onElementCreated.apply(this, arguments);
+            if (this.interactionProperties) {
+                if (this.interactionProperties.styles) {
+                    data.putStyles(this.interactionProperties.styles)
+                }
+                if (this.interactionProperties.properties) {
+                    for (var name in this.interactionProperties.properties) {
+                        data[name] = this.interactionProperties.properties[name]
+                    }
+                }
+            }
+        }
+
+        //点击，显示提示信息
+        graph.addCustomInteraction({
+            ondblclick: function (evt) {
+                var data = evt.getData();
+                if (!data) {
+                    return;
+                }
+                var tooltip = graph.getTooltip(data);
+                if (!tooltip) {
+                    return;
+                }
+                var tooltip_panel = document.getElementById('tooltip_panel');
+                tooltip_panel.innerHTML = tooltip;
+                Q.showPopup(tooltip_panel, evt);
+            }
+        })
+
+
+//        graph.forEach(function (element) {
+//            element.tooltip = '<h3>' + element.name + '</h3><table id="table" style="width: 100%;background-color: #FFF">\
+//            <colgroup>\
+//            <col style="background-color: #0f0">\
+//            <col style="background-color: #EEE">\
+//            <col style="background-color: #EEE">\
+//            <col style="background-color: #EEE">\
+//            <col style="background-color: #EEE">\
+//            </colgroup>\
+//            <tbody>\
+//            <tr>\
+//            <th>Name</th>\
+//            <th>NO</th>\
+//            <th>ID</th>\
+//            <th>Status</th>\
+//            <th>Value(kV)</th>\
+//            </tr>\
+//            <tr><td>AAA</td>\
+//        <td>231</td>\
+//        <td>#218</td>\
+//        <td>38</td>\
+//        <td>67</td></tr>\
+//            <tr><td>AAA</td>\
+//        <td>231</td>\
+//        <td>#218</td>\
+//        <td>38</td>\
+//        <td>67</td></tr>\
+//            <tr><td>AAA</td>\
+//        <td>231</td>\
+//        <td>#218</td>\
+//        <td>38</td>\
+//        <td>67</td></tr>\
+//            </tbody>\
+//            </table>'
+//        })
+
+        //增加一条告警
+        var node = graph.getElementByName('资产管理服务');
+        if (node) {
+            node.setAlarm(Q.AlarmType.CRITICAL, 2)
+        }
+
+        //属性编辑
+        var propertySheet = editor.propertyPane;
+//        propertySheet.showDefaultProperties = false;
+        propertySheet.register({
+            class: Q.Edge,
+            properties: [
+                {name: 'flow', displayName: 'Flowing', type: 'boolean'},
+            ]
+        })
+        propertySheet.register({
+            class: Q.ShapeNode,
+            properties: [
+                {name: 'flow', displayName: 'Flowing', type: 'boolean'},
+            ]
+        })
+
+        Q.loadJSON('topo2.json', function (json) {
+            graph.parseJSON(json);
+            graph.moveToCenter();
+        })
+
+
+    }
+
+    $('#editor').graphEditor({
+//        data: "topo2.json",
+        images: [{
+            name: "Custom Images",
+//            images: SVGIcons
+            images: [{
+                image: 'group_cloud', clientProperties: {
+                    type: 'CustomNode'
+                }
+            }, {
+                image: 'DB', clientProperties: {
+                    type: 'CustomNode'
+                }
+            }]
+        }], callback: initEditor
+    });
+</script>
+<div id="tooltip_panel" class="dropdown-menu" style="padding: 5px;"></div>
+</body>
+</html>
