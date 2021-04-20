@@ -2,7 +2,9 @@
 
 地址：[Graph.Editor ES6](https://github.com/qunee/graph.editor_vue)
 
-新项目删除了第三方依赖，改用es6开发，支持vuejs.
+新项目删除了第三方依赖，改用es6开发，支持vuejs。
+
+------------------------------------------------
 
 #拓扑图编辑器介绍
 
