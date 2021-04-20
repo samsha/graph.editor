@@ -1,6 +1,7 @@
 #拓扑图编辑器介绍
 
 本项目不再更新，可转到新项目，地址：[Graph.Editor ES6](https://github.com/qunee/graph.editor_vue)
+
 新项目删除了第三方依赖，改用es6开发，支持vuejs
 
 ~~[Graph.Editor](https://github.com/samsha/graph.editor)~~
