@@ -1,8 +1,11 @@
 #拓扑图编辑器介绍
 
-[Graph.Editor](https://github.com/samsha/graph.editor)
+本项目不再更新，可转到新项目，地址：[Graph.Editor ES6](https://github.com/qunee/graph.editor_vue)
+新项目删除了第三方依赖，改用es6开发，支持vuejs
 
-[在线演示](http://demo.qunee.com/editor/)
+~~[Graph.Editor](https://github.com/samsha/graph.editor)~~
+
+~~[在线演示](http://demo.qunee.com/editor/)
 
 Graph.Editor是一款基于HTML5技术的拓补图编辑器，采用[jquery](http://jquery.com)插件的形式，是[Qunee图形组件](http://qunee.com)的扩展项目
 
@@ -171,4 +174,4 @@ dist/
 
 #其他说明
 
-项目中包含一些后台相关的尚未完成的代码,可能你没法直接使用,仅作为参考,可以忽略
+项目中包含一些后台相关的尚未完成的代码,可能你没法直接使用,仅作为参考,可以忽略~~
